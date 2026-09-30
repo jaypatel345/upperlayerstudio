@@ -1,26 +1,126 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------
+   Upper Layer Studio — design tokens
+   Single source of truth. Every component pulls from here.
+------------------------------------------------------------------ */
+@theme {
+  /* Type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Ink */
+  --color-ink: #0a0a0a;
+  --color-ink-70: rgba(10, 10, 10, 0.7);
+  --color-muted: #6b7076;
+  --color-faint: #9ca3a8;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-tint: #f2f6f8;
+  --color-tint-2: #f8f9f8;
+  --color-dark: #171717;
+  --color-dark-2: #0e0e0e;
+
+  /* Sky (hero) */
+  --color-sky-deep: #4d93e0;
+  --color-sky: #7db6ee;
+  --color-sky-soft: #bcdcf7;
+  --color-sky-haze: #e8f3fc;
+
+  /* Lines */
+  --color-line: rgba(10, 10, 10, 0.08);
+  --color-line-strong: rgba(10, 10, 10, 0.14);
+  --color-line-light: rgba(255, 255, 255, 0.16);
+
+  /* Radius — 8px is the workhorse, 40px for hero-scale cards */
+  --radius-card: 8px;
+  --radius-sm: 6px;
+  --radius-lg: 16px;
+  --radius-xl: 40px;
+
+  /* Shadow */
+  --shadow-card: 0 1px 2px rgba(10, 10, 10, 0.04), 0 8px 24px rgba(10, 10, 10, 0.06);
+  --shadow-float: 0 2px 4px rgba(10, 10, 10, 0.04), 0 18px 48px rgba(10, 10, 10, 0.1);
+  --shadow-nav: 0 1px 2px rgba(10, 10, 10, 0.05), 0 8px 28px rgba(10, 10, 10, 0.08);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: -0.011em;
+  }
+
+  /* Display type: tight tracking is what gives the reference its voice */
+  h1, h2, h3, h4 {
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Frosted panel used by the nav and hero cards */
+  .glass {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Hairline dividers that match the reference's grid seams */
+  .hairline { border-color: var(--color-line); }
+}
+
+/* Marquee for the logo strip */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 38s) linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Hero entrance. Deliberately CSS, not JS: the above-the-fold content must
+   paint without waiting on hydration, which keeps LCP low and means the
+   headline is never invisible if scripts are slow or blocked. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise 0.8s var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0s);
 }
