@@ -21,7 +21,7 @@ export function Hero() {
         {/* Two deliberate lines — text-wrap:balance is off here so the colour
             split always lands in the same place. */}
         <h1
-          className="rise mt-7 max-w-[20ch] text-[38px] leading-[1.04] sm:text-[58px] sm:leading-[1.02] lg:text-[72px]"
+          className="rise mt-7 max-w-[22ch] text-[34px] leading-[1.06] sm:text-[50px] sm:leading-[1.03] lg:text-[62px]"
           style={delay(0.08)}
         >
           <span className="block">{hero.headline.lead}</span>

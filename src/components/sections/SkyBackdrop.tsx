@@ -6,8 +6,13 @@
  * white cloud layer and the horizon wash bleach the whole section. Cloud
  * radials stay in the upper half; the wash is confined to the bottom third so
  * the section still dissolves cleanly into the white page below.
+ *
+ * `horizon` turns that white wash off. The footer reuses this exact sky so the
+ * top and bottom of the page are literally the same image rather than two
+ * similar ones — but it dissolves into the dark footer instead of into white,
+ * so it supplies its own fade and wants the white one gone.
  */
-export function SkyBackdrop() {
+export function SkyBackdrop({ horizon = true }: { horizon?: boolean }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {/* Base: saturated overhead blue, clearing only near the horizon */}
@@ -33,7 +38,9 @@ export function SkyBackdrop() {
       <div className="absolute -top-24 left-[34%] h-[320px] w-[460px] rounded-full bg-white/25 blur-[90px]" />
 
       {/* Horizon: the section melts into the page */}
-      <div className="absolute inset-x-0 bottom-0 h-[32%] bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.55)_42%,rgba(255,255,255,0.92)_76%,#ffffff_100%)]" />
+      {horizon && (
+        <div className="absolute inset-x-0 bottom-0 h-[32%] bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.55)_42%,rgba(255,255,255,0.92)_76%,#ffffff_100%)]" />
+      )}
 
       {/* Grain kills gradient banding on wide displays */}
       <div

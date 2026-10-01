@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Accordion } from "@/components/ui/Accordion";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
+import { SkyPlate } from "@/components/ui/SkyPlate";
 import { services } from "@/lib/site";
 
 export function Services() {
@@ -15,18 +16,11 @@ export function Services() {
     title: s.title,
     content: (
       <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
-        {/* Gradient plate standing in for the service artwork */}
-        <div
-          className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-card)]"
-          style={{
-            backgroundImage: `linear-gradient(135deg, ${s.art.from} 0%, ${s.art.via} 48%, ${s.art.to} 100%)`,
-          }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_120%,rgba(255,255,255,0.55),transparent_60%)]" />
-          <span className="absolute bottom-5 left-6 text-[15px] font-medium tracking-[-0.02em] text-white mix-blend-difference">
-            {s.art.label.toUpperCase()}
-          </span>
-        </div>
+        <SkyPlate
+          variant={s.art.sky}
+          label={s.art.label}
+          className="aspect-[16/10] rounded-[var(--radius-card)]"
+        />
 
         <div>
           <p className="text-[16px] leading-[1.6] text-ink-70 text-pretty">{s.summary}</p>

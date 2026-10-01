@@ -98,7 +98,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button href={site.calendly} size="sm">
+          <Button href={site.book} size="sm">
             Book a call
           </Button>
 
@@ -165,7 +165,7 @@ export function Navbar() {
                   )}
                 </div>
               ))}
-              <Button href={site.calendly} size="lg" className="mt-6 w-full">
+              <Button href={site.book} size="lg" className="mt-6 w-full">
                 Book a call
               </Button>
             </Container>

@@ -14,15 +14,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://upperlayerstudio.com"),
   title: {
-    default: `${site.name} | AI Automation, Agents & Product Build`,
+    default: `${site.name} | AI Automation, Voice AI, Agents & Product Build`,
     template: `%s | ${site.name}`,
   },
   description:
-    "Upper Layer Studio designs and builds the AI automation, agents and products that take teams from manual work to systems running in production.",
+    "Upper Layer Studio builds the AI automation, voice agents and products that take teams from manual work to software they own.",
   openGraph: {
     title: `${site.name} | ${site.tagline}`,
     description:
-      "AI automation, agents and product build for teams that need something running, not another prototype.",
+      "AI automation, voice agents and product build for teams that need something running, not another prototype.",
     url: "https://upperlayerstudio.com",
     siteName: site.name,
     type: "website",

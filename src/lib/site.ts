@@ -2,25 +2,54 @@
  * Every string on the site lives here. Edit copy without touching components.
  *
  * Voice: first person singular. This is a solo studio — "I" reads as specific
- * and confident; "we" writes a cheque the proof can't cash yet.
+ * and confident; "we" writes a cheque the proof can't cash yet. The exception
+ * is "we" meaning me-and-the-client working together, which is fine.
+ *
+ * Positioning: automation is the entry door, product is the destination.
+ * Services are ordered as a ladder — 01 and 02 are where clients start, 04 is
+ * where the work ends up once an automation has earned its keep. Copy should
+ * never imply the models are mine; the architecture around them is.
  *
  * Numbers rule: nothing here claims a past result. Every figure is a
  * commitment that can be kept from day one. Swap them for real outcome
  * metrics once there is delivered work to point at.
  */
 
+import type { SkyVariant } from "@/components/ui/SkyPlate";
+
 export const site = {
   name: "Upper Layer Studio",
   wordmark: "UPPER LAYER",
   wordmarkSuffix: "®",
-  tagline: "The AI layer that levels up your business.",
-  email: "hello@upperlayerstudio.com",
-  location: "Ahmedabad · Working globally",
-  calendly: "#book-a-call",
+  tagline: "Automate the slow work, then own the software.",
+  email: "jaypatel@upperlayerstudio.com",
+  location: "India · Working globally",
+  /**
+   * Where every "Book a call" button goes.
+   *
+   * A plain path, deliberately. It used to be the bare anchor "#book-a-call",
+   * which was dead on any page without a CTA block (/privacy, /terms) and a
+   * no-op inside the CTA block itself, since that block *is* the target. The
+   * fix is one destination — /contact, where the scheduler lives.
+   *
+   * No "#book-a-call" fragment on the end either: that hash does not scroll
+   * reliably here, and it isn't needed. The booking panel sits ~450px down on
+   * desktop and ~410px on mobile, so it is above the fold on both, and the
+   * visitor reads the page's one line of context on the way to it. The panel
+   * keeps its id so an existing deep link still finds it.
+   */
+  book: "/contact",
+  /**
+   * The real scheduler URL (Calendly, Cal.com…), embedded by BookingPanel.
+   * Empty until one is connected — the panel shows the email fallback instead
+   * of an iframe pointing nowhere. Setting this is the only step needed to put
+   * live booking on the site.
+   */
+  scheduler: "https://cal.com/jaypatel345/upper-layer-studio-discovery-call",
   socials: [
-    { label: "X.com", href: "#" },
-    { label: "LinkedIn", href: "#" },
-    { label: "GitHub", href: "#" },
+    { label: "X.com", href: "https://x.com/UpperLayerAI" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/jaypatel3405/" },
+    { label: "GitHub", href: "https://github.com/jaypatel345/upperlayerstudio" },
   ],
 } as const;
 
@@ -30,8 +59,9 @@ export const nav = [
     href: "/services",
     children: [
       { label: "AI Automation", href: "/services/automation", desc: "Workflows that run without you" },
+      { label: "Voice AI", href: "/services/voice", desc: "Agents that answer the phone" },
       { label: "AI Agents", href: "/services/agents", desc: "Custom agents wired into your stack" },
-      { label: "AI Product Build", href: "/services/product", desc: "From prototype to production" },
+      { label: "Product Build", href: "/services/product", desc: "From prototype to production" },
     ],
   },
   {
@@ -55,11 +85,11 @@ export const nav = [
 ] as const;
 
 export const hero = {
-  badge: "AI automation and AI products",
-  headline: { lead: "Ship the AI layer", trail: "your business is missing" },
+  badge: "AI automation, voice agents and AI products",
+  headline: { lead: "Automate the work", trail: "that's slowing you down" },
   body:
-    "Drowning in manual work, sitting on data you never use, or trying to get an AI product out the door? I design and build the automation, agents and interfaces that turn that intent into something running in production.",
-  primary: { label: "Book a call", href: "#book-a-call" },
+    "I start with the work that repeats — the manual workflows, the missed calls, the copy-paste between tools — and replace it with systems that run on their own. Once those are earning their keep, I turn them into software you own outright.",
+  primary: { label: "Book a call", href: site.book },
   secondary: { label: "See what I build", href: "#services" },
   stat: {
     value: "48h",
@@ -72,19 +102,31 @@ export const hero = {
 export const collaborators = [
   "OpenAI",
   "Anthropic",
+  "ElevenLabs",
   "LangChain",
   "Supabase",
   "Vercel",
   "n8n",
   "Pinecone",
-  "Zapier",
 ];
 
-export const services = {
+export const services: {
+  eyebrow: string;
+  title: string;
+  body: string;
+  items: {
+    n: string;
+    title: string;
+    summary: string;
+    bullets: string[];
+    href: string;
+    art: { sky: SkyVariant; label: string };
+  }[];
+} = {
   eyebrow: "How I can help",
   title: "What needs to change?",
   body:
-    "Start with the problem you need to solve. We agree the scope together, keep what already works, and take the right work through to production.",
+    "Start with the problem you need to solve. Most projects begin with one automation, prove themselves in weeks, and grow from there — we agree the scope together and keep what already works.",
   items: [
     {
       n: "01",
@@ -98,10 +140,24 @@ export const services = {
         "Monitoring, logging and handover docs",
       ],
       href: "/services/automation",
-      art: { from: "#4d93e0", via: "#7db6ee", to: "#e8f3fc", label: "Automation" },
+      art: { sky: "clear", label: "Automation" },
     },
     {
       n: "02",
+      title: "Voice AI",
+      summary:
+        "A voice agent that answers every call in your tone, qualifies the caller, books the job and logs it — on your number, without anyone picking up the phone.",
+      bullets: [
+        "Inbound call handling and qualification",
+        "Booking straight into your calendar",
+        "Transcript and summary after every call",
+        "Hand-off to a human when it matters",
+      ],
+      href: "/services/voice",
+      art: { sky: "deep", label: "Voice" },
+    },
+    {
+      n: "03",
       title: "AI Agents",
       summary:
         "Assistants and agents that know your product, your data and your rules — scoped tightly enough to be trusted, and evaluated so you know when they drift.",
@@ -112,21 +168,22 @@ export const services = {
         "Cost and latency tuning",
       ],
       href: "/services/agents",
-      art: { from: "#171717", via: "#3b3b3b", to: "#7db6ee", label: "Agents" },
+      art: { sky: "dusk", label: "Agents" },
     },
     {
-      n: "03",
-      title: "AI Product Build",
+      n: "04",
+      title: "Product Build",
       summary:
-        "The whole thing: interface, model layer and infrastructure. For teams taking an AI product to market who need it designed and shipped, not prototyped again.",
+        "The whole thing: interface, model layer and infrastructure. For teams taking an AI product to market, and for clients whose automations have outgrown the tools they were built in.",
       bullets: [
         "Product and interface design",
         "Full-stack build and deployment",
         "Model orchestration and fallbacks",
+        "Image and content generation where the product needs it",
         "Launch support and iteration",
       ],
       href: "/services/product",
-      art: { from: "#7db6ee", via: "#bcdcf7", to: "#ffffff", label: "Product" },
+      art: { sky: "cumulus", label: "Product" },
     },
   ],
 };
@@ -171,7 +228,7 @@ export const process = {
   founder: {
     name: "Jay Patel",
     role: "Founder, Upper Layer Studio",
-    link: { label: "Connect on LinkedIn", href: "#" },
+    link: { label: "Connect on LinkedIn", href: "https://www.linkedin.com/in/jaypatel3405/" },
     heading: "Your project, led by me",
     body: [
       "I'm Jay. Upper Layer Studio is me — I lead strategy and build on every project, and bring in specialist designers and engineers when production calls for it.",
@@ -192,6 +249,14 @@ export const faqs = {
     {
       q: "Do we need an AI strategy before we build anything?",
       a: "No. Strategy that isn't grounded in a working system tends to age badly. We start with one high-leverage workflow, ship it, and let what we learn there shape the wider plan.",
+    },
+    {
+      q: "Do you build your own AI models?",
+      a: "No, and be wary of anyone who says they do. The intelligence comes from models like Claude and GPT, and from dedicated speech providers for voice. What I build is everything around them — the architecture, the integrations, the guardrails and the interface. That's the part that's specific to your business, and it's the part you own.",
+    },
+    {
+      q: "Do I have to end up with a custom product?",
+      a: "No. Plenty of work stops at an automation that quietly runs forever, and that's a good outcome. But when a workflow becomes central to how you operate, paying per task inside someone else's tool stops making sense. At that point I'll tell you it's worth rebuilding as your own software, and show you the maths.",
     },
     {
       q: "Can you work with the tools we already use?",
@@ -220,18 +285,35 @@ export const cta = {
   eyebrow: "Start a project",
   title: "Tell me what needs to change",
   body: "Share your product and the work you need. I'll help you find the right scope and next step.",
-  primary: { label: "Book a call", href: "#book-a-call" },
+  primary: { label: "Book a call", href: site.book },
   secondary: { label: "Or email the studio", href: `mailto:${site.email}` },
 };
 
 export const footer = {
+  /**
+   * The reference footer links visitors to AI engines with a pre-filled
+   * research prompt. It is a good idea: people vet suppliers through an
+   * assistant now, and this makes sure the assistant reads the site rather
+   * than guessing. The prompt deliberately asks for scepticism — it names the
+   * studio as new, so the answer can't be contradicted by the /work page.
+   */
+  aiPrompt:
+    "Review Upper Layer Studio as an AI automation and product partner using https://upperlayerstudio.com. Explain its services, how it scopes and prices work, and likely project fit. It is a new studio with no published case studies yet, so separate what the site evidences from what it only claims, and list useful questions to ask before hiring.",
+  aiEngines: [
+    { label: "ChatGPT", base: "https://chatgpt.com/?q=" },
+    { label: "Claude", base: "https://claude.ai/new?q=" },
+    { label: "Gemini", base: "https://gemini.google.com/app?q=" },
+    { label: "Perplexity", base: "https://www.perplexity.ai/search?q=" },
+    { label: "Grok", base: "https://grok.com/?q=" },
+  ],
   columns: [
     {
       title: "Services",
       links: [
         { label: "AI Automation", href: "/services/automation" },
+        { label: "Voice AI", href: "/services/voice" },
         { label: "AI Agents", href: "/services/agents" },
-        { label: "AI Product Build", href: "/services/product" },
+        { label: "Product Build", href: "/services/product" },
       ],
     },
     {
@@ -246,8 +328,9 @@ export const footer = {
       title: "Resources",
       links: [
         { label: "Insights", href: "/insights" },
+        { label: "The Lab", href: "/lab" },
         { label: "Process", href: "/studio#process" },
-        { label: "Book a call", href: "#book-a-call" },
+        { label: "Contact", href: "/contact" },
       ],
     },
   ],

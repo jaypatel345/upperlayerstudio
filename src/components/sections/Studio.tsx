@@ -4,6 +4,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { SkyPlate } from "@/components/ui/SkyPlate";
 import { process } from "@/lib/site";
 
 export function Studio() {
@@ -31,9 +32,12 @@ export function Studio() {
         <Reveal delay={0.1} className="mt-4">
           <div className="grid gap-10 rounded-[var(--radius-card)] border border-line bg-tint p-7 sm:p-10 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:gap-16">
             <div className="flex flex-col">
-              <div className="flex aspect-[4/3] w-full items-center justify-center rounded-[var(--radius-card)] bg-[linear-gradient(160deg,#dcecfa_0%,#a9d0f4_55%,#7db6ee_100%)]">
-                <LogoMark className="h-20 w-20 text-white/85" />
-              </div>
+              <SkyPlate
+                variant="haze"
+                className="flex aspect-[4/3] w-full items-center justify-center rounded-[var(--radius-card)]"
+              >
+                <LogoMark className="h-20 w-20 text-white/90 drop-shadow-[0_2px_12px_rgba(10,40,80,0.35)]" />
+              </SkyPlate>
               <p className="mt-5 text-[15px] font-medium">{process.founder.name}</p>
               <p className="text-[14px] text-muted">{process.founder.role}</p>
               <ArrowLink href={process.founder.link.href} className="mt-3">
