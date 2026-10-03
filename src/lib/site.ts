@@ -16,6 +16,7 @@
  */
 
 import type { SkyVariant } from "@/components/ui/SkyPlate";
+import { projects } from "./projects";
 
 export const site = {
   name: "Upper Layer Studio",
@@ -121,6 +122,8 @@ export const services: {
     bullets: string[];
     href: string;
     art: { sky: SkyVariant; label: string };
+    /** Slug in `projects`: shows that project's screens instead of the plain plate */
+    project?: string;
   }[];
 } = {
   eyebrow: "How I can help",
@@ -184,6 +187,7 @@ export const services: {
       ],
       href: "/services/product",
       art: { sky: "cumulus", label: "Product" },
+      project: "newsbit",
     },
   ],
 };
@@ -228,17 +232,23 @@ export const process = {
   founder: {
     name: "Jay Patel",
     role: "Founder, Upper Layer Studio",
+    photo: { src: "/brand/jay-patel-founder.jpg", alt: "Jay Patel, founder of Upper Layer Studio" },
     link: { label: "Connect on LinkedIn", href: "https://www.linkedin.com/in/jaypatel3405/" },
     heading: "Your project, led by me",
     body: [
-      "I'm Jay. Upper Layer Studio is me — I lead strategy and build on every project, and bring in specialist designers and engineers when production calls for it.",
+      "I'm Jay, and I'm drawn to automating work with AI, building products and AI voice agents, and to the real-world applications of all of them.",
       "We start by agreeing what needs to change and what should stay. You review the direction in working software, then I ship the scope and hand over the code, access and guidance your team needs.",
     ],
   },
   credentials: [
-    { value: "Fixed", label: "Fee agreed up front", sub: "No hourly billing, no scope creep" },
-    { value: "48h", label: "Proposal after our call", sub: "Scope, timeline and number in writing" },
-    { value: "Yours", label: "Code, prompts and infra", sub: "In your own accounts. No lock-in" },
+    { value: "2+ yrs", label: "Software development", sub: "Full-stack, backend and AI" },
+    {
+      // Counts the case studies actually published, so it can never overstate.
+      value: String(projects.length),
+      label: projects.length === 1 ? "Case study" : "Case studies",
+      sub: "Real products, with the build explained",
+    },
+    { value: "4", label: "Services", sub: "Automation, Voice AI, Agents, Product Build" },
   ],
 };
 

@@ -1,10 +1,9 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { LogoMark } from "@/components/ui/LogoMark";
-import { SkyPlate } from "@/components/ui/SkyPlate";
 import { process } from "@/lib/site";
 
 export function Studio() {
@@ -30,26 +29,31 @@ export function Studio() {
 
         {/* Founder panel */}
         <Reveal delay={0.1} className="mt-4">
-          <div className="grid gap-10 rounded-[var(--radius-card)] border border-line bg-tint p-7 sm:p-10 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:gap-16">
+          <div className="grid gap-8 rounded-[var(--radius-card)] border border-line bg-tint p-6 sm:p-8 lg:grid-cols-[220px_minmax(0,1fr)]">
             <div className="flex flex-col">
-              <SkyPlate
-                variant="haze"
-                className="flex aspect-[4/3] w-full items-center justify-center rounded-[var(--radius-card)]"
-              >
-                <LogoMark className="h-20 w-20 text-white/90 drop-shadow-[0_2px_12px_rgba(10,40,80,0.35)]" />
-              </SkyPlate>
-              <p className="mt-5 text-[15px] font-medium">{process.founder.name}</p>
-              <p className="text-[14px] text-muted">{process.founder.role}</p>
+              <Image
+                src={process.founder.photo.src}
+                alt={process.founder.photo.alt}
+                width={1254}
+                height={1254}
+                sizes="220px"
+                quality={90}
+                className="h-[220px] w-[220px] rounded-[var(--radius-card)] object-cover object-top"
+              />
+              <p className="mt-4 text-[24px] leading-[1.2] font-medium tracking-[-0.03em]">
+                {process.founder.name}
+              </p>
+              <p className="mt-1 text-[14px] text-muted">{process.founder.role}</p>
               <ArrowLink href={process.founder.link.href} className="mt-3">
                 {process.founder.link.label}
               </ArrowLink>
             </div>
 
             <div className="flex flex-col justify-center">
-              <h3 className="text-[26px] sm:text-[32px]">{process.founder.heading}</h3>
+              <h3 className="text-[28px] sm:text-[40px]">{process.founder.heading}</h3>
               <div className="mt-5 space-y-4">
                 {process.founder.body.map((p) => (
-                  <p key={p} className="max-w-[58ch] text-[16px] leading-[1.65] text-ink-70 text-pretty">
+                  <p key={p} className="max-w-[64ch] text-[16px] leading-[1.65] text-ink-70 text-pretty">
                     {p}
                   </p>
                 ))}

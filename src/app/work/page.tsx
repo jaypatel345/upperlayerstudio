@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/sections/PageHero";
+import { SelectedWork } from "@/components/sections/SelectedWork";
 import { BuiltWork } from "@/components/sections/BuiltWork";
 import { CopyGrid } from "@/components/sections/CopyGrid";
 import { CTA } from "@/components/sections/CTA";
@@ -23,6 +24,7 @@ export default function WorkPage() {
         primary={{ label: "Book a call", href: site.book }}
         secondary={{ label: "See what I build", href: "/services" }}
       />
+      <SelectedWork showAll={false} eyebrow="Products" title="Built and shipped" />
       <BuiltWork />
       <CopyGrid
         eyebrow={work.standIn.eyebrow}
