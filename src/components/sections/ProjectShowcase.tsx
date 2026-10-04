@@ -31,12 +31,14 @@ export function ProjectShowcase({
             priority={priority}
             sizes="(min-width: 1024px) 600px, 80vw"
           />
+          {mobile && (
           <PhoneFrame
             shot={mobile}
             priority={priority}
             sizes="(min-width: 1024px) 210px, 30vw"
             className="absolute -bottom-8 -right-3 w-[30%] min-w-[96px] max-w-[210px] sm:-right-8"
           />
+          )}
         </div>
       </div>
     </SkyPlate>

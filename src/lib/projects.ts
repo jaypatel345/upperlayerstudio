@@ -3,7 +3,7 @@
  *
  * Same rules as the rest of the site's copy: first person singular, and every
  * claim is something that can be checked on the live product, the repo or the
- * CI history. Newsbit is the studio's own product, not client work, and the
+ * CI history. Newsbit, PromptX and StyleNest are the studio's own products, not client work, and the
  * page says so.
  *
  * Adding a project: append to `projects`. The card, the case study route and
@@ -40,7 +40,7 @@ export type Project = {
   stack: { group: string; items: string[] }[];
   result: { stat: string; label: string; source: string };
   /** Cover pair used on cards and the case-study hero */
-  cover: { desktop: Shot; mobile: Shot };
+  cover: { desktop: Shot; mobile?: Shot };
   /** Screenshots grouped by what they show, in reading order */
   screens: ScreenGroup[];
   /**
@@ -59,6 +59,8 @@ export type ScreenGroup = {
 };
 
 const base = "/work/newsbit";
+const px = "/work/promptx";
+const sn = "/work/stylenest";
 
 export const projects: Project[] = [
   {
@@ -268,9 +270,450 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: `${base}/demo-voice-chat-walkthrough.mp4`,
-      poster: `${base}/demo-poster.jpg`,
-      note: "A short, silent clip of the voice chat: ask out loud, and the answer is spoken while the stories appear.",
+      src: "",
+      poster: `${base}/01-home-hero-desktop.png`,
+      note: "A walkthrough from the morning brief to asking Newsbit a question is on the way.",
+    },
+  },
+  {
+    slug: "promptx",
+    name: "PromptX",
+    kind: "AI prompt enhancer",
+    service: "Product Build",
+    summary:
+      "A full-stack app that turns rough prompts into clear, AI-ready instructions formatted for ChatGPT, Claude, Gemini or Grok, with the AI work run as background jobs.",
+    art: "deep",
+    live: "https://promptx.co.in",
+    repo: "https://github.com/jaypatel345/promptx",
+    meta: [
+      { label: "Type", value: "Own product" },
+      { label: "Role", value: "Design, backend, frontend, deployment" },
+      { label: "Status", value: "Live at promptx.co.in" },
+      { label: "Service", value: "Product Build" },
+    ],
+    problem:
+      "Vague, under-specified prompts produce weak AI answers, and rewriting every prompt by hand doesn't scale.",
+    built:
+      "PromptX takes a rough request and rewrites it into a structured prompt (role, mission, context, rules and output format) using Groq's OpenAI-compatible API. The Express backend queues each enhancement as a background job with BullMQ and Redis, so the request path stays fast while a dedicated worker makes the AI call.",
+    features: [
+      {
+        title: "Prompt enhancement",
+        body: "Type a rough request and get back a structured prompt with a role, mission, context, writing rules and output requirements, ready to paste into any assistant.",
+      },
+      {
+        title: "Built for your model",
+        body: "Pick ChatGPT, Claude, Gemini or Grok and the enhanced prompt is formatted for that model.",
+      },
+      {
+        title: "Conversations",
+        body: "Guests and signed-in users can create, list, rename, pin and delete conversations, and search across all of them from a quick-switch popup.",
+      },
+      {
+        title: "Accounts",
+        body: "Email and password or Google sign-in, with JWT access tokens and refresh tokens stored in MongoDB with TTL expiry.",
+      },
+      {
+        title: "Site assistant",
+        body: "A chat on the marketing site answers questions about PromptX itself, with suggested follow-ups.",
+      },
+      {
+        title: "Observable by default",
+        body: "A /health endpoint reports MongoDB, PostgreSQL and Redis status, a Bull Board dashboard shows the queue, and Pino logs carry request IDs.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Validate",
+        body: "The prompt hits /api/ask, where Zod validates the request before anything else runs.",
+      },
+      {
+        title: "Queue",
+        body: "The API adds an enhancement job to the ai-jobs queue in Redis with BullMQ and returns straight away.",
+      },
+      {
+        title: "Enhance",
+        body: "A dedicated worker picks up the job and calls Groq to rewrite the prompt for the chosen model.",
+      },
+      {
+        title: "Store and serve",
+        body: "Conversations, messages and job state live in MongoDB; prompt history is saved to PostgreSQL on Supabase.",
+      },
+    ],
+    stack: [
+      { group: "Frontend", items: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4"] },
+      { group: "Backend", items: ["Node.js 20", "Express 5", "JWT auth", "Zod", "Pino"] },
+      {
+        group: "Data and AI",
+        items: ["MongoDB (Mongoose)", "PostgreSQL (Supabase)", "Redis + BullMQ", "Groq API"],
+      },
+      { group: "Delivery", items: ["Docker Compose", "GitHub Actions", "Render"] },
+    ],
+    result: {
+      stat: "Tested",
+      label:
+        "before every deploy: the backend Jest + Supertest suite (unit, integration and API auth tests) runs on every push and pull request, and Render deploys from main only after it passes",
+      source: "GitHub Actions workflow .github/workflows/test.yml",
+    },
+    cover: {
+      desktop: {
+        src: `${px}/01-landing-hero-desktop.png`,
+        alt: "PromptX's landing page: “Refine prompts. Spark creative AI ideas. Get dependable outputs.” in the browser at promptx.co.in",
+        caption: "The landing page",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${px}/11-landing-hero-mobile.png`,
+        alt: "PromptX's landing page on a phone",
+        caption: "The landing page on mobile",
+        w: 1170,
+        h: 2532,
+      },
+    },
+    screens: [
+      {
+        title: "The site",
+        body: "What PromptX does, and a preview of the chat on desktop and mobile.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${px}/01-landing-hero-desktop.png`,
+            alt: "PromptX's landing page hero with Start Now and Learn about promptx buttons",
+            caption: "The landing page",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/02-stats-features-desktop.png`,
+            alt: "PromptX's “Sharper prompts. Faster results.” section with three feature columns",
+            caption: "What it does, in three lines",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/03-desktop-mobile-preview-desktop.png`,
+            alt: "PromptX's homepage section showing the chat on a desktop and a phone",
+            caption: "The chat, previewed on desktop and mobile",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Enhance a prompt",
+        body: "Pick a model, send a rough request, and get back a structured prompt.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${px}/04-chat-start-desktop.png`,
+            alt: "PromptX's chat: “What can I help with?” with a history sidebar and a model picker in the prompt box",
+            caption: "The chat, with history in the sidebar",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/05-model-picker-desktop.png`,
+            alt: "PromptX's model picker open with ChatGPT, Claude, Gemini and Grok, each formatted for that model",
+            caption: "1. Pick the model the prompt is for",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/07-enhanced-prompt-desktop.png`,
+            alt: "PromptX's answer: a LinkedIn Content Ideas Generator prompt with Role, Mission and Context sections",
+            caption: "2. Get a structured prompt back",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/08-enhanced-prompt-continued-desktop.png`,
+            alt: "The rest of the enhanced prompt: content framework, writing rules and output requirements, with copy and rating actions",
+            caption: "Rules and output format, ready to copy",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Find your way around",
+        body: "Search every conversation, and ask the site itself about PromptX.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${px}/09-conversation-search-desktop.png`,
+            alt: "PromptX's conversation search popup listing past chats beside a preview of the selected one",
+            caption: "Search and preview past conversations",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${px}/10-site-assistant-desktop.png`,
+            alt: "PromptX's site assistant answering “who is building promptx?” with suggested follow-ups",
+            caption: "The site assistant answers questions about PromptX",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On mobile",
+        body: "The same product on a phone, from the landing page to the chat.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${px}/11-landing-hero-mobile.png`,
+            alt: "PromptX's landing page on a phone",
+            caption: "Landing page",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${px}/12-chat-preview-mobile.png`,
+            alt: "PromptX's homepage on a phone, previewing the chat with links to the web, iOS and Android apps",
+            caption: "The chat preview",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${px}/13-chat-mobile.png`,
+            alt: "PromptX's chat on a phone with the model picker set to ChatGPT",
+            caption: "The chat",
+            w: 1170,
+            h: 2532,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: "",
+      poster: `${px}/01-landing-hero-desktop.png`,
+      note: "A walkthrough of enhancing a prompt end to end is on the way.",
+    },
+  },
+  {
+    slug: "stylenest",
+    name: "StyleNest",
+    kind: "Fashion e-commerce",
+    service: "Product Build",
+    summary:
+      "A full-stack fashion store: a storefront with Stripe checkout, a separate admin dashboard for products and orders, and an Express + MongoDB API.",
+    art: "haze",
+    live: "https://style-nest-frontend-rho.vercel.app",
+    repo: "https://github.com/jaypatel345/StyleNest",
+    meta: [
+      { label: "Type", value: "Own product" },
+      { label: "Role", value: "Design, backend, frontend, deployment" },
+      { label: "Status", value: "Live on Vercel" },
+      { label: "Service", value: "Product Build" },
+    ],
+    problem:
+      "A small fashion store needs an online shop for customers and a separate back office to manage products and orders.",
+    built:
+      "A monorepo with three parts that deploy separately: a React storefront, a React admin dashboard and an Express + MongoDB API. Customers browse, add to cart and check out with Cash on Delivery or Stripe; admins manage the catalog and order statuses.",
+    features: [
+      {
+        title: "Catalog",
+        body: "Pagination, search, category and sub-category filters, price sorting, and detail pages with size selection.",
+      },
+      {
+        title: "Cart that follows you",
+        body: "The cart syncs between local state and the signed-in customer's account.",
+      },
+      {
+        title: "Checkout",
+        body: "Cash on Delivery or Stripe Checkout, with server-side payment verification that clears the cart.",
+      },
+      {
+        title: "Order history",
+        body: "Customers see each order's status, payment method and items.",
+      },
+      {
+        title: "Secure sign-in",
+        body: "JWT auth with bcrypt-hashed passwords, and Redis-backed login rate limiting by IP.",
+      },
+      {
+        title: "Admin dashboard",
+        body: "Add products with up to four Cloudinary image uploads, delete products, and view and update order status.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Browse",
+        body: "The storefront asks the API for products; lists are cached in Redis and invalidated when the catalog changes.",
+      },
+      {
+        title: "Cart",
+        body: "Items live in local state and sync to the customer's account once they sign in.",
+      },
+      {
+        title: "Pay",
+        body: "Cash on Delivery, or Stripe Checkout with the payment verified on the server before the cart is cleared.",
+      },
+      {
+        title: "Fulfil",
+        body: "The order lands in MongoDB, and the admin dashboard moves it through its statuses.",
+      },
+    ],
+    stack: [
+      { group: "Frontend", items: ["React 18", "Vite 5", "React Router", "Tailwind CSS", "Axios"] },
+      { group: "Backend", items: ["Node.js", "Express 4", "JWT", "bcrypt", "Multer", "Stripe"] },
+      { group: "Data", items: ["MongoDB (Mongoose)", "Redis (ioredis)", "Cloudinary"] },
+      { group: "Delivery", items: ["Vercel (API, storefront and admin deployed separately)"] },
+    ],
+    result: {
+      stat: "3",
+      label:
+        "separate deployments on Vercel: the API, the storefront and the admin dashboard, each with its own config",
+      source: "Storefront and admin both returned HTTP 200 on 4 Oct 2026",
+    },
+    cover: {
+      desktop: {
+        src: `${sn}/01-home-hero-desktop.png`,
+        alt: "StyleNest's home page: “Latest Arrivals” hero with a fashion photo, in the browser",
+        caption: "The home page",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${sn}/16-home-hero-mobile.png`,
+        alt: "StyleNest's home page on a phone",
+        caption: "The home page on mobile",
+        w: 1170,
+        h: 2532,
+      },
+    },
+    screens: [
+      {
+        title: "Shop",
+        body: "The home page, the latest collection and the full catalog with filters.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${sn}/01-home-hero-desktop.png`,
+            alt: "StyleNest's home page hero: Latest Arrivals, Shop Now",
+            caption: "The home page",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/02-latest-collection-desktop.png`,
+            alt: "StyleNest's Latest Collections section on the home page",
+            caption: "The latest collection",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/03-collection-filters-desktop.png`,
+            alt: "StyleNest's All Collections page with category and type filters and a sort menu beside product cards",
+            caption: "The catalog, with filters and sorting",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Check out",
+        body: "Pay with Stripe Checkout; the payment is verified on the server before the cart is cleared.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${sn}/06-stripe-checkout-desktop.png`,
+            alt: "Stripe Checkout in sandbox mode for a StyleNest order, with card details and currency choice",
+            caption: "Stripe Checkout",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/09-login-desktop.png`,
+            alt: "StyleNest's sign-in page",
+            caption: "Sign in to keep your cart and orders",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Run the store",
+        body: "A separate admin dashboard to add products, manage the catalog and move orders along.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${sn}/13-admin-add-product-desktop.png`,
+            alt: "StyleNest admin: add a product with four image uploads, category, sub-category, price and sizes",
+            caption: "Add a product with up to four images",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/14-admin-product-list-desktop.png`,
+            alt: "StyleNest admin: the list of products in the catalog",
+            caption: "The catalog",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/15-admin-orders-desktop.png`,
+            alt: "StyleNest admin: orders with items, payment details and a status menu",
+            caption: "Orders, with a status to update",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "The rest of the store",
+        body: "About and contact pages.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${sn}/10-about-desktop.png`,
+            alt: "StyleNest's About page",
+            caption: "About",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${sn}/11-contact-desktop.png`,
+            alt: "StyleNest's Contact page",
+            caption: "Contact",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On mobile",
+        body: "The same store on a phone.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${sn}/16-home-hero-mobile.png`,
+            alt: "StyleNest's home page on a phone",
+            caption: "Home",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${sn}/17-collection-mobile.png`,
+            alt: "StyleNest's collection page on a phone with filters and sorting",
+            caption: "The catalog",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${sn}/18-contact-mobile.png`,
+            alt: "StyleNest's contact page on a phone",
+            caption: "Contact",
+            w: 1170,
+            h: 2532,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: "",
+      poster: `${sn}/01-home-hero-desktop.png`,
+      note: "A walkthrough from browsing to checkout and the admin dashboard is on the way.",
     },
   },
 ];
