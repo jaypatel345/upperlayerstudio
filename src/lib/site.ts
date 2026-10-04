@@ -172,6 +172,7 @@ export const services: {
       ],
       href: "/services/agents",
       art: { sky: "dusk", label: "Agents" },
+      project: "aslioffer",
     },
     {
       n: "04",

@@ -187,8 +187,8 @@ export default async function CaseStudyPage({ params }: Params) {
           <Reveal>
             <SectionHeader
               eyebrow="Under the hood"
-              title={<span className="text-white">How it works every morning</span>}
-              body="The part nobody sees: a pipeline that runs on its own and has to keep running."
+              title={<span className="text-white">How it works</span>}
+              body="The part nobody sees, step by step."
             />
           </Reveal>
           <div className="mt-12">

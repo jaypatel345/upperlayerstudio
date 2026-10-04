@@ -3,8 +3,9 @@
  *
  * Same rules as the rest of the site's copy: first person singular, and every
  * claim is something that can be checked on the live product, the repo or the
- * CI history. Newsbit, PromptX and StyleNest are the studio's own products, not client work, and the
- * page says so.
+ * CI history. Newsbit, PromptX and StyleNest are the studio's own products,
+ * Borrower Copilot was built to a written brief, and AsliOffer was a two-person
+ * hackathon build; none of them is client work, and the page says so.
  *
  * Adding a project: append to `projects`. The card, the case study route and
  * the static params all derive from this one list.
@@ -61,6 +62,8 @@ export type ScreenGroup = {
 const base = "/work/newsbit";
 const px = "/work/promptx";
 const sn = "/work/stylenest";
+const bc = "/work/borrower-copilot";
+const ao = "/work/aslioffer";
 
 export const projects: Project[] = [
   {
@@ -714,6 +717,440 @@ export const projects: Project[] = [
       src: "",
       poster: `${sn}/01-home-hero-desktop.png`,
       note: "A walkthrough from browsing to checkout and the admin dashboard is on the way.",
+    },
+  },
+  {
+    slug: "borrower-copilot",
+    name: "Borrower Copilot",
+    kind: "Loan self-assessment",
+    service: "Product Build",
+    summary:
+      "A loan self-check for Indian borrowers: about nine adaptive questions, then a verdict, a safe amount next to the lender's number, a fair rate and an EMI ceiling, all computed in the browser.",
+    art: "cumulus",
+    live: "https://borrower-copilot-one.vercel.app",
+    repo: "https://github.com/jaypatel345/Borrower-Copilot",
+    meta: [
+      { label: "Type", value: "Built to a written brief" },
+      { label: "Role", value: "Rules engine, design, frontend, deployment" },
+      { label: "Status", value: "Live on Vercel" },
+      { label: "Service", value: "Product Build" },
+    ],
+    problem:
+      "A lender tells a borrower how much they can get, not how much they can safely repay, and the borrower usually walks into the branch with only the lender's number.",
+    built:
+      "Borrower Copilot asks about nine questions that adapt to the borrower (a salaried employee isn't asked about ITRs or collateral) and runs the answers through a deterministic rules engine. It returns four outputs, each with a one-sentence reason, plus a Negotiation Card to show a lender. There is no login and no backend: every number is calculated in the browser.",
+    features: [
+      {
+        title: "A clear verdict",
+        body: "Borrow, borrow less or don't borrow, with the reasons behind it.",
+      },
+      {
+        title: "Two different numbers",
+        body: "What a lender might sanction next to what your income can safely carry. The safe amount survives a 15% income drop, and collateral never raises it.",
+      },
+      {
+        title: "A fair rate, all in",
+        body: "A rate band for your profile, with each adjustment listed, plus the all-in cost (APR) once fees and GST are added.",
+      },
+      {
+        title: "An EMI ceiling",
+        body: "The monthly payment not to cross, a tenure table showing total interest, and one stress test.",
+      },
+      {
+        title: "Honest about gaps",
+        body: "“I'm not sure” is never treated as zero. Skipped answers lower the confidence and widen the ranges instead.",
+      },
+      {
+        title: "Negotiation Card",
+        body: "A one-screen summary with the amount, rate, EMI and tenure to ask for, ready to screenshot or copy before visiting a lender.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Ask",
+        body: "A question engine picks the next question from 9 core and 14 adaptive ones, based on the answers so far.",
+      },
+      {
+        title: "Derive",
+        body: "Answers become stable income, essential costs, a credit tier and a product route, with unknowns kept separate from zeros.",
+      },
+      {
+        title: "Compute",
+        body: "Pure functions work out the confidence, the rate band and APR, the safe EMI, the safe amount, the lender's estimate and a stress test.",
+      },
+      {
+        title: "Explain",
+        body: "Each output gets a one-sentence reason built from the numbers actually used, and the results become the Negotiation Card.",
+      },
+    ],
+    stack: [
+      { group: "Frontend", items: ["Next.js 14 (static export)", "React 18", "TypeScript", "Tailwind CSS"] },
+      { group: "Rules engine", items: ["Pure TypeScript functions", "Config-driven thresholds", "IRR-based APR"] },
+      { group: "Testing", items: ["Vitest", "Testing Library"] },
+      { group: "Delivery", items: ["Vercel"] },
+    ],
+    result: {
+      stat: "78",
+      label:
+        "automated tests across the rules, the question engine and the UI, all passing; every threshold and rate is documented in RULES.md",
+      source: "npm test on the repo's main branch, run 4 Oct 2026",
+    },
+    cover: {
+      desktop: {
+        src: `${bc}/01-home-hero-desktop.png`,
+        alt: "Borrower Copilot's home page: “Know what you can safely borrow — before you meet a lender.” beside an example result, in the browser",
+        caption: "The home page",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${bc}/14-home-hero-mobile.png`,
+        alt: "Borrower Copilot's home page on a phone",
+        caption: "The home page on mobile",
+        w: 1170,
+        h: 2532,
+      },
+    },
+    screens: [
+      {
+        title: "The site",
+        body: "What you get, how it works, sample borrowers to try, and what the tool is and isn't.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${bc}/01-home-hero-desktop.png`,
+            alt: "Borrower Copilot's home page hero with an example result: safe to borrow ₹7.5L–₹9.5L against a lender's ₹21.5L–₹27.0L",
+            caption: "The home page, with an example result",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/02-what-you-get-desktop.png`,
+            alt: "Borrower Copilot's “Four answers you can act on” cards above a lender's view vs your safe view comparison",
+            caption: "Four answers, and why the lender's number differs",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/03-how-it-works-desktop.png`,
+            alt: "Borrower Copilot's three-step How it works section and three sample borrowers: Priya, Ravi and Anita",
+            caption: "How it works, and three sample borrowers",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/04-good-to-know-desktop.png`,
+            alt: "Borrower Copilot's “What this is — and isn't” section: private by design, market references not offers, honest about gaps",
+            caption: "What it is, and what it isn't",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Answer the questions",
+        body: "One question at a time. Unsure answers are allowed, and you can skip to a result once there's enough.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${bc}/05-question-loan-purpose-desktop.png`,
+            alt: "Borrower Copilot asking “What's the money for?” with options from a wedding to paying off other debt",
+            caption: "1. What the money is for",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/06-question-household-costs-desktop.png`,
+            alt: "Borrower Copilot asking for monthly household costs, with an “I'm not sure” option",
+            caption: "2. Household costs, or “I'm not sure”",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/07-question-credit-score-desktop.png`,
+            alt: "Borrower Copilot asking for a credit score on a 300–900 slider, with an “I don't know it” option",
+            caption: "3. Credit score, if you know it",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/08-question-existing-loans-desktop.png`,
+            alt: "Borrower Copilot asking about existing loans, with an option to skip the rest and see the result",
+            caption: "4. Existing loans, or skip to the result",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Get the result",
+        body: "The sample borrower Ravi: four outputs, each with the numbers behind it, and a Negotiation Card.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${bc}/09-result-verdict-desktop.png`,
+            alt: "Borrower Copilot's result for Ravi: “Borrow — but less than you planned”, routed to a secured loan, safe amount ₹3.0L–₹5.0L",
+            caption: "The verdict and the safe amount",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/10-result-fair-rate-desktop.png`,
+            alt: "Borrower Copilot's lender estimate with its reasoning, and a fair rate band of 10.8%–15.0% with each adjustment listed",
+            caption: "The lender's number, and a fair rate with its reasons",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/11-result-emi-ceiling-desktop.png`,
+            alt: "Borrower Copilot's EMI ceiling of ₹11,500/month with a tenure trade-off table and a passed stress test",
+            caption: "The EMI ceiling, tenure trade-off and stress test",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${bc}/12-negotiation-card-desktop.png`,
+            alt: "Borrower Copilot's Negotiation Card: safe amount, lender estimate, EMI ceiling, fair rate, tenure and a line to say to the lender",
+            caption: "The Negotiation Card",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On mobile",
+        body: "Built mobile-first: the same flow on a phone, shown here with the sample borrower Priya.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${bc}/14-home-hero-mobile.png`,
+            alt: "Borrower Copilot's home page on a phone",
+            caption: "Home",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${bc}/16-result-verdict-mobile.png`,
+            alt: "Borrower Copilot's result for Priya on a phone: Borrow, with high confidence",
+            caption: "The result",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${bc}/17-negotiation-card-mobile.png`,
+            alt: "Borrower Copilot's Negotiation Card for Priya on a phone",
+            caption: "The Negotiation Card",
+            w: 1170,
+            h: 2532,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: "",
+      poster: `${bc}/01-home-hero-desktop.png`,
+      note: "A walkthrough from the first question to the Negotiation Card is on the way.",
+    },
+  },
+  {
+    slug: "aslioffer",
+    name: "AsliOffer",
+    kind: "Job offer verification agent",
+    service: "AI Agents",
+    summary:
+      "An AI agent that checks a job offer against the employer's public footprint in live search results and flags scam signals for Indian freshers, citing a source for each finding.",
+    art: "dusk",
+    live: "https://aslioffer.vercel.app",
+    repo: "https://github.com/jaypatel345/aslioffer",
+    meta: [
+      { label: "Type", value: "Hackathon build, two-person team" },
+      {
+        label: "My part",
+        value: "Frontend, document reading, live search wiring, API contract, deployment",
+      },
+      { label: "Status", value: "Live on Vercel and Render" },
+      { label: "Service", value: "AI Agents" },
+    ],
+    problem:
+      "Freshers in India get fake job and internship offers that borrow the names of real companies, then ask for a “refundable” laptop or training deposit over UPI. The offer letter looks real; the company's public footprint doesn't match it.",
+    built:
+      "AsliOffer reads an offer from pasted text, a PDF or a screenshot, pulls out the claims it makes, and sends four agents to check them against live Google results through SerpApi. It returns one of four outcomes with every finding linked to its source, and says “cannot verify” rather than guessing when the evidence isn't there. Built with a teammate for the SerpApi India Hackathon 2026, AI Agents track.",
+    features: [
+      {
+        title: "Reads the offer",
+        body: "Paste a message or upload a PDF or screenshot. Screenshots are read by a Groq vision model, with Gemini as the fallback if Groq is busy.",
+      },
+      {
+        title: "Four agents",
+        body: "Company, Recruiter, Salary and Scam agents each check one part of the offer: the employer's domain and careers page, the recruiter's email, the pay, and fee demands.",
+      },
+      {
+        title: "Evidence, not vibes",
+        body: "Every finding in the report links to the search result it came from, and the report lists what was checked and what wasn't.",
+      },
+      {
+        title: "Honest outcomes",
+        body: "High risk, Needs review, Cannot verify, or No strong risk signals. It never stamps an offer “verified”, and a failed search is reported as missing evidence, not as a pass.",
+      },
+      {
+        title: "What to do next",
+        body: "Each report ends with next steps, the employer's official contact routes and, for a high-risk offer, how to report it to the national cyber-crime helpline.",
+      },
+      {
+        title: "Live progress",
+        body: "A checklist shows each stage as it runs, from reading the offer to assembling the report.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Extract",
+        body: "The offer is turned into separate claims (employer, role, recruiter, pay, any fee), with the candidate's own details kept out of searches.",
+      },
+      {
+        title: "Plan",
+        body: "A planner picks which checks to run, within a fixed budget of searches and a deadline, and adds follow-ups only when the first results call for them.",
+      },
+      {
+        title: "Investigate",
+        body: "The four agents query SerpApi in parallel, and each result is kept as evidence with its source.",
+      },
+      {
+        title: "Assess and report",
+        body: "A risk engine weighs the evidence into one of four outcomes, and the report explains each finding from the evidence behind it.",
+      },
+    ],
+    stack: [
+      { group: "Frontend", items: ["React 18", "Vite", "TypeScript", "Tailwind CSS"] },
+      { group: "Backend", items: ["Python 3.12", "FastAPI", "SQLModel", "Pydantic"] },
+      { group: "Agents and AI", items: ["SerpApi", "Groq (vision)", "Gemini (fallback)"] },
+      { group: "Delivery", items: ["Vercel (frontend)", "Render (API)", "Docker Compose"] },
+    ],
+    result: {
+      stat: "27/27",
+      label:
+        "evaluation cases passed, with no legitimate offer flagged high risk (0 of 9) and no scam missed (0 of 5); 616 backend tests also pass. These are synthetic cases, not real-world accuracy",
+      source: "Offline evaluation runner and pytest on the repo's main branch, run 4 Oct 2026",
+    },
+    cover: {
+      desktop: {
+        src: `${ao}/01-landing-hero-desktop.png`,
+        alt: "AsliOffer's landing page: “Verify Job Offers With Real Public Footprint Proof”, in the browser at aslioffer.vercel.app",
+        caption: "The landing page",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${ao}/10-landing-hero-mobile.png`,
+        alt: "AsliOffer's landing page on a phone",
+        caption: "The landing page on mobile",
+        w: 1170,
+        h: 2531,
+      },
+    },
+    screens: [
+      {
+        title: "Check an offer",
+        body: "Paste the offer or upload it, then watch each check run.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${ao}/02-agent-pipeline-sample-offers-desktop.png`,
+            alt: "AsliOffer's four agent cards, Company, Recruiter, Salary and Scam, above two illustrative sample offers",
+            caption: "The four agents",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/03-verify-offer-form-desktop.png`,
+            alt: "AsliOffer's Verify Offer page with quick test scenarios and tabs to paste text or upload a PDF or screenshot",
+            caption: "1. Paste the offer, or upload a PDF or screenshot",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/04-offer-pasted-desktop.png`,
+            alt: "An Infosys offer letter pasted into AsliOffer, above the Investigate Offer with AI Agents button",
+            caption: "2. Send it to the agents",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/05-investigation-progress-desktop.png`,
+            alt: "AsliOffer's progress checklist: entity extraction, company footprint and recruiter domain done, salary check running",
+            caption: "3. Each check, as it runs",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Read the report",
+        body: "The app's illustrative sample report for a fake TCS offer. It is written by hand to show the layout, and the app labels it that way; it is not a live run.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${ao}/06-sample-report-verdict-desktop.png`,
+            alt: "AsliOffer's illustrative sample report: High risk for a TCS offer, with red flags and green flags",
+            caption: "The verdict, red flags and green flags",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/07-sample-report-evidence-desktop.png`,
+            alt: "The claims pulled from the sample offer, including a Gmail recruiter address and a ₹15,000 deposit, above the Company agent's evidence",
+            caption: "The claims it found, and the first agent's evidence",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/08-sample-report-agents-desktop.png`,
+            alt: "Recruiter, Salary and Scam agent findings in the sample report, each with a source link",
+            caption: "Each agent's findings, with sources",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${ao}/09-sample-report-next-steps-desktop.png`,
+            alt: "The employer's official website and careers page, and recommended next steps including the 1930 cyber-crime helpline",
+            caption: "Official contact routes and next steps",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On mobile",
+        body: "The same app on a phone.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${ao}/10-landing-hero-mobile.png`,
+            alt: "AsliOffer's landing page on a phone",
+            caption: "Home",
+            w: 1170,
+            h: 2531,
+          },
+          {
+            src: `${ao}/11-agent-pipeline-mobile.png`,
+            alt: "AsliOffer's agent cards on a phone",
+            caption: "The four agents",
+            w: 1170,
+            h: 2531,
+          },
+          {
+            src: `${ao}/13-sample-report-mobile.png`,
+            alt: "AsliOffer's illustrative sample report on a phone, marked as hand-written",
+            caption: "The sample report",
+            w: 1170,
+            h: 2531,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: "",
+      poster: `${ao}/01-landing-hero-desktop.png`,
+      note: "A walkthrough of checking a real offer end to end is on the way.",
     },
   },
 ];
