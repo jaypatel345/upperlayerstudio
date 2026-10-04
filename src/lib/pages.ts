@@ -35,7 +35,7 @@ export const work = {
   hero: {
     eyebrow: "Selected work",
     headline: { lead: "The studio is new.", trail: "The standard isn't." },
-    body: "There are no client case studies here yet, and I'm not going to dress practice projects up as results to fill the gap. What follows is what's actually real: what I've built, what a case study will contain when the first one lands, and how I structure projects so being early costs you nothing.",
+    body: "There are no client case studies here yet, and I'm not going to dress my own projects up as client results to fill the gap. What follows is what's actually real: products I've built and shipped myself, what a client case study will contain when the first one lands, and how I structure projects so being early costs you nothing.",
     tags: ["Honest about what's missing", "Fixed fee", "You own everything"],
   },
 

@@ -9,9 +9,8 @@
  * pixels, no forms, no local or session storage, and no third-party runtime
  * requests (Inter is downloaded at build time by next/font and self-hosted).
  *
- * UPDATE THIS the moment any of those change — in particular when
- * site.scheduler points at a real scheduler, because that scheduler will then
- * collect visitor data and has to be named here.
+ * UPDATE THIS the moment any of those change, in particular when
+ * anything new is embedded. The Cal.com scheduler is already named below.
  */
 
 import { site } from "./site";
@@ -24,13 +23,13 @@ export type LegalDoc = {
   sections: { heading: string; paragraphs: string[]; list?: string[] }[];
 };
 
-const UPDATED = "2026-10-01";
+const UPDATED = "2026-10-04";
 
 export const privacy: LegalDoc = {
   slug: "privacy",
   title: "Privacy policy",
   summary:
-    "This website collects nothing about you. No cookies, no analytics, no tracking. The long version is below, and it stays short because there is not much to describe.",
+    "This website collects nothing about you while you read it. No cookies, no analytics, no tracking. The one exception is the booking calendar on the contact page, run by Cal.com, which is explained below.",
   updated: UPDATED,
   sections: [
     {
@@ -49,7 +48,7 @@ export const privacy: LegalDoc = {
         "No advertising or social tracking pixels.",
         "No forms, so nothing is submitted from these pages.",
         "No browser storage — nothing is written to local storage or session storage.",
-        "No third-party requests while you read. The typeface is downloaded when the site is built and served from the same domain, so your browser never contacts a font provider.",
+        "No third-party requests while you read, except on the contact page, which embeds the Cal.com booking calendar. The typeface is downloaded when the site is built and served from the same domain, so your browser never contacts a font provider.",
       ],
     },
     {
@@ -62,7 +61,7 @@ export const privacy: LegalDoc = {
       heading: "If you email or book a call",
       paragraphs: [
         `When you write to ${site.email}, I keep the email and my reply so that I have a record of the conversation. I use it to answer you and to carry out any work we agree. I do not add you to a mailing list, and I do not sell, rent or share your details.`,
-        "If the booking scheduler is connected, booking a time goes through a third-party provider that will collect your name, your email address and anything you type into the booking form, under its own privacy policy. This section will name that provider once one is in use.",
+        "Booking a call goes through Cal.com, which is embedded on the contact page. Cal.com collects your name, your email address and anything you type into the booking form, under its own privacy policy, and loads its calendar from its own servers when you open that page.",
       ],
     },
     {
@@ -80,7 +79,7 @@ export const privacy: LegalDoc = {
     {
       heading: "Changes to this policy",
       paragraphs: [
-        "If the site starts doing something it does not do today — analytics, a contact form, an embedded scheduler — this page gets updated before that goes live, and the date at the top changes with it.",
+        "If the site starts doing something it does not do today — analytics, a contact form, a new third-party service — this page gets updated before that goes live, and the date at the top changes with it.",
       ],
     },
     {

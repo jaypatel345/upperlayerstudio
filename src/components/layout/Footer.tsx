@@ -54,7 +54,7 @@ export function Footer() {
           </div>
 
           <div className="lg:justify-self-end lg:text-right">
-            <p className="text-[14px] text-white/50">Design + Build</p>
+            <p className="text-[14px] text-white/50">Automation + Build</p>
             <p className="mt-3 max-w-[18ch] text-[26px] leading-[1.18] tracking-[-0.035em] text-pretty sm:text-[32px] lg:ml-auto">
               Make your operation easier to run
             </p>

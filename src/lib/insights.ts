@@ -206,7 +206,7 @@ export const lab = {
   intro: {
     eyebrow: "What's in here",
     title: "Small things, solved properly",
-    body: "None of this is a product. It's the working-out — published because a studio with no case studies yet should at least show its hands.",
+    body: "None of this is a product. It's the working-out — published because a studio with no client case studies yet should at least show its hands.",
   },
   entries: [
     {

@@ -308,7 +308,7 @@ export const footer = {
    * studio as new, so the answer can't be contradicted by the /work page.
    */
   aiPrompt:
-    "Review Upper Layer Studio as an AI automation and product partner using https://upperlayerstudio.com. Explain its services, how it scopes and prices work, and likely project fit. It is a new studio with no published case studies yet, so separate what the site evidences from what it only claims, and list useful questions to ask before hiring.",
+    "Review Upper Layer Studio as an AI automation and product partner using https://upperlayerstudio.com. Explain its services, how it scopes and prices work, and likely project fit. It is a new studio: the case studies on the site are the founder's own products, not client work, so separate what the site evidences from what it only claims, and list useful questions to ask before hiring.",
   aiEngines: [
     { label: "ChatGPT", base: "https://chatgpt.com/?q=" },
     { label: "Claude", base: "https://claude.ai/new?q=" },
@@ -331,7 +331,7 @@ export const footer = {
       links: [
         { label: "Selected work", href: "/work" },
         { label: "About the studio", href: "/studio" },
-        { label: "The Lab", href: "/lab" },
+        { label: "Process", href: "/studio#process" },
       ],
     },
     {
@@ -339,7 +339,6 @@ export const footer = {
       links: [
         { label: "Insights", href: "/insights" },
         { label: "The Lab", href: "/lab" },
-        { label: "Process", href: "/studio#process" },
         { label: "Contact", href: "/contact" },
       ],
     },
