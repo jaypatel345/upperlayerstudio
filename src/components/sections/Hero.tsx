@@ -33,14 +33,14 @@ export function Hero() {
       )}
 
       <Container className="relative flex flex-col items-center pt-14 pb-10 text-center sm:pt-20 sm:pb-12">
-        <div className="rise" style={delay(0)}>
+        <div className="rise select-none" style={delay(0)}>
           <Pill>{hero.badge}</Pill>
         </div>
 
         {/* Two deliberate lines — text-wrap:balance is off here so the colour
             split always lands in the same place. */}
         <h1
-          className="rise mt-7 max-w-[22ch] text-[34px] leading-[1.06] sm:text-[50px] sm:leading-[1.03] lg:text-[62px]"
+          className="rise mt-7 max-w-[22ch] select-none text-[34px] leading-[1.06] sm:text-[50px] sm:leading-[1.03] lg:text-[62px]"
           style={delay(0.08)}
         >
           <span className="block">{hero.headline.lead}</span>
@@ -48,7 +48,7 @@ export function Hero() {
         </h1>
 
         <p
-          className="rise mt-6 max-w-[600px] text-[16px] leading-[1.6] text-ink-70 text-pretty sm:text-[17px]"
+          className="rise mt-6 max-w-[600px] select-none text-[16px] leading-[1.6] text-ink-70 text-pretty sm:text-[17px]"
           style={delay(0.16)}
         >
           {hero.body}
