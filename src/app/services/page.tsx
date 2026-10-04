@@ -30,7 +30,7 @@ export default function ServicesPage() {
       <LogoStrip />
       <Studio />
       <FAQ />
-      <CTA />
+      <CTA after="tint" />
     </>
   );
 }

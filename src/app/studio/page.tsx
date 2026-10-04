@@ -41,7 +41,7 @@ export default function StudioPage() {
         tone="tint"
       />
       <FAQ />
-      <CTA />
+      <CTA after="tint" />
     </>
   );
 }

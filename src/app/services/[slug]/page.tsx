@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: Params) {
         slugs={service.related}
         title={`Clients who start with ${service.name} usually go here next`}
       />
-      <CTA />
+      <CTA after="tint" />
     </>
   );
 }

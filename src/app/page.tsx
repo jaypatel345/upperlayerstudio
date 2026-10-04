@@ -18,7 +18,7 @@ export default function Home() {
       {/* Testimonials slot in here later */}
       <Studio />
       <FAQ />
-      <CTA />
+      <CTA after="tint" />
     </>
   );
 }

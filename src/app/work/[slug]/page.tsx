@@ -302,7 +302,7 @@ export default async function CaseStudyPage({ params }: Params) {
         </Container>
       </Section>
 
-      <CTA />
+      <CTA after="tint" />
     </>
   );
 }

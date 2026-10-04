@@ -2,37 +2,18 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { Button } from "@/components/ui/Button";
-import { SkyBackdrop } from "@/components/sections/SkyBackdrop";
 import { LocalTime } from "./LocalTime";
 import { site, footer } from "@/lib/site";
 
 /**
- * Full-height footer, in five bands: brand statement, the booking panel, the
- * AI-engine row, the link columns, and the baseline.
- *
- * The sky band at the top is the same component used for every art plate on the
- * site — it stops the dark block starting abruptly against a white section, and
- * it is the one place the imagery runs the full width of the page.
+ * Full-height footer, in bands: brand statement, the AI-engine row, the link
+ * columns, and the baseline.
  */
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <footer className="relative isolate overflow-hidden bg-dark text-white">
-      {/* Sky band — the hero's own backdrop, cropped.
-          The inner box is rendered tall and the band clips it, so what shows is
-          the top of the same sky that opens the page: saturated blue and the
-          cloud mass, rather than a second sky that merely resembles it. */}
-      <div aria-hidden className="relative h-[180px] w-full overflow-hidden sm:h-[240px]">
-        <div className="absolute inset-x-0 top-0 h-[460px]">
-          <SkyBackdrop horizon={false} />
-        </div>
-        {/* Dissolve into the footer, the way the hero dissolves into the page.
-            Held back until just past halfway so the band shows actual sky
-            rather than a blue haze under a scrim. */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(23,23,23,0.06)_52%,rgba(23,23,23,0.58)_80%,#171717_100%)]" />
-      </div>
-
       <Container size="wide" className="pt-14 pb-10 sm:pt-16">
         {/* Band 1 — brand statement */}
         <div className="grid gap-12 border-b border-line-light pb-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-20">
