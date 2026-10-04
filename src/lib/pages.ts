@@ -179,7 +179,7 @@ export const contact = {
   },
   hero: {
     eyebrow: "Book a call",
-    headline: { lead: "Book a call", trail: "with Jay" },
+    title: "Book a call with Jay",
     body: "A 30-minute conversation about your project, what needs to change and whether Upper Layer Studio is the right fit. Choose a time below.",
   },
   steps: {
@@ -205,7 +205,8 @@ export const contact = {
     ] as Feature[],
   },
   direct: {
-    prompt: "Can't find a suitable time? Email the studio with your project and a few times that work for you:",
+    prompt: "Can't find a suitable time?",
+    promptBody: "Email the studio with your project and a few times that work for you.",
     title: "Prefer email?",
     body: "Send over the problem and a couple of times that suit you, and I'll come back with a time or with questions.",
     responseNote: "I answer every email myself, usually within one working day.",
