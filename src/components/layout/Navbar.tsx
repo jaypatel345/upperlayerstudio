@@ -13,6 +13,9 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const activeMenu = nav.find((item) => item.label === openMenu && "children" in item) as
+    | Extract<(typeof nav)[number], { children: unknown }>
+    | undefined;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -20,6 +23,13 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenMenu(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openMenu]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -68,30 +78,6 @@ export function Navbar() {
                   )}
                 </Link>
 
-                <AnimatePresence>
-                  {hasChildren && openMenu === item.label && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                      className="absolute top-full left-0 w-[290px] pt-2"
-                    >
-                      <div className="rounded-[var(--radius-card)] border border-line bg-white p-1.5 shadow-[var(--shadow-nav)]">
-                        {item.children!.map((child) => (
-                          <Link
-                            key={child.label}
-                            href={child.href}
-                            className="block rounded-[var(--radius-sm)] px-3 py-2.5 transition-colors hover:bg-tint"
-                          >
-                            <span className="block text-[14px] font-medium">{child.label}</span>
-                            <span className="mt-0.5 block text-[13px] text-muted">{child.desc}</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             );
           })}
@@ -128,6 +114,84 @@ export function Navbar() {
           </button>
         </div>
       </Container>
+
+      {/* Desktop mega panel — one shared panel under the bar, centred, so moving
+          between menu items swaps its contents instead of jumping a dropdown
+          around. The pt-3 wrapper bridges the gap so the hover never drops. */}
+      <AnimatePresence>
+        {activeMenu && (
+          <motion.div
+            key="mega"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-x-0 top-full mx-auto hidden w-full px-5 pt-3 lg:block"
+            style={{ maxWidth: activeMenu.children.length > 2 ? 840 : 600 }}
+          >
+            <div className="rounded-2xl bg-[linear-gradient(125deg,rgba(255,255,255,0.98)_0%,rgba(250,252,255,0.96)_55%,rgba(245,249,254,0.96)_100%)] px-5 pt-5 pb-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_10px_36px_rgba(30,70,120,0.1)] backdrop-blur-[18px] backdrop-saturate-[1.12]">
+              <div className="flex items-center justify-between px-1">
+                <p className="text-[13px] text-muted">{activeMenu.label}</p>
+                <button
+                  type="button"
+                  onClick={() => setOpenMenu(null)}
+                  className="rounded-md bg-[#eef4fa] px-3 py-2 text-[13px] leading-none text-muted transition-colors hover:text-ink"
+                >
+                  Close ×
+                </button>
+              </div>
+
+              <motion.div
+                key={activeMenu.label}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.18 }}
+                className={cn(
+                  "mt-4 grid gap-2",
+                  activeMenu.children.length > 2 ? "grid-cols-4" : "grid-cols-2",
+                )}
+              >
+                {activeMenu.children.map((child) => (
+                  <Link
+                    key={child.label}
+                    href={child.href}
+                    onClick={() => setOpenMenu(null)}
+                    className="group flex min-h-[120px] flex-col rounded-lg bg-[#f1f6fb] p-4 shadow-[inset_0_0_0_1px_rgba(30,70,120,0.06)] transition-[background-color,box-shadow] duration-200 hover:bg-[#e8f1fa] hover:shadow-[inset_0_0_0_1px_rgba(74,143,224,0.18)]"
+                  >
+                    <span className="flex items-start justify-between gap-3">
+                      <span className="text-[16px] leading-[1.5] text-ink">{child.label}</span>
+                      <span
+                        aria-hidden
+                        className="text-[16px] leading-[1.5] text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ink"
+                      >
+                        ↗
+                      </span>
+                    </span>
+                    <span className="mt-2 text-[13px] leading-[1.4] text-muted">{child.desc}</span>
+                  </Link>
+                ))}
+              </motion.div>
+
+              <div className="mt-3 flex items-center justify-between px-1 pt-1">
+                <Link
+                  href={activeMenu.href}
+                  onClick={() => setOpenMenu(null)}
+                  className="py-2 text-[13px] text-muted transition-colors hover:text-ink"
+                >
+                  View all {activeMenu.label.toLowerCase()} ↗
+                </Link>
+                <Link
+                  href={site.book}
+                  onClick={() => setOpenMenu(null)}
+                  className="py-2 text-[13px] text-muted transition-colors hover:text-ink"
+                >
+                  Book a call
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile sheet */}
       <AnimatePresence>
