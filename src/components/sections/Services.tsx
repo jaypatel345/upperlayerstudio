@@ -28,7 +28,11 @@ export function Services() {
               aria-label={`${project.name} case study`}
               className="block"
             >
-              <ProjectShowcase project={project} className="aspect-[16/10]" />
+              <ProjectShowcase
+                project={project}
+                className="aspect-[16/10]"
+                showMobile={false}
+              />
             </Link>
           ) : (
             <SkyPlate

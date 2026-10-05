@@ -20,6 +20,8 @@ import { projects } from "./projects";
 
 export const site = {
   name: "Upper Layer Studio",
+  /** Canonical origin. The apex domain 301s here, so metadata must use www too. */
+  url: "https://www.upperlayerstudio.com",
   wordmark: "UPPER LAYER",
   wordmarkSuffix: "®",
   tagline: "Automate the slow work, then own the software.",
@@ -158,6 +160,7 @@ export const services: {
       ],
       href: "/services/voice",
       art: { sky: "deep", label: "Voice" },
+      project: "frontdeskai",
     },
     {
       n: "03",

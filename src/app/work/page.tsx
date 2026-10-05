@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { SelectedWork } from "@/components/sections/SelectedWork";
-import { BuiltWork } from "@/components/sections/BuiltWork";
 import { CopyGrid } from "@/components/sections/CopyGrid";
 import { CTA } from "@/components/sections/CTA";
 import { work } from "@/lib/pages";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: work.meta.title,
-  description: work.meta.description,
-  alternates: { canonical: "/work" },
-};
+export const metadata: Metadata = pageMeta({ title: work.meta.title, description: work.meta.description, path: "/work" });
 
 export default function WorkPage() {
   return (
@@ -25,7 +21,6 @@ export default function WorkPage() {
         secondary={{ label: "See what I build", href: "/services" }}
       />
       <SelectedWork showAll={false} eyebrow="Products" title="Built and shipped" />
-      <BuiltWork />
       <CopyGrid
         eyebrow={work.standIn.eyebrow}
         title={work.standIn.title}

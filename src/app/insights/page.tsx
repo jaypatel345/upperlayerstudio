@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { PostGrid } from "@/components/sections/PostGrid";
 import { CTA } from "@/components/sections/CTA";
 import { insightsIndex } from "@/lib/insights";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: insightsIndex.meta.title,
-  description: insightsIndex.meta.description,
-  alternates: { canonical: "/insights" },
-};
+export const metadata: Metadata = pageMeta({ title: insightsIndex.meta.title, description: insightsIndex.meta.description, path: "/insights" });
 
 export default function InsightsPage() {
   return (

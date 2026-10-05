@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import { BookingPanel } from "@/components/sections/BookingPanel";
 import { Container } from "@/components/ui/Container";
@@ -6,11 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { contact } from "@/lib/pages";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: contact.meta.title,
-  description: contact.meta.description,
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = pageMeta({ title: contact.meta.title, description: contact.meta.description, path: "/contact" });
 
 /**
  * Mirrors the reference's book-a-call page: a left-aligned reading column with

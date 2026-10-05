@@ -7,17 +7,21 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { servicesIndex } from "@/lib/services";
 import { site } from "@/lib/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, faqSchema, pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Services",
+export const metadata: Metadata = pageMeta({
+  title: "AI Automation, Voice AI & AI Agent Services",
   description:
     "AI automation, voice agents, custom agents and product build. Start with the problem you need to solve — scope and fixed fee in writing within 48 hours.",
-  alternates: { canonical: "/services" },
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={faqSchema()} />
+      <JsonLd data={breadcrumbSchema([{ name: "Services", path: "/services" }])} />
       <PageHero
         eyebrow={servicesIndex.hero.eyebrow}
         headline={servicesIndex.hero.headline}

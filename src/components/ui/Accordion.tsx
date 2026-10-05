@@ -66,7 +66,7 @@ export function Accordion({ items, defaultOpen = 0, className }: Props) {
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <div className="pb-8 sm:pl-17">{item.content}</div>
+                  <div className={cn("pb-8", item.n && "sm:pl-17")}>{item.content}</div>
                 </motion.div>
               )}
             </AnimatePresence>

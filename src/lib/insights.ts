@@ -169,7 +169,7 @@ export const postBySlug = (slug: string) => posts.find((p) => p.slug === slug);
 
 export const insightsIndex = {
   meta: {
-    title: "Insights",
+    title: "Insights on AI Automation & Voice Agents",
     description:
       "Written positions on AI automation, voice agents and shipping AI products — the thinking behind how Upper Layer Studio scopes work.",
   },
@@ -193,7 +193,7 @@ export type LabEntry = {
 
 export const lab = {
   meta: {
-    title: "The Lab",
+    title: "The Lab: Experiments & Internal Tools",
     description:
       "Experiments and internal tools from Upper Layer Studio — the techniques behind the studio's own site and tooling, written up in full.",
   },

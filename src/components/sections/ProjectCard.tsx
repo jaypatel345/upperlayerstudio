@@ -46,7 +46,11 @@ export function ProjectCard({ project, delay = 0.06 }: { project: Project; delay
             <ArrowLink href={href} direction="right">
               View case study
             </ArrowLink>
-            <ArrowLink href={project.live}>Open the live product</ArrowLink>
+            {project.live ? (
+              <ArrowLink href={project.live}>Open the live product</ArrowLink>
+            ) : (
+              <ArrowLink href={project.repo}>View the source</ArrowLink>
+            )}
           </div>
         </div>
       </article>

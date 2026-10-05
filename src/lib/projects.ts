@@ -4,8 +4,9 @@
  * Same rules as the rest of the site's copy: first person singular, and every
  * claim is something that can be checked on the live product, the repo or the
  * CI history. Newsbit, PromptX and StyleNest are the studio's own products,
- * Borrower Copilot was built to a written brief, and AsliOffer was a two-person
- * hackathon build; none of them is client work, and the page says so.
+ * Borrower Copilot and FrontDesk AI were built to a written brief, and
+ * AsliOffer was a two-person hackathon build; none of them is client work, and
+ * the page says so.
  *
  * Adding a project: append to `projects`. The card, the case study route and
  * the static params all derive from this one list.
@@ -31,6 +32,7 @@ export type Project = {
   /** One-sentence card summary */
   summary: string;
   art: SkyVariant;
+  /** Live URL, or "" when there is no public deployment */
   live: string;
   repo: string;
   meta: { label: string; value: string }[];
@@ -64,6 +66,7 @@ const px = "/work/promptx";
 const sn = "/work/stylenest";
 const bc = "/work/borrower-copilot";
 const ao = "/work/aslioffer";
+const fd = "/work/frontdeskai";
 
 export const projects: Project[] = [
   {
@@ -1151,6 +1154,225 @@ export const projects: Project[] = [
       src: "",
       poster: `${ao}/01-landing-hero-desktop.png`,
       note: "A walkthrough of checking a real offer end to end is on the way.",
+    },
+  },
+  {
+    slug: "frontdeskai",
+    name: "FrontDesk AI",
+    kind: "AI phone receptionist",
+    service: "Voice AI",
+    summary:
+      "An AI phone receptionist for a demo cosmetic clinic, running on Vapi: it answers questions, qualifies the caller, books the appointment in Cal.com and logs the caller and the full transcript to HubSpot.",
+    art: "high",
+    live: "",
+    repo: "https://github.com/jaypatel345/FrontDeskAI",
+    meta: [
+      { label: "Type", value: "Built to a written brief" },
+      { label: "Role", value: "Call flow, prompt, backend, integrations, dashboard" },
+      { label: "Status", value: "Deployed on Render, tested with Vapi browser calls; no phone number yet" },
+      { label: "Service", value: "Voice AI" },
+    ],
+    problem:
+      "A busy clinic misses calls while the front desk is with a patient or already on the phone, and most of those callers want something simple: a price range, the opening hours or a time to come in.",
+    built:
+      "FrontDesk AI is a voice receptionist on Vapi for a made-up clinic, Demo Aesthetics Clinic. It answers from the clinic's FAQ, finds out what the caller wants, and books, moves or cancels the appointment in Cal.com. The caller becomes a HubSpot contact and the call is logged against them with its transcript, and every call shows up on a dashboard. Cal.com and HubSpot are connected to real accounts; text confirmations (Twilio) and vector search (Qdrant) are built but run as mocks until their keys are added. The clinic, its prices and its doctors are invented, and every call so far is one of my own tests.",
+    features: [
+      {
+        title: "Answers from the clinic's FAQ",
+        body: "Services, price ranges, hours, doctors and aftercare come from the clinic's knowledge base. It quotes ranges, not exact prices, and offers a callback when the answer isn't there.",
+      },
+      {
+        title: "Books while the caller is on the line",
+        body: "It checks real Cal.com availability up to three weeks ahead, offers times, reads the name and number back to confirm them, and books. Existing appointments can be moved or cancelled on the same call.",
+      },
+      {
+        title: "Every caller lands in the CRM",
+        body: "The caller is created or updated as a HubSpot contact, and the call is logged on their record with the full transcript, so the front desk can pick it up from there.",
+      },
+      {
+        title: "Knows when to hand over",
+        body: "Clinical questions, an upset caller or a request for a person go to the front desk by call transfer. It never gives medical advice.",
+      },
+      {
+        title: "Honest from the first line",
+        body: "The greeting says the call may be recorded, and if asked, it says plainly that the clinic is a demo of an AI receptionist.",
+      },
+      {
+        title: "A call dashboard behind a login",
+        body: "Calls, bookings, conversion, escalations, missed calls and Vapi's average reply time, a list of every call, and which integrations are live or mocked. Phone numbers are masked to the last four digits.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Answer",
+        body: "Vapi picks up, Deepgram Nova-3 transcribes the caller and GPT-4.1 mini replies in Vapi's Savannah voice, following one shared receptionist prompt.",
+      },
+      {
+        title: "Call a tool",
+        body: "When it needs the FAQ, the calendar or a booking, Vapi calls one webhook on a Node backend. The request must carry a shared secret, and every argument is checked with zod before anything runs.",
+      },
+      {
+        title: "Act",
+        body: "Adapters reach Cal.com for bookings, HubSpot for contacts, Twilio for texts and Qdrant for the FAQ. Any adapter without a key falls back to in-memory slots, a console log or keyword search, so the whole call can be tested with no paid accounts.",
+      },
+      {
+        title: "Log",
+        body: "Vapi's end-of-call report, with the transcript, recording link and average reply time, is saved to SQLite for the dashboard and logged to HubSpot as a call.",
+      },
+    ],
+    stack: [
+      { group: "Voice", items: ["Vapi", "Deepgram Nova-3", "GPT-4.1 mini", "Retell and Bland (kept as backups)"] },
+      { group: "Backend", items: ["Node.js", "Express", "zod", "SQLite (node:sqlite)"] },
+      { group: "Integrations", items: ["Cal.com", "HubSpot", "Twilio", "Qdrant"] },
+      { group: "Delivery", items: ["node:test and supertest", "GitHub Actions", "Render"] },
+    ],
+    result: {
+      stat: "64",
+      label:
+        "automated tests, all passing, covering endpoint auth, webhook signatures, rate limiting, argument checks and the book → reschedule → cancel round trip; GitHub Actions runs them on every push",
+      source: "npm test on the repo's main branch and the Tests workflow in GitHub Actions, 5 Oct 2026",
+    },
+    cover: {
+      desktop: {
+        src: `${fd}/01-dashboard-overview-desktop.png`,
+        alt: "FrontDesk AI's dashboard overview: call stats, calls over the last seven days, the integrations panel and recent calls",
+        caption: "The call dashboard",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${fd}/12-dashboard-overview-mobile.png`,
+        alt: "FrontDesk AI's dashboard overview on a phone",
+        caption: "The dashboard on mobile",
+        w: 1170,
+        h: 2532,
+      },
+    },
+    screens: [
+      {
+        title: "The call dashboard",
+        body: "The deployed dashboard on Render. The calls on it are my own browser test calls to the demo clinic, not patients.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${fd}/01-dashboard-overview-desktop.png`,
+            alt: "The dashboard overview: total calls, answer rate, bookings, conversion, drop-off, escalation, missed calls and an average response latency of 1.58 seconds",
+            caption: "Overview after one test call that ended in a booking",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/02-calls-list-desktop.png`,
+            alt: "The Calls page listing two web test calls, both ended and handled",
+            caption: "Every call, with its status and outcome",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/03-integrations-desktop.png`,
+            alt: "The Integrations page: Cal.com and HubSpot live, SMS and the knowledge base on mocks",
+            caption: "Which integrations are live and which are mocked",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "The call, on Vapi",
+        body: "One booking call from Vapi's side: the recording, the transcript and where the reply time goes.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${fd}/04-vapi-call-transcript-desktop.png`,
+            alt: "Vapi's log of a 4 minute 18 second browser test call, with the recording waveform and the start of the transcript",
+            caption: "The recording and transcript",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/05-vapi-latency-desktop.png`,
+            alt: "Vapi's latency summary for the same call: 16 turns, 1,584 ms average, split into transport, transcriber, endpointing, LLM and voice",
+            caption: "Latency per stage: 1.58 s average over 16 turns",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "Booked and logged",
+        body: "Where the call ends up. The booking lands in Cal.com (the clinic runs on Los Angeles time, so a 9 PM slot shows as 9:30 AM in India), and the caller becomes a HubSpot contact with the call and its full transcript on their record. The summary and sentiment panels are HubSpot's own AI reading that logged call.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${fd}/06-calcom-booking-desktop.png`,
+            alt: "A confirmed 30 minute Cal.com booking for the test caller on 6 October 2026, with contact details blurred",
+            caption: "The confirmed booking in Cal.com",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/07-hubspot-call-transcript-desktop.png`,
+            alt: "The HubSpot contact with a logged call open, showing the start of the transcript",
+            caption: "The call logged with its transcript",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/08-hubspot-transcript-booking-desktop.png`,
+            alt: "Further down the logged transcript: the agent offers times, takes the caller's details and confirms the Botox booking",
+            caption: "The transcript through to the booking",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/09-hubspot-contact-insights-desktop.png`,
+            alt: "HubSpot's contact insights summarising a Botox inquiry, the booked appointment and the details collected",
+            caption: "HubSpot's summary of the call",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/10-hubspot-recent-interactions-desktop.png`,
+            alt: "HubSpot's recent interactions panel showing the inbound logged call",
+            caption: "The inbound call on the contact's timeline",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${fd}/11-hubspot-sentiment-desktop.png`,
+            alt: "HubSpot's sentiment panel rating the caller as receptive",
+            caption: "HubSpot's sentiment read of the call",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On mobile",
+        body: "The dashboard on a phone.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${fd}/12-dashboard-overview-mobile.png`,
+            alt: "FrontDesk AI's dashboard overview on a phone",
+            caption: "Overview",
+            w: 1170,
+            h: 2532,
+          },
+          {
+            src: `${fd}/13-dashboard-integrations-mobile.png`,
+            alt: "The dashboard's integrations and recent calls on a phone",
+            caption: "Integrations and recent calls",
+            w: 1170,
+            h: 2532,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: "",
+      poster: `${fd}/01-dashboard-overview-desktop.png`,
+      note: "A recording of a test call, from the first question to a confirmed booking, is on the way.",
     },
   },
 ];

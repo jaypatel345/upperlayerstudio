@@ -9,6 +9,8 @@ import { RelatedServices } from "@/components/sections/RelatedServices";
 import { CTA } from "@/components/sections/CTA";
 import { serviceBySlug, serviceDetails } from "@/lib/services";
 import { site } from "@/lib/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, faqSchema, pageMeta, serviceSchema } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -24,16 +26,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const service = serviceBySlug(slug);
   if (!service) return {};
 
-  return {
+  return pageMeta({
     title: service.meta.title,
     description: service.meta.description,
-    alternates: { canonical: `/services/${service.slug}` },
-    openGraph: {
-      title: `${service.meta.title} | ${site.name}`,
-      description: service.meta.description,
-      url: `/services/${service.slug}`,
-    },
-  };
+    path: `/services/${service.slug}`,
+  });
 }
 
 export default async function ServicePage({ params }: Params) {
@@ -43,6 +40,16 @@ export default async function ServicePage({ params }: Params) {
 
   return (
     <>
+      <JsonLd
+        data={serviceSchema({ name: service.name, slug: service.slug, description: service.meta.description })}
+      />
+      <JsonLd data={faqSchema(service.faqs)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Services", path: "/services" },
+          { name: service.name, path: `/services/${service.slug}` },
+        ])}
+      />
       <PageHero
         eyebrow={service.name}
         headline={service.hero.headline}

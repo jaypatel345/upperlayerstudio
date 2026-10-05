@@ -6,16 +6,18 @@ import type { Project } from "@/lib/projects";
 /**
  * The hero art for a project: its desktop and mobile cover shots floating on
  * a sky plate, so the captures get room to breathe instead of being stretched
- * edge to edge.
+ * edge to edge. Pass `showMobile={false}` for the desktop shot alone.
  */
 export function ProjectShowcase({
   project,
   className,
   priority,
+  showMobile = true,
 }: {
   project: Project;
   className?: string;
   priority?: boolean;
+  showMobile?: boolean;
 }) {
   const { desktop, mobile } = project.cover;
 
@@ -31,7 +33,7 @@ export function ProjectShowcase({
             priority={priority}
             sizes="(min-width: 1024px) 600px, 80vw"
           />
-          {mobile && (
+          {showMobile && mobile && (
           <PhoneFrame
             shot={mobile}
             priority={priority}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { CopyGrid } from "@/components/sections/CopyGrid";
 import { Studio } from "@/components/sections/Studio";
@@ -7,11 +8,7 @@ import { CTA } from "@/components/sections/CTA";
 import { studio } from "@/lib/pages";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: studio.meta.title,
-  description: studio.meta.description,
-  alternates: { canonical: "/studio" },
-};
+export const metadata: Metadata = pageMeta({ title: studio.meta.title, description: studio.meta.description, path: "/studio" });
 
 export default function StudioPage() {
   return (

@@ -13,7 +13,8 @@ import { ProjectShowcase } from "@/components/sections/ProjectShowcase";
 import { ProjectVideo } from "@/components/sections/ProjectVideo";
 import { CTA } from "@/components/sections/CTA";
 import { projectBySlug, projects } from "@/lib/projects";
-import { site } from "@/lib/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, pageMeta, projectSchema } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -29,16 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!project) return {};
 
   const title = `${project.name}: ${project.kind} case study`;
-  return {
-    title,
-    description: project.summary,
-    alternates: { canonical: `/work/${project.slug}` },
-    openGraph: {
-      title: `${title} | ${site.name}`,
-      description: project.summary,
-      url: `/work/${project.slug}`,
-    },
-  };
+  return pageMeta({ title, description: project.summary, path: `/work/${project.slug}` });
 }
 
 export default async function CaseStudyPage({ params }: Params) {
@@ -51,6 +43,13 @@ export default async function CaseStudyPage({ params }: Params) {
 
   return (
     <>
+      <JsonLd data={projectSchema(project)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Work", path: "/work" },
+          { name: project.name, path: `/work/${project.slug}` },
+        ])}
+      />
       {/* Hero */}
       <section className="relative isolate overflow-hidden pt-[60px]">
         <div
@@ -91,10 +90,12 @@ export default async function CaseStudyPage({ params }: Params) {
           </p>
 
           <div className="rise mt-8 flex flex-wrap items-center gap-3" style={delay(0.24)}>
-            <Button href={project.live} size="lg">
-              Visit {liveHost} ↗
-            </Button>
-            <Button href={project.repo} size="lg" variant="light">
+            {project.live && (
+              <Button href={project.live} size="lg">
+                Visit {liveHost} ↗
+              </Button>
+            )}
+            <Button href={project.repo} size="lg" variant={project.live ? "light" : undefined}>
               View the source ↗
             </Button>
           </div>
@@ -169,7 +170,7 @@ export default async function CaseStudyPage({ params }: Params) {
             <SectionHeader
               eyebrow="What it does"
               title="The features that matter"
-              body="What a reader actually uses, from the morning brief to asking a question out loud."
+              body="What it actually does, one feature at a time."
             />
           </Reveal>
           <div className="mt-12">
@@ -208,7 +209,11 @@ export default async function CaseStudyPage({ params }: Params) {
             <SectionHeader
               eyebrow="Screens"
               title="Every screen, as shipped"
-              body="Captured from the live product at newsbit.in. Nothing mocked up."
+              body={
+                project.live
+                  ? `Captured from the live product at ${liveHost}.`
+                  : "Captured from the running app. It has no public deployment yet."
+              }
             />
           </Reveal>
 

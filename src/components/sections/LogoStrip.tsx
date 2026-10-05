@@ -24,7 +24,7 @@ export function LogoStrip() {
   const row = [...half, ...half];
 
   return (
-    <div className="border-y border-line bg-surface py-10">
+    <div className="border-y border-line bg-surface py-10 select-none">
       <Container>
         <p className="mb-8 text-center text-[13px] font-medium text-muted">
           Built with the tools your team already trusts

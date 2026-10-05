@@ -56,7 +56,7 @@ export const serviceDetails: ServiceDetail[] = [
     blurb: "Workflows that run without you",
     art: { sky: "clear", label: "Automation" },
     meta: {
-      title: "AI Automation",
+      title: "AI Automation Services & Workflow Automation",
       description:
         "I map the work your team repeats and replace it with automations that run on their own — built on the tools you already use, documented and handed over.",
     },
@@ -153,7 +153,7 @@ export const serviceDetails: ServiceDetail[] = [
     blurb: "Agents that answer the phone",
     art: { sky: "deep", label: "Voice" },
     meta: {
-      title: "Voice AI",
+      title: "Voice AI Agents & AI Phone Receptionist",
       description:
         "A voice agent that answers every call in your tone, qualifies the caller, books the job into your calendar and writes it down — on your number, in your accounts.",
     },
@@ -250,7 +250,7 @@ export const serviceDetails: ServiceDetail[] = [
     blurb: "Custom agents wired into your stack",
     art: { sky: "dusk", label: "Agents" },
     meta: {
-      title: "AI Agents",
+      title: "Custom AI Agents & RAG Assistants",
       description:
         "Agents grounded in your own data and wired into your real systems, with guardrails and an evaluation suite so you know when the answers drift.",
     },
@@ -347,7 +347,7 @@ export const serviceDetails: ServiceDetail[] = [
     blurb: "From prototype to production",
     art: { sky: "cumulus", label: "Product" },
     meta: {
-      title: "Product Build",
+      title: "AI Product Development",
       description:
         "The full build — interface, model layer and infrastructure — for teams taking an AI product to market, or outgrowing the automations they started with.",
     },

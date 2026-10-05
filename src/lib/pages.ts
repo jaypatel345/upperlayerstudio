@@ -7,28 +7,17 @@
  * site — inventing either would be the one mistake a prospect can actually
  * catch, and it would poison every true claim next to it. The page instead
  * publishes what IS real, states plainly what's missing, and spends its length
- * on de-risking a new studio. Replace `work.built` with real projects as they
- * ship, then delete `work.standIn`.
+ * on de-risking a new studio. Delete `work.standIn` once client work ships.
  */
 
 import type { Feature } from "@/components/ui/FeatureGrid";
-import type { SkyVariant } from "@/components/ui/SkyPlate";
 import { site } from "./site";
 
 /* ------------------------------------------------------------------ /work */
 
-export type BuiltItem = {
-  name: string;
-  kind: string;
-  body: string;
-  tags: string[];
-  href?: string;
-  art: SkyVariant;
-};
-
 export const work = {
   meta: {
-    title: "Work",
+    title: "Work & Case Studies",
     description:
       "What Upper Layer Studio has built, what a case study here will contain, and how to hire a new studio without carrying the risk.",
   },
@@ -37,23 +26,6 @@ export const work = {
     headline: { lead: "The studio is new.", trail: "The standard isn't." },
     body: "There are no client case studies here yet, and I'm not going to dress my own projects up as client results to fill the gap. What follows is what's actually real: products I've built and shipped myself, what a client case study will contain when the first one lands, and how I structure projects so being early costs you nothing.",
     tags: ["Honest about what's missing", "Fixed fee", "You own everything"],
-  },
-
-  /** Real, verifiable work only. Add client projects here as they ship. */
-  built: {
-    eyebrow: "What I've built",
-    title: "Start with the thing you're reading",
-    body: "The most honest sample available is the site itself. Click anything, read the source, judge the standard.",
-    items: [
-      {
-        name: "Upper Layer Studio",
-        kind: "This website",
-        body: "Designed and built from scratch: a token-driven design system, a typed content layer, server-rendered pages and a fully static build. Every page you've clicked through to get here, including this one. The source is public, so you can check the standard rather than take my word for it.",
-        tags: ["Next.js 16", "React 19", "TypeScript", "Tailwind 4", "Static build"],
-        href: site.socials.find((s) => s.label === "GitHub")?.href,
-        art: "high",
-      },
-    ] as BuiltItem[],
   },
 
   standIn: {
@@ -117,7 +89,7 @@ export const work = {
 
 export const studio = {
   meta: {
-    title: "Studio",
+    title: "About the Studio",
     description:
       "Upper Layer Studio is a one-person AI studio in India, working globally. How I work, who I work with, and what you get.",
   },
@@ -173,7 +145,7 @@ export const studio = {
 
 export const contact = {
   meta: {
-    title: "Contact",
+    title: "Book a Call",
     description:
       "Book a 30-minute call about your project, or email the studio. Written scope and a fixed fee within 48 hours of the call.",
   },

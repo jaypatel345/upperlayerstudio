@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { LegalBody } from "@/components/sections/LegalBody";
 import { privacy } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: privacy.title,
   description: "What this website collects: nothing. No cookies, no analytics, no tracking.",
-  alternates: { canonical: "/privacy" },
-  robots: { index: true, follow: true },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return <LegalBody doc={privacy} />;

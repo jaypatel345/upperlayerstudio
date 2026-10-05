@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { LabEntries } from "@/components/sections/LabEntries";
 import { CTA } from "@/components/sections/CTA";
 import { lab } from "@/lib/insights";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: lab.meta.title,
-  description: lab.meta.description,
-  alternates: { canonical: "/lab" },
-};
+export const metadata: Metadata = pageMeta({ title: lab.meta.title, description: lab.meta.description, path: "/lab" });
 
 export default function LabPage() {
   return (

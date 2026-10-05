@@ -9,6 +9,8 @@ import { SkyPlate } from "@/components/ui/SkyPlate";
 import { CTA } from "@/components/sections/CTA";
 import { postBySlug, posts } from "@/lib/insights";
 import { site } from "@/lib/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleSchema, breadcrumbSchema, pageMeta } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -23,18 +25,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = postBySlug(slug);
   if (!post) return {};
 
-  return {
+  return pageMeta({
     title: post.title,
     description: post.summary,
-    alternates: { canonical: `/insights/${post.slug}` },
-    openGraph: {
-      title: `${post.title} | ${site.name}`,
-      description: post.summary,
-      type: "article",
-      publishedTime: post.date,
-      url: `/insights/${post.slug}`,
-    },
-  };
+    path: `/insights/${post.slug}`,
+    type: "article",
+    publishedTime: post.date,
+  });
 }
 
 const formatDate = (iso: string) =>
@@ -51,6 +48,13 @@ export default async function PostPage({ params }: Params) {
 
   return (
     <>
+      <JsonLd data={articleSchema(post)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Insights", path: "/insights" },
+          { name: post.title, path: `/insights/${post.slug}` },
+        ])}
+      />
       {/* Title block — narrower measure than a marketing hero, it's an article */}
       <section className="relative isolate overflow-hidden border-b border-line pt-[60px]">
         <div
@@ -72,7 +76,7 @@ export default async function PostPage({ params }: Params) {
             {post.summary}
           </p>
           <p className="rise mt-7 text-[14px] text-faint">
-            {formatDate(post.date)} · {site.name}
+            <time dateTime={post.date}>{formatDate(post.date)}</time> · {site.name}
           </p>
         </Container>
       </section>
