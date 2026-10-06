@@ -1,22 +1,39 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/lib/site";
+import { useLead } from "./LeadContext";
 
 /**
  * The scheduler embed. While site.scheduler is empty there is nothing to
  * embed, so a holding card shows instead of an iframe pointing nowhere. Set
  * site.scheduler to the real booking URL (Calendly, Cal.com…) and this swaps
  * to the live embed on its own.
+ *
+ * Once the contact form has been sent, the embed reloads pre-filled with the
+ * visitor's name, email and message (Cal.com reads them from the query).
  */
 export function BookingPanel() {
+  const { lead } = useLead();
   const live = /^https?:\/\//.test(site.scheduler);
+
+  let src: string = site.scheduler;
+  if (live && lead) {
+    const url = new URL(site.scheduler);
+    url.searchParams.set("name", lead.name);
+    url.searchParams.set("email", lead.email);
+    url.searchParams.set("notes", lead.message.slice(0, 500));
+    src = url.toString();
+  }
 
   return (
     <Reveal>
       <div id="book-a-call" className="mt-10 scroll-mt-24 overflow-hidden rounded-2xl bg-white">
         {live ? (
           <iframe
-            src={site.scheduler}
+            key={src}
+            src={src}
             title="Book a call"
             loading="lazy"
             className="block h-[840px] w-full border-0"
