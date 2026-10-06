@@ -10,7 +10,7 @@ export const ogAlt = `${site.name} — ${site.tagline}`;
 export async function renderOgImage() {
   const [sky, logo] = await Promise.all([
     readFile(join(process.cwd(), "src/assets/og-sky.jpg"), "base64"),
-    readFile(join(process.cwd(), "public/brand/upper_layer_studio_logo_transparent.png"), "base64"),
+    readFile(join(process.cwd(), "public/brand/upper_layer_studio_logo_badge.png"), "base64"),
   ]);
 
   return new ImageResponse(
@@ -34,7 +34,7 @@ export async function renderOgImage() {
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 72, width: "100%" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`data:image/png;base64,${logo}`} alt="" width={56} height={56} />
+            <img src={`data:image/png;base64,${logo}`} alt="" width={56} height={56} style={{ borderRadius: 14 }} />
             <span style={{ fontSize: 30, fontWeight: 600, letterSpacing: "-0.03em" }}>{site.wordmark}</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
