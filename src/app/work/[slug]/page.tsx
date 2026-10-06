@@ -157,7 +157,7 @@ export default async function CaseStudyPage({ params }: Params) {
               body={project.video.note}
             />
           </Reveal>
-          <Reveal delay={0.08} className="mt-10">
+          <Reveal delay={0.08} className="mt-10 select-none">
             <ProjectVideo video={project.video} name={project.name} />
           </Reveal>
         </Container>

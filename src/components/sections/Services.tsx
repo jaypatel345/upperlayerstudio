@@ -22,7 +22,17 @@ export function Services() {
       title: s.title,
       content: (
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
-          {project ? (
+          {project?.video.src ? (
+            // The clip is a showcase, not a link: no pointer, no click-through.
+            <div className="cursor-default select-none">
+              <ProjectShowcase
+                project={project}
+                className="aspect-[16/10]"
+                showMobile={false}
+                playVideo
+              />
+            </div>
+          ) : project ? (
             <Link
               href={`/work/${project.slug}`}
               aria-label={`${project.name} case study`}

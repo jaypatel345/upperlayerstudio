@@ -1,8 +1,9 @@
+import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import type { Project } from "@/lib/projects";
 
 /**
- * Walkthrough player. Plain <video> with a poster and nothing preloaded, so
- * the clip costs no bandwidth until someone presses play. With no `src` it
+ * Walkthrough clip. Plays muted and looping with no controls once it scrolls
+ * into view, so it reads as a showcase rather than a player. With no `src` it
  * becomes an honest "coming soon" poster rather than a broken player.
  */
 export function ProjectVideo({ video, name }: { video: Project["video"]; name: string }) {
@@ -22,16 +23,16 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
     );
   }
 
+  // A light frame that clips the clip, so no dark fringe shows at the corners.
   return (
-    <video
-      controls
-      playsInline
-      preload="none"
-      poster={video.poster}
-      aria-label={`${name} walkthrough video`}
-      className="aspect-[16/10] w-full rounded-[var(--radius-lg)] border border-line bg-dark object-cover shadow-[var(--shadow-card)]"
-    >
-      <source src={video.src} type="video/mp4" />
-    </video>
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-line bg-white shadow-[var(--shadow-card)]">
+      <AutoplayVideo
+        src={video.src}
+        srcSmall={video.srcSmall}
+        poster={video.poster}
+        label={`${name} walkthrough video`}
+        className="aspect-video"
+      />
+    </div>
   );
 }

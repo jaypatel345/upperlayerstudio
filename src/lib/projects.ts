@@ -49,8 +49,10 @@ export type Project = {
   /**
    * Walkthrough video. Set `src` to "" to show the "coming soon" poster
    * instead; swap in a hosted URL and nothing else needs to change.
+   * `src` is the 1080p cut; `srcSmall` is an optional 720p cut served to
+   * phones and other small screens.
    */
-  video: { src: string; poster: string; note: string };
+  video: { src: string; srcSmall?: string; poster: string; note: string };
 };
 
 export type ScreenGroup = {
@@ -276,9 +278,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${base}/01-home-hero-desktop.png`,
-      note: "A walkthrough from the morning brief to asking Newsbit a question is on the way.",
+      src: `${base}/showcase.mp4`,
+      srcSmall: `${base}/showcase-720.mp4`,
+      poster: `${base}/showcase-poster.jpg`,
+      note: "From the morning brief to asking Newsbit a question, in one minute.",
     },
   },
   {
@@ -491,9 +494,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${px}/01-landing-hero-desktop.png`,
-      note: "A walkthrough of enhancing a prompt end to end is on the way.",
+      src: `${px}/showcase.mp4`,
+      srcSmall: `${px}/showcase-720.mp4`,
+      poster: `${px}/showcase-poster.jpg`,
+      note: "Enhancing a prompt end to end, in one minute.",
     },
   },
   {
@@ -717,9 +721,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${sn}/01-home-hero-desktop.png`,
-      note: "A walkthrough from browsing to checkout and the admin dashboard is on the way.",
+      src: `${sn}/showcase.mp4`,
+      srcSmall: `${sn}/showcase-720.mp4`,
+      poster: `${sn}/showcase-poster.jpg`,
+      note: "From browsing to checkout and the admin dashboard, in one minute.",
     },
   },
   {
@@ -950,9 +955,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${bc}/01-home-hero-desktop.png`,
-      note: "A walkthrough from the first question to the Negotiation Card is on the way.",
+      src: `${bc}/showcase.mp4`,
+      srcSmall: `${bc}/showcase-720.mp4`,
+      poster: `${bc}/showcase-poster.jpg`,
+      note: "From the first question to the Negotiation Card, in one minute.",
     },
   },
   {
@@ -1151,9 +1157,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${ao}/01-landing-hero-desktop.png`,
-      note: "A walkthrough of checking a real offer end to end is on the way.",
+      src: `${ao}/showcase.mp4`,
+      srcSmall: `${ao}/showcase-720.mp4`,
+      poster: `${ao}/showcase-poster.jpg`,
+      note: "Checking a real offer end to end, in one minute.",
     },
   },
   {
@@ -1370,9 +1377,10 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: "",
-      poster: `${fd}/01-dashboard-overview-desktop.png`,
-      note: "A recording of a test call, from the first question to a confirmed booking, is on the way.",
+      src: `${fd}/showcase.mp4`,
+      srcSmall: `${fd}/showcase-720.mp4`,
+      poster: `${fd}/showcase-poster.jpg`,
+      note: "A test call, from the first question to a confirmed booking, in one minute.",
     },
   },
 ];
