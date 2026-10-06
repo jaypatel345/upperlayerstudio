@@ -183,4 +183,14 @@ export const contact = {
     body: "Send over the problem and a couple of times that suit you, and I'll come back with a time or with questions.",
     responseNote: "I answer every email myself, usually within one working day.",
   },
+  form: {
+    title: "Tell me about the project",
+    body: "A few lines is enough. You'll get a reply in your inbox within a minute, with a link to book the call.",
+    placeholder: "What's slowing the business down, and what you'd like to happen instead.",
+    submit: "Send enquiry",
+    pending: "Sending…",
+    sentTitle: "Thanks — that's with me.",
+    sentBody: "Check your inbox: a reply with next steps and a booking link is on its way.",
+    fallback: "That didn't go through. Please email the studio directly:",
+  },
 };

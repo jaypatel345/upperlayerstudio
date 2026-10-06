@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import { BookingPanel } from "@/components/sections/BookingPanel";
+import { ContactForm } from "@/components/sections/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { contact } from "@/lib/pages";
@@ -11,8 +12,9 @@ export const metadata: Metadata = pageMeta({ title: contact.meta.title, descript
 
 /**
  * Mirrors the reference's book-a-call page: a left-aligned reading column with
- * the headline, one line of copy, a sky banner and the email fallback, then the
- * scheduler at full width beneath it. Nothing else competes with the call.
+ * the headline, one line of copy, a sky banner, a short project form (feeds the
+ * AI lead agent) and the email fallback, then the scheduler at full width
+ * beneath it.
  */
 export default function ContactPage() {
   const delay = (s: number) => ({ "--rise-delay": `${s}s` }) as React.CSSProperties;
@@ -39,6 +41,10 @@ export default function ContactPage() {
             sizes="(min-width: 768px) 680px, 100vw"
             className="object-cover object-[center_55%]"
           />
+        </div>
+
+        <div className="rise mt-6" style={delay(0.2)}>
+          <ContactForm />
         </div>
 
         <section className="rise mt-6 rounded-lg bg-tint p-6" style={delay(0.24)}>

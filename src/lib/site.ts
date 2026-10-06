@@ -48,7 +48,7 @@ export const site = {
    * of an iframe pointing nowhere. Setting this is the only step needed to put
    * live booking on the site.
    */
-  scheduler: "https://cal.com/jaypatel345/upper-layer-studio-discovery-call",
+  scheduler: "https://cal.com/jay-patel-znqgcm/discovery-call",
   socials: [
     { label: "X.com", href: "https://x.com/UpperLayerAI" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/jaypatel3405/" },
