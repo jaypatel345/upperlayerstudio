@@ -38,7 +38,7 @@ export const posts: Post[] = [
     date: "2026-09-24",
     readingTime: "4 min read",
     topic: "Automation",
-    cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/04-n8n-lead-intake-desktop.png" },
+    cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/04-n8n-lead-intake-desktop.webp" },
     sections: [
       {
         paragraphs: [
@@ -87,7 +87,7 @@ export const posts: Post[] = [
     date: "2026-09-17",
     readingTime: "3 min read",
     topic: "Working with AI",
-    cover: { project: "promptx", src: "/work/promptx/05-model-picker-desktop.png" },
+    cover: { project: "promptx", src: "/work/promptx/05-model-picker-desktop.webp" },
     sections: [
       {
         paragraphs: [
@@ -126,7 +126,7 @@ export const posts: Post[] = [
     date: "2026-09-10",
     readingTime: "4 min read",
     topic: "Voice AI",
-    cover: { project: "frontdeskai", src: "/work/frontdeskai/01-dashboard-overview-desktop.png" },
+    cover: { project: "frontdeskai", src: "/work/frontdeskai/01-dashboard-overview-desktop.webp" },
     sections: [
       {
         paragraphs: [

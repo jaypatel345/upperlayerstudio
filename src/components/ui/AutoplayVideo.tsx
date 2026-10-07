@@ -6,11 +6,18 @@ import { cn } from "@/lib/cn";
 
 /**
  * A showcase clip rather than a player: muted, looping, no controls, and it
- * only plays while it is on screen. Nothing loads until the clip is about to
- * scroll into view, and it pauses again once it leaves, so it never costs
- * bandwidth or battery off screen. Given `srcSmall` (a 720p cut), it picks
- * whichever file matches how many real pixels the frame covers, so Retina
- * laptops get the sharp 1080p cut and phones get the light one.
+ * only plays while it is on screen.
+ *
+ * Downloads are kept to the clip in front of the visitor. A clip only starts
+ * fetching when it is about to scroll in, and if it is scrolled well away it
+ * drops its source, which cancels the download. A page with several clips
+ * (the homepage has five) used to buffer them all at once, and the one being
+ * watched stalled for bandwidth.
+ *
+ * Given `srcSmall` (a 720p cut), it uses that unless the frame is wider than
+ * the 720p cut itself or the visitor has asked to save data. The 1080p cut is
+ * twice the size, and these clips are screen recordings shown at well under
+ * full screen, so 720p is what most visitors see.
  *
  * `posterWidth` is the CSS width the frame is usually shown at; the poster is
  * served at twice that for high-density screens.
@@ -38,25 +45,46 @@ export function AutoplayVideo({
 
     let inView = false;
     const sync = () => {
-      if (inView && !document.hidden) {
+      if (inView && !document.hidden && video.getAttribute("src")) {
         video.play().catch(() => {});
       } else {
         video.pause();
       }
     };
 
-    // Start buffering about a screen early, so the clip is ready to play
-    // the moment it arrives instead of stalling on a blank poster.
-    const warm = new IntersectionObserver(
+    const pick = () => {
+      if (!srcSmall) return src;
+      const conn = (navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }).connection;
+      const slow = conn?.saveData || /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
+      // CSS pixels: wider than the 720p cut's own width is where 1080p shows.
+      return !slow && video.clientWidth > 1280 ? src : srcSmall;
+    };
+
+    // Fetch when the clip is about a quarter-screen away; drop it again once
+    // it is more than half a screen away, so off-screen clips stop downloading.
+    const near = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
-        // 720p is 1280px wide; past that, the 1080p cut is visibly sharper.
-        const pixels = video.clientWidth * (window.devicePixelRatio || 1);
-        video.src = srcSmall && pixels <= 1280 ? srcSmall : src;
-        video.preload = "auto";
-        warm.disconnect();
+        if (entry.isIntersecting) {
+          if (video.getAttribute("src")) return;
+          video.src = pick();
+          video.preload = "auto";
+          sync();
+        }
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "25% 0px" },
+    );
+
+    const far = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting || !video.getAttribute("src")) return;
+        video.pause();
+        video.removeAttribute("src");
+        video.preload = "none";
+        video.load();
+      },
+      { rootMargin: "60% 0px" },
     );
 
     const observer = new IntersectionObserver(
@@ -67,10 +95,13 @@ export function AutoplayVideo({
       { threshold: 0.35 },
     );
 
-    // Hold the warm-up until the page has finished loading: a clip near the
+    // Hold any fetching until the page has finished loading: a clip near the
     // fold would otherwise start a multi-MB download that competes with the
     // hero photo for bandwidth on a phone and pushes back LCP.
-    const arm = () => warm.observe(video);
+    const arm = () => {
+      near.observe(video);
+      far.observe(video);
+    };
     if (document.readyState === "complete") arm();
     else window.addEventListener("load", arm, { once: true });
 
@@ -79,7 +110,8 @@ export function AutoplayVideo({
     observer.observe(video);
     return () => {
       window.removeEventListener("load", arm);
-      warm.disconnect();
+      near.disconnect();
+      far.disconnect();
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
     };

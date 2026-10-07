@@ -16,6 +16,23 @@ const nextConfig: NextConfig = {
     // 1920 hero. 1440 and 1600 fill that gap.
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1600, 1920, 2048, 3840],
   },
+  // Case-study media and the photos change rarely, but public/ files aren't
+  // content-hashed, so the default asks the browser to re-check them every
+  // visit. A week in the browser, served stale while it re-checks after that;
+  // rename a file to replace it sooner.
+  async headers() {
+    const cache = [
+      {
+        key: "Cache-Control",
+        value: "public, max-age=604800, stale-while-revalidate=86400",
+      },
+    ];
+    // Media files only: /work/<slug> is also a page, and that must stay fresh.
+    return [
+      { source: "/work/:file(.+\\.(?:webp|mp4|jpg))", headers: cache },
+      { source: "/hero/:file(.+\\.jpg)", headers: cache },
+    ];
+  },
 };
 
 export default nextConfig;
