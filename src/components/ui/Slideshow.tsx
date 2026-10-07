@@ -65,6 +65,29 @@ export function Slideshow({
     setIndex(wrap(index));
   };
 
+  // Once the gallery is near the screen, fetch every slide's image rather
+  // than waiting for each to be dragged into view, so browsing feels instant.
+  // The three copies share URLs, so this is one download per slide.
+  useEffect(() => {
+    const track = trackRef.current;
+    const area = areaRef.current;
+    if (!track || !area) return;
+    // Watch the frame, not the track: the track is translated sideways, so
+    // its own box is usually off screen.
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        track.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((img) => {
+          img.loading = "eager";
+        });
+        io.disconnect();
+      },
+      { rootMargin: "50% 0px" },
+    );
+    io.observe(area);
+    return () => io.disconnect();
+  }, []);
+
   // Re-enable the transition on the frame after a silent jump.
   useEffect(() => {
     if (animate) return;
