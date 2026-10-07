@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { SkyPlate } from "@/components/ui/SkyPlate";
+import { PostCover } from "@/components/sections/PostCover";
 import { posts } from "@/lib/insights";
 
 const formatDate = (iso: string) =>
@@ -10,7 +10,7 @@ const formatDate = (iso: string) =>
     new Date(iso),
   );
 
-/** Article index. Cards carry a sky plate so the page reads as imagery first. */
+/** Article index. Each card leads with a screenshot from the case study it draws on. */
 export function PostGrid() {
   return (
     <Section tone="white" pad="lg">
@@ -22,7 +22,11 @@ export function PostGrid() {
                 href={`/insights/${post.slug}`}
                 className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-line bg-white transition-all duration-300 ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[var(--shadow-card)]"
               >
-                <SkyPlate variant={post.sky} className="aspect-[16/10] w-full" />
+                <PostCover
+                  post={post}
+                  sizes="(min-width: 1024px) 300px, (min-width: 768px) 38vw, 80vw"
+                  className="aspect-[16/10] w-full border-b border-line"
+                />
 
                 <div className="flex flex-1 flex-col p-6 sm:p-7">
                   <p className="text-[13px] text-faint">

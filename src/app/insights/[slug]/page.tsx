@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { SkyPlate } from "@/components/ui/SkyPlate";
+import { PostCover, resolveCover } from "@/components/sections/PostCover";
 import { CTA } from "@/components/sections/CTA";
 import { postBySlug, posts } from "@/lib/insights";
 import { site } from "@/lib/site";
@@ -43,6 +43,7 @@ export default async function PostPage({ params }: Params) {
   const { slug } = await params;
   const post = postBySlug(slug);
   if (!post) notFound();
+  const cover = resolveCover(post);
 
   const more = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
@@ -82,7 +83,24 @@ export default async function PostPage({ params }: Params) {
       </section>
 
       <Container size="text" className="pt-10 sm:pt-14">
-        <SkyPlate variant={post.sky} className="aspect-[2/1] rounded-[var(--radius-lg)]" />
+        <PostCover
+          post={post}
+          priority
+          sizes="(min-width: 840px) 520px, 64vw"
+          className="aspect-[2/1] rounded-[var(--radius-lg)]"
+          shotClassName="w-[64%]"
+        />
+        {cover && (
+          <p className="mt-3 text-[13px] text-muted">
+            {cover.shot.caption}, from{" "}
+            <Link
+              href={`/work/${cover.project.slug}`}
+              className="font-medium text-ink underline-offset-4 hover:underline"
+            >
+              the {cover.project.name} case study
+            </Link>
+          </p>
+        )}
       </Container>
 
       <Section tone="white" pad="md">

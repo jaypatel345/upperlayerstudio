@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
-import { SkyPlate } from "@/components/ui/SkyPlate";
+import { ServiceProof } from "@/components/sections/ServiceProof";
 import type { ServiceDetail } from "@/lib/services";
 
 /**
@@ -12,10 +12,10 @@ import type { ServiceDetail } from "@/lib/services";
  */
 export function ServiceDeliverables({
   deliverables,
-  art,
+  proof,
 }: {
   deliverables: ServiceDetail["deliverables"];
-  art: ServiceDetail["art"];
+  proof: ServiceDetail["proof"];
 }) {
   return (
     <Section tone="white" pad="lg">
@@ -28,11 +28,7 @@ export function ServiceDeliverables({
                 title={deliverables.title}
                 body={deliverables.body}
               />
-              <SkyPlate
-                variant={art.sky}
-                label={art.label}
-                className="mt-10 hidden aspect-[16/10] rounded-[var(--radius-card)] lg:block"
-              />
+              <ServiceProof slug={proof} className="mt-10 hidden lg:block" />
             </div>
           </Reveal>
 
@@ -47,6 +43,11 @@ export function ServiceDeliverables({
               </Reveal>
             ))}
           </div>
+
+          {/* On phones the proof follows the list instead of leading it */}
+          <Reveal className="lg:hidden">
+            <ServiceProof slug={proof} posterWidth={375} />
+          </Reveal>
         </div>
       </Container>
     </Section>

@@ -23,9 +23,8 @@ export const work = {
   },
   hero: {
     eyebrow: "Selected work",
-    headline: { lead: "The studio is new.", trail: "The standard isn't." },
-    body: "There are no client case studies here yet, and I'm not going to dress my own projects up as client results to fill the gap. What follows is what's actually real: products I've built and shipped myself, what a client case study will contain when the first one lands, and how I structure projects so being early costs you nothing.",
-    tags: ["Honest about what's missing", "Fixed fee", "You own everything"],
+    title: "Work",
+    body: "Products I've built and shipped myself, each one live or open to inspect. None of it is client work yet, and each case study says exactly what it was built as.",
   },
 
   standIn: {

@@ -216,22 +216,22 @@ export const process = {
   eyebrow: "The studio",
   title: "Meet Upper Layer",
   body:
-    "I lead strategy and build on every project directly, bringing in specialist designers and engineers when a scope calls for it. We establish what needs to change, preserve what already works, and agree the scope around that need.",
+    "I scope, build and ship every project myself, so the person you brief is the person writing the code. I start with the one workflow that's costing you the most time, prove it in working software on the tools you already use, and only grow the scope once it's paying for itself.",
   steps: [
     {
       n: "01",
-      title: "Agree what needs to change",
-      body: "I review the brief, map your current workflow, preserve what works, and define the deliverables, responsibilities and fee.",
+      title: "Find the workflow worth fixing first",
+      body: "I map how the work happens today, keep what already works, and pick the highest-leverage fix. You get the deliverables and a fixed fee in writing before anything starts.",
     },
     {
       n: "02",
-      title: "Review the direction before full build",
-      body: "You assess a working prototype against the agreed brief while changes are still cheap and focused.",
+      title: "Review it working, on your own tools",
+      body: "You test a working prototype connected to your real systems, with a person approving anything that reaches a customer, while changes are still cheap.",
     },
     {
       n: "03",
-      title: "Ship the scope and hand over",
-      body: "I deploy into your environment, document it, and give your team the access, runbooks and guidance to own it.",
+      title: "Ship it and hand over the keys",
+      body: "I deploy into your accounts with logging and alerts, document it, and walk your team through it. You own the code, prompts and infrastructure from day one.",
     },
   ],
   founder: {

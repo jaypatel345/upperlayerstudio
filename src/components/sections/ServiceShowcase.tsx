@@ -3,11 +3,11 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { SkyPlate } from "@/components/ui/SkyPlate";
+import { ServiceProof } from "@/components/sections/ServiceProof";
 import { serviceDetails, servicesIndex } from "@/lib/services";
 
 /**
- * The /services index proper: each service as an alternating art-plate / copy
+ * The /services index proper: each service as an alternating proof-video / copy
  * row on dark, mirroring the reference's "what we do" block.
  *
  * Each row carries an id so the nav's /services#automation style anchors land
@@ -34,14 +34,11 @@ export function ServiceShowcase() {
                 id={s.slug}
                 className="grid scroll-mt-24 items-center gap-8 rounded-[var(--radius-lg)] border border-line-light bg-[rgba(255,255,255,0.03)] p-5 sm:p-6 lg:grid-cols-2 lg:gap-12 lg:p-7"
               >
-                {/* Art plate alternates side on desktop so the page has rhythm */}
-                <SkyPlate
-                  variant={s.art.sky}
-                  label={s.art.label}
-                  className={[
-                    "aspect-[16/10] rounded-[var(--radius-card)]",
-                    i % 2 === 1 ? "lg:order-2" : "",
-                  ].join(" ")}
+                {/* Proof video alternates side on desktop so the page has rhythm */}
+                <ServiceProof
+                  slug={s.proof}
+                  tone="dark"
+                  className={i % 2 === 1 ? "lg:order-2" : undefined}
                 />
 
                 <div className="lg:px-4">

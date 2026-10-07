@@ -29,6 +29,8 @@ export type ServiceDetail = {
   blurb: string;
   /** Sky plate standing in for service artwork — see SkyPlate */
   art: { sky: SkyVariant; label: string };
+  /** Slug of the case study whose walkthrough video proves this service */
+  proof: string;
   meta: { title: string; description: string };
   hero: {
     headline: { lead: string; trail: string };
@@ -55,6 +57,7 @@ export const serviceDetails: ServiceDetail[] = [
     name: "AI Automation",
     blurb: "Workflows that run without you",
     art: { sky: "clear", label: "Automation" },
+    proof: "ai-lead-agent",
     meta: {
       title: "AI Automation Services & Workflow Automation",
       description:
@@ -152,6 +155,7 @@ export const serviceDetails: ServiceDetail[] = [
     name: "Voice AI",
     blurb: "Agents that answer the phone",
     art: { sky: "deep", label: "Voice" },
+    proof: "frontdeskai",
     meta: {
       title: "Voice AI Agents & AI Phone Receptionist",
       description:
@@ -249,6 +253,7 @@ export const serviceDetails: ServiceDetail[] = [
     name: "AI Agents",
     blurb: "Custom agents wired into your stack",
     art: { sky: "dusk", label: "Agents" },
+    proof: "aslioffer",
     meta: {
       title: "Custom AI Agents & RAG Assistants",
       description:
@@ -346,6 +351,7 @@ export const serviceDetails: ServiceDetail[] = [
     name: "Product Build",
     blurb: "From prototype to production",
     art: { sky: "cumulus", label: "Product" },
+    proof: "newsbit",
     meta: {
       title: "AI Product Development",
       description:

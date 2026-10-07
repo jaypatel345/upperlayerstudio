@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: Params) {
         secondary={{ label: "See all services", href: "/services" }}
       />
       <ServiceProblem problem={service.problem} />
-      <ServiceDeliverables deliverables={service.deliverables} art={service.art} />
+      <ServiceDeliverables deliverables={service.deliverables} proof={service.proof} />
       <ServiceProcess />
       <ServiceFAQ items={service.faqs} />
       <RelatedServices

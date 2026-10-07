@@ -53,12 +53,12 @@ export default function ContactPage() {
         <section id="enquiry" className="mt-16 max-w-[680px] scroll-mt-24">
           <div className="relative h-[160px] overflow-hidden rounded-lg">
             <Image
-              src="/hero/mountain-lake-4k.jpg"
+              src="/hero/cta-hills-4k.jpg"
               alt=""
               fill
               sizes="(min-width: 768px) 680px, 100vw"
               quality={90}
-              className="object-cover object-[center_55%]"
+              className="object-cover object-[center_90%]"
             />
           </div>
           <div className="mt-6">

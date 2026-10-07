@@ -10,7 +10,6 @@
  * template controls the typography and nothing can drift.
  */
 
-import type { SkyVariant } from "@/components/ui/SkyPlate";
 
 export type PostSection = { heading?: string; paragraphs: string[]; list?: string[] };
 
@@ -22,7 +21,11 @@ export type Post = {
   date: string;
   readingTime: string;
   topic: string;
-  sky: SkyVariant;
+  /**
+   * Cover screenshot, borrowed from the case study the article draws on:
+   * the project's slug and the shot's src, both as they appear in projects.ts.
+   */
+  cover: { project: string; src: string };
   sections: PostSection[];
 };
 
@@ -35,7 +38,7 @@ export const posts: Post[] = [
     date: "2026-09-24",
     readingTime: "4 min read",
     topic: "Automation",
-    sky: "clear",
+    cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/04-n8n-lead-intake-desktop.png" },
     sections: [
       {
         paragraphs: [
@@ -84,7 +87,7 @@ export const posts: Post[] = [
     date: "2026-09-17",
     readingTime: "3 min read",
     topic: "Working with AI",
-    sky: "high",
+    cover: { project: "promptx", src: "/work/promptx/05-model-picker-desktop.png" },
     sections: [
       {
         paragraphs: [
@@ -123,7 +126,7 @@ export const posts: Post[] = [
     date: "2026-09-10",
     readingTime: "4 min read",
     topic: "Voice AI",
-    sky: "deep",
+    cover: { project: "frontdeskai", src: "/work/frontdeskai/01-dashboard-overview-desktop.png" },
     sections: [
       {
         paragraphs: [
@@ -188,7 +191,8 @@ export type LabEntry = {
   kind: string;
   body: string;
   detail: string;
-  sky: SkyVariant;
+  /** Which live demo fills the entry's tile on /lab */
+  demo: "marquee" | "copy" | "docs";
 };
 
 export const lab = {
@@ -198,44 +202,32 @@ export const lab = {
       "Experiments and internal tools from Upper Layer Studio — the techniques behind the studio's own site and tooling, written up in full.",
   },
   hero: {
-    eyebrow: "The Lab",
-    headline: { lead: "Things built", trail: "to find out" },
-    body: "The Lab is where studio work that isn't a client project goes: techniques worth keeping, problems worth writing down, and tools built because the alternative was doing something by hand twice.",
-    tags: ["Open techniques", "Built in public", "No client data"],
+    eyebrow: "Experiments and internal tools",
+    title: "The Lab",
+    body: "Studio work that isn't a client project: techniques worth keeping, problems worth writing down, and tools built because the alternative was doing something by hand twice. Each tile is the real thing running, not a picture of it.",
   },
-  intro: {
-    eyebrow: "What's in here",
-    title: "Small things, solved properly",
-    body: "None of this is a product. It's the working-out — published because a studio with no client case studies yet should at least show its hands.",
-  },
+
   entries: [
-    {
-      title: "A sky with no photograph in it",
-      kind: "Technique",
-      body: "Every piece of imagery on this site is built from layered CSS gradients rather than a photo: a base wash, a stack of cloud radials, one blurred pass to keep the edges atmospheric, and a noise overlay to stop wide screens banding.",
-      detail: "Six variants, zero image bytes, no pixelation at any size, and the whole system recolours from design tokens instead of fighting them.",
-      sky: "cumulus",
-    },
     {
       title: "The marquee that didn't loop",
       kind: "Bug write-up",
       body: "The logo strip scrolls a duplicated list and translates by exactly -50%, so one loop travels the width of one copy. That copy measured 1,033px while the strip spans the full viewport — so on any wider screen the names ran out before the reset and left a visible gap.",
       detail: "The fix isn't a faster animation, it's more repeats: enough that one loop distance always exceeds the screen. Duration scales with the repeat count so the speed never changes.",
-      sky: "haze",
+      demo: "marquee",
     },
     {
       title: "Copy that lives in one file",
       kind: "Architecture",
       body: "No string on this site is written inside a component. Everything resolves to a typed content layer, which means the voice can be audited in one place and a service page is an object rather than a route.",
       detail: "Adding a fifth service means adding data, not building a page. The template, the metadata, the nav entry and the related-service links all follow from it.",
-      sky: "high",
+      demo: "copy",
     },
     {
       title: "Reading the docs that shipped with the framework",
       kind: "Practice",
       body: "This site runs on a Next.js version newer than most training data, where conventions have genuinely changed. The project instructs any agent working on it to read the docs bundled inside the installed package before writing a line.",
       detail: "It costs two minutes and it is the difference between code that matches the framework you actually installed and code that matches the one that was current eighteen months ago.",
-      sky: "dusk",
+      demo: "docs",
     },
   ] as LabEntry[],
 };

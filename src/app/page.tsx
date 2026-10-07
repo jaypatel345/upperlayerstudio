@@ -5,7 +5,7 @@ import { Hero } from "@/components/sections/Hero";
 import { LogoStrip } from "@/components/sections/LogoStrip";
 import { Services } from "@/components/sections/Services";
 import { TwoUp } from "@/components/sections/TwoUp";
-import { SelectedWork } from "@/components/sections/SelectedWork";
+import { HomeWork } from "@/components/sections/HomeWork";
 import { Studio } from "@/components/sections/Studio";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
@@ -22,7 +22,7 @@ export default function Home() {
       <LogoStrip />
       <Services />
       <TwoUp />
-      <SelectedWork />
+      <HomeWork />
       {/* Testimonials slot in here later */}
       <Studio />
       <FAQ />
