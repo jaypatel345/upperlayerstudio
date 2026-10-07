@@ -89,8 +89,9 @@
   /* Frosted panel used by the nav and hero cards */
   .glass {
     background: rgba(255, 255, 255, 0.82);
+    /* Unprefixed only: the CSS build adds -webkit- itself, and listing both made
+       it drop the standard one, so Chromium got no blur at all. */
     backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
   }
 
   .text-balance { text-wrap: balance; }

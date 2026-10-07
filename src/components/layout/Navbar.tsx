@@ -10,19 +10,11 @@ import { nav, site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeMenu = nav.find((item) => item.label === openMenu && "children" in item) as
     | Extract<(typeof nav)[number], { children: unknown }>
     | undefined;
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (!openMenu) return;
@@ -42,7 +34,10 @@ export function Navbar() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-[var(--ease-out-soft)]",
-        scrolled ? "glass border-b border-line" : "bg-transparent border-b border-transparent",
+        // Light see-through frost in every state (BrightStudios' nav): a soft
+        // white gradient, a gentle blur, and glassy edge highlights
+        "bg-[linear-gradient(125deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.62)_45%,rgba(247,251,253,0.7)_100%)] backdrop-blur-[5px] backdrop-saturate-[1.18]",
+        "shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_8px_32px_rgba(31,50,61,0.06)]",
       )}
       onMouseLeave={() => setOpenMenu(null)}
     >
@@ -129,7 +124,7 @@ export function Navbar() {
             className="absolute inset-x-0 top-full mx-auto hidden w-full px-5 pt-3 lg:block"
             style={{ maxWidth: activeMenu.children.length > 2 ? 840 : 600 }}
           >
-            <div className="rounded-2xl bg-[linear-gradient(125deg,rgba(255,255,255,0.98)_0%,rgba(250,252,255,0.96)_55%,rgba(245,249,254,0.96)_100%)] px-5 pt-5 pb-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_10px_36px_rgba(30,70,120,0.1)] backdrop-blur-[18px] backdrop-saturate-[1.12]">
+            <div className="rounded-2xl bg-white/98 bg-[linear-gradient(125deg,rgba(255,255,255,0.996),rgba(255,255,255,0.98))] px-5 pt-5 pb-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_8px_32px_rgba(31,50,61,0.06)] backdrop-blur-[18px] backdrop-saturate-[1.12]">
               <div className="flex items-center justify-between px-1">
                 <p className="text-[13px] text-muted">{activeMenu.label}</p>
                 <button
@@ -156,7 +151,7 @@ export function Navbar() {
                     key={child.label}
                     href={child.href}
                     onClick={() => setOpenMenu(null)}
-                    className="group flex min-h-[120px] flex-col rounded-lg bg-[#f1f6fb] p-4 shadow-[inset_0_0_0_1px_rgba(30,70,120,0.06)] transition-[background-color,box-shadow] duration-200 hover:bg-[#e8f1fa] hover:shadow-[inset_0_0_0_1px_rgba(74,143,224,0.18)]"
+                    className="group flex min-h-[120px] flex-col rounded-lg bg-[#f2f6f8] p-4 transition-colors duration-200 hover:bg-[#e9eff3]"
                   >
                     <span className="flex items-start justify-between gap-3">
                       <span className="text-[16px] leading-[1.5] text-ink">{child.label}</span>
@@ -201,7 +196,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="h-[calc(100dvh-60px)] overflow-y-auto border-t border-line bg-surface lg:hidden"
+            className="h-[calc(100dvh-60px)] overflow-y-auto border-t border-white/70 bg-white/98 backdrop-blur-[18px] backdrop-saturate-[1.12] lg:hidden"
           >
             <Container className="py-6">
               {nav.map((item) => (

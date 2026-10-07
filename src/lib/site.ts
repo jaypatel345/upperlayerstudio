@@ -88,10 +88,10 @@ export const nav = [
 ] as const;
 
 export const hero = {
-  badge: "AI automation, voice agents and AI products",
+  badge: "AI automation, AI voice & product",
   headline: { lead: "Automate the work", trail: "that's slowing you down" },
   body:
-    "I start with the work that repeats — the manual workflows, the missed calls, the copy-paste between tools — and replace it with systems that run on their own. Once those are earning their keep, I turn them into software you own outright.",
+    "I start with the work that repeats — the manual workflows, the missed calls, the copy‑paste between tools — and replace it with systems that run on their own. Once those are earning their keep, I turn them into software you own outright.",
   primary: { label: "Book a call", href: site.book },
   secondary: { label: "See what I build", href: "#services" },
   stat: {

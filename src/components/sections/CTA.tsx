@@ -8,8 +8,8 @@ import { cta } from "@/lib/site";
 import { cn } from "@/lib/cn";
 
 /**
- * Closing call to action: a frosted glass card over the hero's cloud photo, so
- * the page ends on the sky it opened with. The photo is masked at the top and
+ * Closing call to action: a frosted glass card over a hills-and-sky photo,
+ * so the page ends on open sky and landscape. The photo is masked at the top and
  * bottom to dissolve into the white sections either side instead of starting
  * on a hard edge.
  *
@@ -21,20 +21,22 @@ export function CTA({ after = "white" }: { after?: "white" | "tint" }) {
     <section
       id="book-a-call"
       className={cn(
-        "relative isolate overflow-hidden py-20 sm:py-[88px]",
+        // 600px tall like BrightStudios' closing image; the card sits centred in it
+        "relative isolate flex min-h-[600px] items-center overflow-hidden py-20 sm:py-[88px]",
         after === "tint" ? "bg-[linear-gradient(180deg,var(--color-tint)_0%,var(--color-surface)_60%)]" : "bg-surface",
       )}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,transparent_0%,#000_12%,#000_84%,transparent_100%)]"
+        className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,transparent_0%,#000_5%,#000_94%,transparent_100%)]"
       >
         <Image
-          src="/hero/sky-1.jpg"
+          src="/hero/cta-hills-4k.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-[center_60%]"
+          quality={90}
+          className="object-cover object-bottom"
         />
       </div>
 
