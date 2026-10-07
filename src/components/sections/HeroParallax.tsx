@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useReducedMotion, useScroll, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 
 /**
  * Scroll depth for the hero photo, after BrightStudios: as the hero scrolls
@@ -21,12 +22,12 @@ export function HeroParallax({ children }: { children: React.ReactNode }) {
   return (
     <div ref={ref} className="absolute inset-0">
       {/* Starts 10% above the box, so the photo sits higher and its lower part shows */}
-      <motion.div
+      <m.div
         className="absolute inset-x-0 -top-[10%] bottom-0 will-change-transform"
         style={reduce ? { scale: 1.025 } : { y, scale }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </div>
   );
 }

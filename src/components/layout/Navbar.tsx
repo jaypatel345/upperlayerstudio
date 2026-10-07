@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Wordmark } from "@/components/ui/Wordmark";
@@ -115,7 +116,7 @@ export function Navbar() {
           around. The pt-3 wrapper bridges the gap so the hover never drops. */}
       <AnimatePresence>
         {activeMenu && (
-          <motion.div
+          <m.div
             key="mega"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,7 +137,7 @@ export function Navbar() {
                 </button>
               </div>
 
-              <motion.div
+              <m.div
                 key={activeMenu.label}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -165,7 +166,7 @@ export function Navbar() {
                     <span className="mt-2 text-[13px] leading-[1.4] text-muted">{child.desc}</span>
                   </Link>
                 ))}
-              </motion.div>
+              </m.div>
 
               <div className="mt-3 flex items-center justify-between px-1 pt-1">
                 <Link
@@ -184,14 +185,14 @@ export function Navbar() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       {/* Mobile sheet */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -228,7 +229,7 @@ export function Navbar() {
                 Book a call
               </Button>
             </Container>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>
