@@ -28,12 +28,16 @@ export function mediaUrl(src: string) {
 }
 
 /**
- * next/image loader: picks the smallest pre-sized WebP at least as wide as
- * the browser asked for. Anything outside /work and /hero, and everything in
- * development, goes through Next's own optimiser as before.
+ * next/image loader. Images go through Next's own optimiser on Vercel: an
+ * uncached image fetched from the R2 bucket could take close to a minute to
+ * start, while Vercel serves small optimised images quickly. Only the large
+ * video files come from R2. Flip USE_R2_IMAGES to serve the pre-sized WebP
+ * variants from the bucket instead (they are uploaded and kept current).
  */
+const USE_R2_IMAGES = false;
+
 export function mediaLoader({ src, width, quality }: ImageLoaderProps) {
-  if (!MEDIA_ORIGIN || !isMedia(src)) {
+  if (!USE_R2_IMAGES || !MEDIA_ORIGIN || !isMedia(src)) {
     return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality ?? 75}`;
   }
   const w = VARIANT_WIDTHS.find((v) => v >= width) ?? VARIANT_WIDTHS[VARIANT_WIDTHS.length - 1];

@@ -13,7 +13,7 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
       <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-dark">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={mediaLoader({ src: video.poster, width: 1280 })}
+          src={mediaLoader({ src: video.poster, width: 1200 })}
           alt=""
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
