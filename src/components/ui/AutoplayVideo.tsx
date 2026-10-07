@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { getImageProps } from "next/image";
 import { cn } from "@/lib/cn";
 
 /**
@@ -61,21 +62,32 @@ export function AutoplayVideo({
       { threshold: 0.35 },
     );
 
+    // Hold the warm-up until the page has finished loading: a clip near the
+    // fold would otherwise start a multi-MB download that competes with the
+    // hero photo for bandwidth on a phone and pushes back LCP.
+    const arm = () => warm.observe(video);
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
+
     // A play() attempted in a background tab is dropped, so retry on return.
     document.addEventListener("visibilitychange", sync);
-    warm.observe(video);
     observer.observe(video);
     return () => {
+      window.removeEventListener("load", arm);
       warm.disconnect();
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
     };
   }, [src, srcSmall]);
 
+  // The poster loads with the page, so send it through the image optimiser:
+  // a 1200px WebP/AVIF instead of the ~100 KB 1920px JPEG it was cut from.
+  const posterSrc = getImageProps({ src: poster, alt: "", width: 600, height: 338, quality: 75 }).props.src;
+
   return (
     <video
       ref={ref}
-      poster={poster}
+      poster={posterSrc}
       muted
       loop
       playsInline

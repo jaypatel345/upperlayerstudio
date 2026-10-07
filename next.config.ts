@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     // 4-hour cache would re-encode every screenshot several times a day.
     // A week keeps them warm; rename a file to bust it sooner.
     minimumCacheTTL: 604800,
+    // AVIF is ~20% smaller than WebP at the same quality, so the hero photo
+    // keeps q90 but arrives lighter; WebP stays as the fallback.
+    formats: ["image/avif", "image/webp"],
   },
 };
 
