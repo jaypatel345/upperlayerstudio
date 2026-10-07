@@ -47,9 +47,15 @@ export function ProjectCard({ project, delay = 0.06 }: { project: Project; delay
               View case study<span className="sr-only">: {project.name}</span>
             </ArrowLink>
             {project.live ? (
-              <ArrowLink href={project.live}>Open the live product</ArrowLink>
+              <ArrowLink href={project.live}>
+                Open the live product<span className="sr-only">: {project.name}</span>
+              </ArrowLink>
             ) : (
-              project.repo && <ArrowLink href={project.repo}>View the source</ArrowLink>
+              project.repo && (
+                <ArrowLink href={project.repo}>
+                  View the source<span className="sr-only">: {project.name}</span>
+                </ArrowLink>
+              )
             )}
           </div>
         </div>
