@@ -9,6 +9,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { SkyPlate } from "@/components/ui/SkyPlate";
 import { ProjectShowcase } from "@/components/sections/ProjectShowcase";
+import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import { services } from "@/lib/site";
 import { projects } from "@/lib/projects";
 
@@ -23,13 +24,15 @@ export function Services() {
       content: (
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
           {project?.video.src ? (
-            // The clip is a showcase, not a link: no pointer, no click-through.
-            <div className="cursor-default select-none">
-              <ProjectShowcase
-                project={project}
-                className="aspect-[16/10]"
-                showMobile={false}
-                playVideo
+            // The clip fills the card on its own, with no sky plate behind it.
+            // It is a showcase, not a link: no pointer, no click-through.
+            <div className="cursor-default select-none self-start overflow-hidden rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)]">
+              <AutoplayVideo
+                src={project.video.src}
+                srcSmall={project.video.srcSmall}
+                poster={project.video.poster}
+                label={`${project.name} walkthrough video`}
+                className="aspect-video"
               />
             </div>
           ) : project ? (

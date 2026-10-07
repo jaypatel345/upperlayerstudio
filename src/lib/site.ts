@@ -146,6 +146,7 @@ export const services: {
       ],
       href: "/services/automation",
       art: { sky: "clear", label: "Automation" },
+      project: "ai-lead-agent",
     },
     {
       n: "02",

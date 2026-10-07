@@ -4,9 +4,9 @@
  * Same rules as the rest of the site's copy: first person singular, and every
  * claim is something that can be checked on the live product, the repo or the
  * CI history. Newsbit, PromptX and StyleNest are the studio's own products,
- * Borrower Copilot and FrontDesk AI were built to a written brief, and
- * AsliOffer was a two-person hackathon build; none of them is client work, and
- * the page says so.
+ * Borrower Copilot and FrontDesk AI were built to a written brief, AsliOffer
+ * was a two-person hackathon build, and the AI Lead Agent is the studio's own
+ * lead pipeline; none of them is client work, and the page says so.
  *
  * Adding a project: append to `projects`. The card, the case study route and
  * the static params all derive from this one list.
@@ -34,6 +34,7 @@ export type Project = {
   art: SkyVariant;
   /** Live URL, or "" when there is no public deployment */
   live: string;
+  /** Source repo, or "" when the code is private */
   repo: string;
   meta: { label: string; value: string }[];
   problem: string;
@@ -69,6 +70,7 @@ const sn = "/work/stylenest";
 const bc = "/work/borrower-copilot";
 const ao = "/work/aslioffer";
 const fd = "/work/frontdeskai";
+const al = "/work/ai-agent-lead";
 
 export const projects: Project[] = [
   {
@@ -1381,6 +1383,212 @@ export const projects: Project[] = [
       srcSmall: `${fd}/showcase-720.mp4`,
       poster: `${fd}/showcase-poster.jpg`,
       note: "A test call, from the first question to a confirmed booking, in one minute.",
+    },
+  },
+  {
+    slug: "ai-lead-agent",
+    name: "AI Lead Agent",
+    kind: "Lead automation",
+    service: "AI Automation",
+    summary:
+      "Three n8n workflows that answer every website enquiry in under a minute: they score the lead with Gemini, log it in HubSpot, send a reply written for that lead, brief me before the call and follow up until the lead books. It runs on free tiers for $0 a month.",
+    art: "clear",
+    live: "https://upperlayerstudio.com/contact",
+    repo: "",
+    meta: [
+      { label: "Type", value: "The studio's own lead pipeline" },
+      { label: "Role", value: "Workflows, prompts, integrations, site form" },
+      { label: "Status", value: "Live behind this site's contact form" },
+      { label: "Service", value: "AI Automation" },
+    ],
+    problem:
+      "Small service businesses lose leads between “form submitted” and “someone replies”. The enquiry sits in an inbox for hours, nobody records it, the owner can't tell a serious buyer from a spammer, and if the lead doesn't book straight away nobody follows up.",
+    built:
+      "The AI Lead Agent is three n8n workflows behind the “Prefer to write first?” form on this site. Lead Intake scores each enquiry with Gemini, writes it to HubSpot, emails a reply that restates what the lead asked for with a booking link, and pings me on Telegram when a lead is hot. Booking catches the Cal.com webhook, moves the contact to “Call Booked” and sends me a pre-call brief. Follow-up runs every hour and nudges warm and hot leads who haven't booked, twice, before moving them to Nurture. Everything runs on free tiers. The leads in these screens are my own test enquiries; “Priya Mehta” and BrightSmile Dental are a sample lead, not a client.",
+    features: [
+      {
+        title: "A reply in seconds, not hours",
+        body: "Hot and warm leads get an email written for them: it restates their problem in plain words, asks one concrete question and links to the booking page. The visitor sees “Thanks” in about half a second while the rest runs in the background.",
+      },
+      {
+        title: "Scored by the model, tiered by code",
+        body: "Gemini returns a score, intent, budget, urgency and a summary as strict JSON. A code node applies the rule itself: 70 and up is hot, 40 to 69 warm, under 40 cold, and spam is always cold and never emailed.",
+      },
+      {
+        title: "Every lead lands in the CRM",
+        body: "A HubSpot upsert keyed on email writes the contact with eight custom fields: score, tier, stage, service fit, AI summary, source, follow-ups sent and last contacted.",
+      },
+      {
+        title: "A brief before every call",
+        body: "When a lead books on Cal.com, Gemini writes a pre-call brief from the stored summary, with what they want, what to ask and the angle to lead with, and sends it to my Telegram.",
+      },
+      {
+        title: "Follow-up that knows when to stop",
+        body: "Open leads get a nudge after 24 hours and a second, with a link to my work, 48 hours later. Silent leads move to Nurture with no more email, and a lead who books gets none.",
+      },
+      {
+        title: "Honest by rule",
+        body: "Every writing prompt carries a rule never to invent clients, results or numbers. An early nudge claimed work for “a similar design firm” that doesn't exist; the rule fixed it in 4 of 4 re-samples.",
+      },
+    ],
+    pipeline: [
+      {
+        title: "Normalise and enrich",
+        body: "Each source maps to one lead shape, and a missing or invalid email is turned away with a 400. If the lead has a company domain or website, its homepage title and description are fetched as context, with a 5-second timeout.",
+      },
+      {
+        title: "Qualify",
+        body: "Gemini scores the lead and code sets the tier. Every Gemini call has a fallback model on its error output, since free-tier 429s and 503s are common, and a reply that can't be parsed defaults the lead to warm so it is never dropped.",
+      },
+      {
+        title: "Log and reply",
+        body: "The contact is upserted into HubSpot, the reply goes out over Gmail, and a hot lead triggers a Telegram alert. Telegram, enrichment and email fail soft, so a broken side channel never blocks the reply or the CRM write.",
+      },
+      {
+        title: "Book and follow up",
+        body: "The Cal.com webhook flips the contact to Call Booked and sends the brief. An hourly run picks up open leads, times nudges from the last email rather than from sign-up, and moves silent leads to Nurture.",
+      },
+    ],
+    stack: [
+      { group: "Orchestration", items: ["n8n (self-hosted, Docker)", "Cloudflare tunnel"] },
+      { group: "AI", items: ["Gemini 3.1 Flash-Lite", "Gemini 3.5 Flash (fallback)"] },
+      { group: "Integrations", items: ["HubSpot Free CRM", "Cal.com", "Gmail SMTP", "Telegram bot"] },
+      { group: "Website", items: ["Next.js 16 Server Action"] },
+    ],
+    result: {
+      stat: "14.0s",
+      label:
+        "average from form submit to reply sent, across 16 test leads; every one under 60 seconds, the slowest 32.6s when the fallback model stepped in",
+      source: "n8n execution history and the repo's metrics script, 6 Oct 2026",
+    },
+    cover: {
+      desktop: {
+        src: `${al}/04-n8n-lead-intake-desktop.png`,
+        alt: "The AI Lead Agent's Lead Intake workflow in n8n, from the webhook through scoring, HubSpot, the reply and the Telegram alert",
+        caption: "The Lead Intake workflow",
+        w: 2880,
+        h: 1800,
+      },
+      mobile: {
+        src: `${al}/10-telegram-brief-mobile.png`,
+        alt: "A pre-call brief from the AI Lead Agent in Telegram",
+        caption: "A pre-call brief on Telegram",
+        w: 1206,
+        h: 2622,
+      },
+    },
+    screens: [
+      {
+        title: "The enquiry",
+        body: "The form on this site's contact page, filled in with a sample lead. The visitor gets a thank-you straight away, and the calendar below is already filled in with their details.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${al}/01-contact-form-desktop.png`,
+            alt: "The “Prefer to write first?” form on upperlayerstudio.com filled in for Priya Mehta of BrightSmile Dental, asking for AI automation for sales calls; the email address is blurred",
+            caption: "A sample lead fills in the form",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/02-form-success-desktop.png`,
+            alt: "The form replaced by “Thanks — that's with me.” and a Pick a time button",
+            caption: "The thank-you, shown about half a second later",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "The three workflows",
+        body: "The workflows as they run in production on n8n.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${al}/03-n8n-workflows-desktop.png`,
+            alt: "n8n's workflow list with AI Lead Agent 01 Lead Intake, 02 Booking and 03 Follow-up, all published",
+            caption: "Lead Intake, Booking and Follow-up, all published",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/04-n8n-lead-intake-desktop.png`,
+            alt: "The Lead Intake workflow: webhook, normalise, email check, website enrichment, Gemini qualify with a fallback, HubSpot upsert, route by tier, reply, email and Telegram alert",
+            caption: "Lead Intake: score, log, reply and alert",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/05-n8n-booking-desktop.png`,
+            alt: "The Booking workflow: Cal.com webhook, find or create the HubSpot contact, set Call Booked, write the pre-call brief with Gemini and a fallback, and send it to Telegram",
+            caption: "Booking: update the CRM and brief me",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/06-n8n-follow-up-desktop.png`,
+            alt: "The Follow-up workflow: an hourly trigger finds open leads, decides, then either writes and sends a nudge or sets the lead to Nurture",
+            caption: "Follow-up: nudge or move to Nurture",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/07-n8n-execution-desktop.png`,
+            alt: "A successful Follow-up execution in n8n on 6 October at 21:00, finished in 1.468 seconds",
+            caption: "An hourly Follow-up run, done in 1.5 seconds",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "What the lead and I get",
+        body: "The reply the agent wrote for the sample lead, and the booking it led to. The test inbox address and the meeting link are blurred.",
+        kind: "desktop",
+        shots: [
+          {
+            src: `${al}/08-gmail-ai-reply-desktop.png`,
+            alt: "The AI-written reply in Gmail: it restates BrightSmile Dental's request, asks which CRM they use and links to a 30-minute discovery call",
+            caption: "The reply, written for this lead",
+            w: 2880,
+            h: 1800,
+          },
+          {
+            src: `${al}/09-calcom-booking-desktop.png`,
+            alt: "A confirmed Cal.com discovery call on Wednesday 7 October 2026, booked from a test enquiry",
+            caption: "The discovery call, booked on Cal.com",
+            w: 2880,
+            h: 1800,
+          },
+        ],
+      },
+      {
+        title: "On my phone",
+        body: "What arrives on Telegram when a call is booked: who it is, what they want, what to ask and how to pitch it.",
+        kind: "phone",
+        shots: [
+          {
+            src: `${al}/10-telegram-brief-mobile.png`,
+            alt: "A Telegram pre-call brief for the sample lead: founder of BrightSmile Dental Clinics, wants AI booking across 4 clinics, with three questions to ask and a pitch angle",
+            caption: "A pre-call brief",
+            w: 1206,
+            h: 2622,
+          },
+          {
+            src: `${al}/11-telegram-booking-brief-mobile.png`,
+            alt: "A second Telegram brief for a booked call about AI automation for sales calls, with questions on call volume, pain points and budget",
+            caption: "The brief for the booked test call",
+            w: 1206,
+            h: 2622,
+          },
+        ],
+      },
+    ],
+    video: {
+      src: `${al}/showcase.mp4`,
+      srcSmall: `${al}/showcase-720.mp4`,
+      poster: `${al}/showcase-poster.jpg`,
+      note: "From the enquiry to the booked call, in one minute.",
     },
   },
 ];

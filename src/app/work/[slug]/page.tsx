@@ -95,9 +95,11 @@ export default async function CaseStudyPage({ params }: Params) {
                 Visit {liveHost} ↗
               </Button>
             )}
-            <Button href={project.repo} size="lg" variant={project.live ? "light" : undefined}>
-              View the source ↗
-            </Button>
+            {project.repo && (
+              <Button href={project.repo} size="lg" variant={project.live ? "light" : undefined}>
+                View the source ↗
+              </Button>
+            )}
           </div>
 
           <dl
