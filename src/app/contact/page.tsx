@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import Image from "next/image";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { BookingPanel } from "@/components/sections/BookingPanel";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { LeadProvider } from "@/components/sections/LeadContext";
@@ -52,7 +52,7 @@ export default function ContactPage() {
 
         <section id="enquiry" className="mt-16 max-w-[680px] scroll-mt-24">
           <div className="relative h-[160px] overflow-hidden rounded-lg">
-            <Image
+            <MediaImage
               src="/hero/cta-hills-4k.jpg"
               alt=""
               fill

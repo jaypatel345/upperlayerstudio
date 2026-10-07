@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Pre-sized images for the R2 media bucket (scripts/build-media.mjs)
+/.media

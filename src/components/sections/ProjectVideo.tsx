@@ -1,4 +1,5 @@
 import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
+import { mediaLoader } from "@/lib/media";
 import type { Project } from "@/lib/projects";
 
 /**
@@ -12,7 +13,7 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
       <div className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-dark">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={video.poster}
+          src={mediaLoader({ src: video.poster, width: 1280 })}
           alt=""
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />

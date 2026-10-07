@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { getImageProps } from "next/image";
 import { cn } from "@/lib/cn";
+import { mediaLoader, mediaUrl } from "@/lib/media";
 
 /**
  * A showcase clip rather than a player: muted, looping, no controls, and it
@@ -53,13 +54,13 @@ export function AutoplayVideo({
     };
 
     const pick = () => {
-      if (!srcSmall) return src;
+      if (!srcSmall) return mediaUrl(src);
       const conn = (navigator as Navigator & {
         connection?: { saveData?: boolean; effectiveType?: string };
       }).connection;
       const slow = conn?.saveData || /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
       // CSS pixels: wider than the 720p cut's own width is where 1080p shows.
-      return !slow && video.clientWidth > 1280 ? src : srcSmall;
+      return mediaUrl(!slow && video.clientWidth > 1280 ? src : srcSmall);
     };
 
     // Fetch when the clip is about a quarter-screen away; drop it again once
@@ -117,9 +118,10 @@ export function AutoplayVideo({
     };
   }, [src, srcSmall]);
 
-  // The poster loads with the page, so send it through the image optimiser:
-  // a WebP/AVIF sized to the frame instead of the ~100 KB 1920px JPEG it was cut from.
+  // The poster loads with the page, so it comes pre-sized: a WebP near the
+  // frame's width instead of the ~100 KB 1920px JPEG it was cut from.
   const posterSrc = getImageProps({
+    loader: mediaLoader,
     src: poster,
     alt: "",
     width: posterWidth,

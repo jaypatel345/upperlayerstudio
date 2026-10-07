@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
@@ -30,7 +30,7 @@ export function CTA({ after = "white" }: { after?: "white" | "tint" }) {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,transparent_0%,#000_5%,#000_94%,transparent_100%)]"
       >
-        <Image
+        <MediaImage
           src="/hero/cta-hills-4k.jpg"
           alt=""
           fill

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { cn } from "@/lib/cn";
 import type { Shot } from "@/lib/projects";
 
@@ -22,7 +22,7 @@ export function Screenshot({
   sizes?: string;
 }) {
   return (
-    <Image
+    <MediaImage
       src={shot.src}
       alt={shot.alt}
       width={shot.w}
@@ -61,7 +61,7 @@ export function PhoneFrame({
         className,
       )}
     >
-      <Image
+      <MediaImage
         src={shot.src}
         alt={shot.alt}
         width={shot.w}

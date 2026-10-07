@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { hero } from "@/lib/site";
-import Image from "next/image";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { HeroParallax } from "./HeroParallax";
 
 // Photo behind the hero. null leaves the hero on the plain page background.
@@ -31,7 +31,7 @@ export function Hero() {
       {HERO_PHOTO && (
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden [mask-image:linear-gradient(180deg,#000_0%,#000_70%,rgba(0,0,0,0.6)_82%,rgba(0,0,0,0.25)_91%,transparent_100%)]">
           <HeroParallax>
-            <Image
+            <MediaImage
               src={HERO_PHOTO}
               alt=""
               fill
