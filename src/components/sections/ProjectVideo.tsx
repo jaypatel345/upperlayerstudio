@@ -31,6 +31,7 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
         srcSmall={video.srcSmall}
         poster={video.poster}
         label={`${name} walkthrough video`}
+        posterWidth={600}
         className="aspect-video"
       />
     </div>

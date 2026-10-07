@@ -44,7 +44,7 @@ export function ProjectCard({ project, delay = 0.06 }: { project: Project; delay
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <ArrowLink href={href} direction="right">
-              View case study
+              View case study<span className="sr-only">: {project.name}</span>
             </ArrowLink>
             {project.live ? (
               <ArrowLink href={project.live}>Open the live product</ArrowLink>

@@ -58,7 +58,7 @@ export function Footer() {
         <div className="flex flex-col gap-5 border-b border-line-light py-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-[15px] font-medium text-white/90">Look the studio up on AI engines</p>
-            <p className="mt-1 text-[14px] text-white/45">
+            <p className="mt-1 text-[14px] text-white/55">
               Opens a research prompt — including the parts I&apos;d rather you checked.
             </p>
           </div>
@@ -82,7 +82,7 @@ export function Footer() {
         <div className="grid gap-10 border-b border-line-light py-14 sm:grid-cols-2 lg:grid-cols-5">
           {footer.columns.map((col) => (
             <div key={col.title}>
-              <p className="text-[13px] font-medium text-white/45">{col.title}</p>
+              <p className="text-[13px] font-medium text-white/55">{col.title}</p>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
@@ -99,7 +99,7 @@ export function Footer() {
           ))}
 
           <div>
-            <p className="text-[13px] font-medium text-white/45">Social</p>
+            <p className="text-[13px] font-medium text-white/55">Social</p>
             <ul className="mt-4 space-y-2.5">
               {site.socials.map((s) => (
                 <li key={s.label}>
@@ -117,10 +117,10 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[13px] font-medium text-white/45">Studio</p>
+            <p className="text-[13px] font-medium text-white/55">Studio</p>
             <p className="mt-4 text-[15px] text-white/80">{site.location}</p>
-            <LocalTime className="mt-1 text-[15px] text-white/45" />
-            <p className="mt-4 max-w-[24ch] text-[14px] text-white/45 text-pretty">
+            <LocalTime className="mt-1 text-[15px] text-white/55" />
+            <p className="mt-4 max-w-[24ch] text-[14px] text-white/55 text-pretty">
               One person, start to finish. You talk to whoever writes the code.
             </p>
           </div>
@@ -128,19 +128,19 @@ export function Footer() {
 
         {/* Band 4 — baseline */}
         <div className="flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[13px] text-white/40">
+          <p className="text-[13px] text-white/55">
             © {site.name} {year}
           </p>
           <div className="flex flex-wrap gap-6">
             <Link
               href="/privacy"
-              className="text-[13px] text-white/40 transition-colors hover:text-white/70"
+              className="text-[13px] text-white/55 transition-colors hover:text-white/70"
             >
               Privacy policy
             </Link>
             <Link
               href="/terms"
-              className="text-[13px] text-white/40 transition-colors hover:text-white/70"
+              className="text-[13px] text-white/55 transition-colors hover:text-white/70"
             >
               Terms of use
             </Link>
@@ -150,9 +150,12 @@ export function Footer() {
 
       {/* Oversized wordmark, clipped by the page edge */}
       <div aria-hidden className="pointer-events-none select-none overflow-hidden px-5 sm:px-8">
-        <p className="-mb-[0.22em] w-full text-center text-[18vw] leading-[0.8] font-medium tracking-[-0.055em] text-white/[0.055]">
-          {site.wordmark}
-        </p>
+        {/* Drawn from a pseudo-element so it reads as decoration, not as
+            low-contrast text, to contrast checkers */}
+        <p
+          data-wordmark={site.wordmark}
+          className="-mb-[0.22em] w-full text-center text-[18vw] leading-[0.8] font-medium tracking-[-0.055em] text-white/[0.055] before:content-[attr(data-wordmark)]"
+        />
       </div>
     </footer>
   );

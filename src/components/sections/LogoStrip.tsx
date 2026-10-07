@@ -44,7 +44,7 @@ export function LogoStrip() {
             <span
               key={`${name}-${i}`}
               aria-hidden={i >= collaborators.length}
-              className="text-[19px] font-medium tracking-[-0.035em] whitespace-nowrap text-[rgba(10,10,10,0.34)] transition-colors duration-300 hover:text-ink"
+              className="text-[19px] font-medium tracking-[-0.035em] whitespace-nowrap text-[rgba(10,10,10,0.58)] transition-colors duration-300 hover:text-ink"
             >
               {name}
             </span>

@@ -11,18 +11,23 @@ import { cn } from "@/lib/cn";
  * bandwidth or battery off screen. Given `srcSmall` (a 720p cut), it picks
  * whichever file matches how many real pixels the frame covers, so Retina
  * laptops get the sharp 1080p cut and phones get the light one.
+ *
+ * `posterWidth` is the CSS width the frame is usually shown at; the poster is
+ * served at twice that for high-density screens.
  */
 export function AutoplayVideo({
   src,
   srcSmall,
   poster,
   label,
+  posterWidth = 375,
   className,
 }: {
   src: string;
   srcSmall?: string;
   poster: string;
   label: string;
+  posterWidth?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
@@ -81,8 +86,14 @@ export function AutoplayVideo({
   }, [src, srcSmall]);
 
   // The poster loads with the page, so send it through the image optimiser:
-  // a 1200px WebP/AVIF instead of the ~100 KB 1920px JPEG it was cut from.
-  const posterSrc = getImageProps({ src: poster, alt: "", width: 600, height: 338, quality: 75 }).props.src;
+  // a WebP/AVIF sized to the frame instead of the ~100 KB 1920px JPEG it was cut from.
+  const posterSrc = getImageProps({
+    src: poster,
+    alt: "",
+    width: posterWidth,
+    height: Math.round((posterWidth * 9) / 16),
+    quality: 75,
+  }).props.src;
 
   return (
     <video
@@ -98,6 +109,9 @@ export function AutoplayVideo({
       aria-label={label}
       onContextMenu={(e) => e.preventDefault()}
       className={cn("pointer-events-none block w-full select-none object-cover", className)}
-    />
+    >
+      {/* The clips have no sound; the track says so for anyone relying on captions */}
+      <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />
+    </video>
   );
 }
