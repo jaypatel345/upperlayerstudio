@@ -1,0 +1,30 @@
+# Warms the US CDN caches once a day by running scripts/warm-cache.mjs on
+# GitHub's US servers. The Indian caches are warmed by a daily job on Jay's
+# Mac, since caches are per region. Run it by hand from the Actions tab
+# ("Run workflow") after a deploy if US visitors matter that day.
+name: Warm CDN cache (US)
+
+on:
+  schedule:
+    # 13:00 UTC is 9:00 US Eastern in summer, 8:00 in winter.
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # The script only reads public/work to list the videos.
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
+            public/work
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/warm-cache.mjs
