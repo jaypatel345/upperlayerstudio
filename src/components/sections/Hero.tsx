@@ -35,12 +35,12 @@ export function Hero() {
               src={HERO_PHOTO}
               alt=""
               fill
-              preload
+              priority
               fetchPriority="high"
               placeholder={HERO_BLUR ? "blur" : "empty"}
               blurDataURL={HERO_BLUR ?? undefined}
               sizes="100vw"
-              quality={90}
+              quality={80}
               className="-scale-x-100 object-cover object-top"
             />
           </HeroParallax>
@@ -66,7 +66,7 @@ export function Hero() {
                 ? "text-[#0b1626]"
                 : ""
           }`}
-          style={delay(0.08)}
+          style={delay(0)}
         >
           <span className="block">{hero.headline.lead}</span>
           <span className={`block ${LIGHT_TEXT ? "text-white" : HERO_PHOTO ? "text-[#0e3a5f]" : "text-[rgba(10,10,10,0.45)]"}`}>{hero.headline.trail}</span>
@@ -80,12 +80,12 @@ export function Hero() {
                 ? "text-[#102233]"
                 : "text-ink-70"
           }`}
-          style={delay(0.16)}
+          style={delay(0.05)}
         >
           {hero.body}
         </p>
 
-        <div className="rise mt-7 flex flex-wrap items-center justify-center gap-3" style={delay(0.24)}>
+        <div className="rise mt-7 flex flex-wrap items-center justify-center gap-3" style={delay(0.1)}>
           <Button href={hero.primary.href} size="lg">
             {hero.primary.label}
           </Button>
@@ -99,7 +99,7 @@ export function Hero() {
       <Container className="relative pb-[70px]">
         <div
           className="rise mx-auto flex max-w-[800px] flex-col gap-5 rounded-[var(--radius-card)] bg-white/94 px-6 py-5 shadow-[var(--shadow-float)] backdrop-blur-sm sm:flex-row sm:items-center sm:gap-5 sm:px-6"
-          style={delay(0.34)}
+          style={delay(0.15)}
         >
           <span className="text-[32px] leading-none font-medium tracking-[-0.035em] sm:text-[36px]">
             {hero.stat.value}

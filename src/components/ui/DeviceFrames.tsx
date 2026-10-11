@@ -28,8 +28,8 @@ export function Screenshot({
       width={shot.w}
       height={shot.h}
       sizes={sizes}
-      quality={90}
-      preload={priority}
+      quality={80}
+      priority={priority}
       className={cn(
         "block h-auto w-full rounded-[12px] shadow-[var(--shadow-float)]",
         className,
@@ -67,8 +67,8 @@ export function PhoneFrame({
         width={shot.w}
         height={shot.h}
         sizes={sizes}
-        quality={90}
-        preload={priority}
+        quality={80}
+        priority={priority}
         className="block h-auto w-full rounded-[22px]"
       />
     </div>

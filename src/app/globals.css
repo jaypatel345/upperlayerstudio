@@ -118,10 +118,10 @@
    paint without waiting on hydration, which keeps LCP low and means the
    headline is never invisible if scripts are slow or blocked. */
 @keyframes rise {
-  from { opacity: 0; transform: translateY(22px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 .rise {
-  animation: rise 0.8s var(--ease-out-soft) both;
+  animation: rise 0.4s var(--ease-out-soft) both;
   animation-delay: var(--rise-delay, 0s);
 }

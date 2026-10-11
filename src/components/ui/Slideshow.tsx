@@ -77,12 +77,16 @@ export function Slideshow({
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        track.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((img) => {
-          img.loading = "eager";
+        // Preload only immediate slides rather than all duplicate copies at once
+        const lazyImgs = track.querySelectorAll<HTMLImageElement>('img[loading="lazy"]');
+        lazyImgs.forEach((img, idx) => {
+          if (idx < 3) {
+            img.loading = "eager";
+          }
         });
         io.disconnect();
       },
-      { rootMargin: "50% 0px" },
+      { rootMargin: "15% 0px" },
     );
     io.observe(area);
     return () => io.disconnect();

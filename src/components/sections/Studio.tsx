@@ -37,7 +37,7 @@ export function Studio() {
                 width={1254}
                 height={1254}
                 sizes="220px"
-                quality={90}
+                quality={80}
                 className="h-[220px] w-[220px] rounded-[var(--radius-card)] object-cover object-top"
               />
               <p className="mt-4 text-[24px] leading-[1.2] font-medium tracking-[-0.03em]">

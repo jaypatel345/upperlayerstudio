@@ -75,9 +75,18 @@ export function siteSchema() {
         "@id": orgId,
         name: site.name,
         url: siteUrl,
-        // The brand logo Google shows in the Knowledge Panel and results
-        logo: absolute("/icon.png"),
-        image: absolute("/opengraph-image"),
+        // Schema.org requires logo to be an ImageObject for rich results
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${siteUrl}/#logo`,
+          url: absolute("/icon.png"),
+          contentUrl: absolute("/icon.png"),
+          caption: site.name,
+        },
+        image: {
+          "@type": "ImageObject",
+          url: absolute("/opengraph-image"),
+        },
         email: site.email,
         slogan: site.tagline,
         description:
@@ -109,7 +118,11 @@ export function siteSchema() {
         "@id": founderId,
         name: process.founder.name,
         jobTitle: "Founder",
-        image: absolute(process.founder.photo.src),
+        url: process.founder.link.href,
+        image: {
+          "@type": "ImageObject",
+          url: absolute(process.founder.photo.src),
+        },
         worksFor: { "@id": orgId },
         sameAs: [process.founder.link.href],
       },

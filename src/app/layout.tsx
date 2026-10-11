@@ -16,12 +16,12 @@ const inter = Inter({
 });
 
 const description =
-  "Upper Layer Studio builds AI automation, voice AI agents, custom AI agents and AI products — taking teams from manual work to software they own. Fixed-fee scope in 48 hours.";
+  "AI automation, voice AI agents and product build for teams worldwide. Fixed-fee scope within 48 hours. Based in India.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} | AI Automation, Voice AI, Agents & Product Build`,
+    default: `AI Automation, Voice AI & Agents | ${site.name}`,
     template: `%s | ${site.name}`,
   },
   description,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "AI studio India",
   ],
   category: "technology",
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: { en: "/" } },
   openGraph: {
     title: `${site.name} | ${site.tagline}`,
     description:
@@ -68,6 +68,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#ffffff",
 };
 
@@ -76,12 +78,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-X3049BT33Q"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];

@@ -35,7 +35,7 @@ export function CTA({ after = "white" }: { after?: "white" | "tint" }) {
           alt=""
           fill
           sizes="100vw"
-          quality={90}
+          quality={80}
           className="object-cover object-bottom"
         />
       </div>

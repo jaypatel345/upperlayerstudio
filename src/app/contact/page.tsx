@@ -57,7 +57,7 @@ export default function ContactPage() {
               alt=""
               fill
               sizes="(min-width: 768px) 680px, 100vw"
-              quality={90}
+              quality={80}
               className="object-cover object-[center_90%]"
             />
           </div>
