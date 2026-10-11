@@ -152,14 +152,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${base}/01-home-hero-desktop.webp`,
-        alt: "Newsbit's home screen: the headline “News for busy minds” above an ask box, in the browser at newsbit.in",
+        alt: "Newsbit browser home screen with News for busy minds headline and AI news question ask box",
         caption: "The home screen",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${base}/11-home-hero-mobile.webp`,
-        alt: "Newsbit's home screen on a phone",
+        alt: "Newsbit mobile interface featuring headline News for busy minds and quick AI search input",
         caption: "The home screen on mobile",
         w: 780,
         h: 1688,
@@ -173,28 +173,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${base}/02-todays-brief-summaries-desktop.webp`,
-            alt: "Newsbit's Today's Brief: five short AI summaries, each tagged with its source outlet, with a Listen with AI voice button",
+            alt: "Newsbit Today's Brief with AI news summaries, source publisher tags, and Listen with AI voice button",
             caption: "Today's Brief: short summaries, each tagged with its source",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/03-todays-brief-sources-desktop.webp`,
-            alt: "Newsbit's News Sources list open, showing the outlets behind the brief with links",
+            alt: "Newsbit news sources modal displaying linked publisher outlets backing the daily AI brief",
             caption: "The Sources list: every outlet behind the brief",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/04-top-stories-desktop.webp`,
-            alt: "Newsbit's Top Stories: ranked cards with category, headline, AI summary, publisher and time",
+            alt: "Newsbit Top Stories section with ranked cards showing headlines, AI summaries, and timestamps",
             caption: "Top Stories: ranked, summarised, with publisher and time",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/05-explore-topics-desktop.webp`,
-            alt: "Newsbit's Explore page with topic tabs from AI to World above ranked story cards",
+            alt: "Newsbit Explore topics screen filtering ranked news articles across AI, Tech, and World tabs",
             caption: "Explore: the same stories, by topic",
             w: 2880,
             h: 1800,
@@ -208,14 +208,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${base}/06-ask-prompt-suggestions-desktop.webp`,
-            alt: "Newsbit's “Ask Newsbit anything” section with scrolling prompt suggestions",
+            alt: "Newsbit Ask Newsbit anything section with interactive suggested prompt pills for readers",
             caption: "Prompt suggestions on the home page",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/07-ai-chat-start-desktop.webp`,
-            alt: "Newsbit's chat start screen: “Where should we start?” with six suggested threads",
+            alt: "Newsbit AI chat onboarding screen displaying starter conversation prompts and news topics",
             caption: "The chat: suggested threads to start a conversation",
             w: 2880,
             h: 1800,
@@ -229,21 +229,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${base}/08-voice-listening-desktop.webp`,
-            alt: "Newsbit's voice mode listening for a question",
+            alt: "Newsbit interactive voice mode interface listening for user's spoken news query",
             caption: "1. Listening",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/09-voice-thinking-desktop.webp`,
-            alt: "Newsbit's voice mode working on the question “give me today's finance news”",
+            alt: "Newsbit AI voice assistant processing query for today's finance news",
             caption: "2. Looking into it",
             w: 2880,
             h: 1800,
           },
           {
             src: `${base}/10-voice-speaking-desktop.webp`,
-            alt: "Newsbit's voice mode speaking the answer while the finance stories appear in the chat",
+            alt: "Newsbit voice mode reciting finance news summaries with synchronized text response in chat",
             caption: "3. Speaking the answer",
             w: 2880,
             h: 1800,
@@ -257,21 +257,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${base}/11-home-hero-mobile.webp`,
-            alt: "Newsbit's home screen on a phone",
+            alt: "Newsbit responsive mobile home screen layout with clean headline and voice query button",
             caption: "Home",
             w: 780,
             h: 1688,
           },
           {
             src: `${base}/12-todays-brief-sources-mobile.webp`,
-            alt: "Newsbit's brief on a phone, with source tags under each summary",
+            alt: "Newsbit Today's Brief mobile view with bullet summaries and clickable source attribution tags",
             caption: "Today's Brief with sources",
             w: 780,
             h: 1688,
           },
           {
             src: `${base}/13-ask-prompt-suggestions-mobile.webp`,
-            alt: "Newsbit's prompt suggestions on a phone",
+            alt: "Newsbit Ask Newsbit anything mobile view with topic prompt suggestion pills",
             caption: "Prompt suggestions",
             w: 780,
             h: 1688,
@@ -368,14 +368,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${px}/01-landing-hero-desktop.webp`,
-        alt: "PromptX's landing page: “Refine prompts. Spark creative AI ideas. Get dependable outputs.” in the browser at promptx.co.in",
+        alt: "PromptX browser landing page featuring Refine prompts headline and AI optimization features",
         caption: "The landing page",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${px}/11-landing-hero-mobile.webp`,
-        alt: "PromptX's landing page on a phone",
+        alt: "PromptX mobile landing page with value proposition and Start Now call to action",
         caption: "The landing page on mobile",
         w: 1170,
         h: 2532,
@@ -389,21 +389,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${px}/01-landing-hero-desktop.webp`,
-            alt: "PromptX's landing page hero with Start Now and Learn about promptx buttons",
+            alt: "PromptX landing page hero section with primary action buttons and product description",
             caption: "The landing page",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/02-stats-features-desktop.webp`,
-            alt: "PromptX's “Sharper prompts. Faster results.” section with three feature columns",
+            alt: "PromptX feature highlights section showcasing prompt refinement, creativity, and speed benefits",
             caption: "What it does, in three lines",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/03-desktop-mobile-preview-desktop.webp`,
-            alt: "PromptX's homepage section showing the chat on a desktop and a phone",
+            alt: "PromptX multi-device preview demonstrating responsive chat interface across desktop and mobile",
             caption: "The chat, previewed on desktop and mobile",
             w: 2880,
             h: 1800,
@@ -417,28 +417,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${px}/04-chat-start-desktop.webp`,
-            alt: "PromptX's chat: “What can I help with?” with a history sidebar and a model picker in the prompt box",
+            alt: "PromptX chat interface with conversation history sidebar and AI model selector in input field",
             caption: "The chat, with history in the sidebar",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/05-model-picker-desktop.webp`,
-            alt: "PromptX's model picker open with ChatGPT, Claude, Gemini and Grok, each formatted for that model",
+            alt: "PromptX model picker dropdown allowing selection between ChatGPT, Claude, Gemini, and Grok",
             caption: "1. Pick the model the prompt is for",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/07-enhanced-prompt-desktop.webp`,
-            alt: "PromptX's answer: a LinkedIn Content Ideas Generator prompt with Role, Mission and Context sections",
+            alt: "PromptX optimized output showing structured prompt with Role, Mission, and Context guidelines",
             caption: "2. Get a structured prompt back",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/08-enhanced-prompt-continued-desktop.webp`,
-            alt: "The rest of the enhanced prompt: content framework, writing rules and output requirements, with copy and rating actions",
+            alt: "PromptX detailed prompt output specifying content framework, rules, copy button, and quality ratings",
             caption: "Rules and output format, ready to copy",
             w: 2880,
             h: 1800,
@@ -452,14 +452,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${px}/09-conversation-search-desktop.webp`,
-            alt: "PromptX's conversation search popup listing past chats beside a preview of the selected one",
+            alt: "PromptX conversation search dialog with history list and live chat preview pane",
             caption: "Search and preview past conversations",
             w: 2880,
             h: 1800,
           },
           {
             src: `${px}/10-site-assistant-desktop.webp`,
-            alt: "PromptX's site assistant answering “who is building promptx?” with suggested follow-ups",
+            alt: "PromptX embedded site assistant answering founder questions with suggested follow-up prompts",
             caption: "The site assistant answers questions about PromptX",
             w: 2880,
             h: 1800,
@@ -473,21 +473,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${px}/11-landing-hero-mobile.webp`,
-            alt: "PromptX's landing page on a phone",
+            alt: "PromptX mobile landing screen detailing AI prompt enhancement capabilities",
             caption: "Landing page",
             w: 1170,
             h: 2532,
           },
           {
             src: `${px}/12-chat-preview-mobile.webp`,
-            alt: "PromptX's homepage on a phone, previewing the chat with links to the web, iOS and Android apps",
+            alt: "PromptX mobile chat preview section with download links for web, iOS, and Android platforms",
             caption: "The chat preview",
             w: 1170,
             h: 2532,
           },
           {
             src: `${px}/13-chat-mobile.webp`,
-            alt: "PromptX's chat on a phone with the model picker set to ChatGPT",
+            alt: "PromptX mobile chat screen with model picker configured for ChatGPT optimization",
             caption: "The chat",
             w: 1170,
             h: 2532,
@@ -581,14 +581,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${sn}/01-home-hero-desktop.webp`,
-        alt: "StyleNest's home page: “Latest Arrivals” hero with a fashion photo, in the browser",
+        alt: "StyleNest e-commerce browser home page featuring Latest Arrivals hero banner and clothing collections",
         caption: "The home page",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${sn}/16-home-hero-mobile.webp`,
-        alt: "StyleNest's home page on a phone",
+        alt: "StyleNest mobile home page featuring Latest Arrivals banner and navigation menu",
         caption: "The home page on mobile",
         w: 1170,
         h: 2532,
@@ -602,21 +602,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${sn}/01-home-hero-desktop.webp`,
-            alt: "StyleNest's home page hero: Latest Arrivals, Shop Now",
+            alt: "StyleNest storefront hero banner displaying Latest Arrivals collection with Shop Now link",
             caption: "The home page",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/02-latest-collection-desktop.webp`,
-            alt: "StyleNest's Latest Collections section on the home page",
+            alt: "StyleNest Latest Collections product grid showcasing apparel items with prices and ratings",
             caption: "The latest collection",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/03-collection-filters-desktop.webp`,
-            alt: "StyleNest's All Collections page with category and type filters and a sort menu beside product cards",
+            alt: "StyleNest All Collections catalog with sidebar category filters, sorting menu, and apparel cards",
             caption: "The catalog, with filters and sorting",
             w: 2880,
             h: 1800,
@@ -630,14 +630,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${sn}/06-stripe-checkout-desktop.webp`,
-            alt: "Stripe Checkout in sandbox mode for a StyleNest order, with card details and currency choice",
+            alt: "Stripe Checkout sandbox payment page for StyleNest order with card entry and currency selection",
             caption: "Stripe Checkout",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/09-login-desktop.webp`,
-            alt: "StyleNest's sign-in page",
+            alt: "StyleNest customer authentication portal with email login, password recovery, and sign-up form",
             caption: "Sign in to keep your cart and orders",
             w: 2880,
             h: 1800,
@@ -651,21 +651,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${sn}/13-admin-add-product-desktop.webp`,
-            alt: "StyleNest admin: add a product with four image uploads, category, sub-category, price and sizes",
+            alt: "StyleNest admin panel product creation form with image uploaders, category fields, and pricing",
             caption: "Add a product with up to four images",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/14-admin-product-list-desktop.webp`,
-            alt: "StyleNest admin: the list of products in the catalog",
+            alt: "StyleNest admin catalog management table displaying inventory items, prices, and edit actions",
             caption: "The catalog",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/15-admin-orders-desktop.webp`,
-            alt: "StyleNest admin: orders with items, payment details and a status menu",
+            alt: "StyleNest admin order dashboard listing customer orders, payment status, and fulfillment options",
             caption: "Orders, with a status to update",
             w: 2880,
             h: 1800,
@@ -679,14 +679,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${sn}/10-about-desktop.webp`,
-            alt: "StyleNest's About page",
+            alt: "StyleNest About Us page detailing company mission, brand vision, and product photography",
             caption: "About",
             w: 2880,
             h: 1800,
           },
           {
             src: `${sn}/11-contact-desktop.webp`,
-            alt: "StyleNest's Contact page",
+            alt: "StyleNest Contact page displaying customer support email, store address, and careers link",
             caption: "Contact",
             w: 2880,
             h: 1800,
@@ -700,21 +700,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${sn}/16-home-hero-mobile.webp`,
-            alt: "StyleNest's home page on a phone",
+            alt: "StyleNest mobile storefront showing responsive header, cart counter, and hero arrival card",
             caption: "Home",
             w: 1170,
             h: 2532,
           },
           {
             src: `${sn}/17-collection-mobile.webp`,
-            alt: "StyleNest's collection page on a phone with filters and sorting",
+            alt: "StyleNest mobile collections page with filter button, sort dropdown, and clothing catalog grid",
             caption: "The catalog",
             w: 1170,
             h: 2532,
           },
           {
             src: `${sn}/18-contact-mobile.webp`,
-            alt: "StyleNest's contact page on a phone",
+            alt: "StyleNest mobile contact screen with store location details and email inquiries",
             caption: "Contact",
             w: 1170,
             h: 2532,
@@ -808,14 +808,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${bc}/01-home-hero-desktop.webp`,
-        alt: "Borrower Copilot's home page: “Know what you can safely borrow — before you meet a lender.” beside an example result, in the browser",
+        alt: "Borrower Copilot browser home page: Know what you can safely borrow headline beside sample result card",
         caption: "The home page",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${bc}/14-home-hero-mobile.webp`,
-        alt: "Borrower Copilot's home page on a phone",
+        alt: "Borrower Copilot mobile home screen with 3-minute loan self-check assessment button",
         caption: "The home page on mobile",
         w: 1170,
         h: 2532,
@@ -829,28 +829,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${bc}/01-home-hero-desktop.webp`,
-            alt: "Borrower Copilot's home page hero with an example result: safe to borrow ₹7.5L–₹9.5L against a lender's ₹21.5L–₹27.0L",
+            alt: "Borrower Copilot hero comparison: safe borrowing of ₹7.5L–₹9.5L versus lender offer of ₹21.5L–₹27.0L",
             caption: "The home page, with an example result",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/02-what-you-get-desktop.webp`,
-            alt: "Borrower Copilot's “Four answers you can act on” cards above a lender's view vs your safe view comparison",
+            alt: "Borrower Copilot Four answers you can act on section comparing lender metrics to safe borrower targets",
             caption: "Four answers, and why the lender's number differs",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/03-how-it-works-desktop.webp`,
-            alt: "Borrower Copilot's three-step How it works section and three sample borrowers: Priya, Ravi and Anita",
+            alt: "Borrower Copilot three-step assessment guide illustrated with Priya, Ravi, and Anita user profiles",
             caption: "How it works, and three sample borrowers",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/04-good-to-know-desktop.webp`,
-            alt: "Borrower Copilot's “What this is — and isn't” section: private by design, market references not offers, honest about gaps",
+            alt: "Borrower Copilot privacy policy section highlighting browser-only calculations and no lender kickbacks",
             caption: "What it is, and what it isn't",
             w: 2880,
             h: 1800,
@@ -864,28 +864,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${bc}/05-question-loan-purpose-desktop.webp`,
-            alt: "Borrower Copilot asking “What's the money for?” with options from a wedding to paying off other debt",
+            alt: "Borrower Copilot step 1 questionnaire asking What's the money for with loan purpose category pills",
             caption: "1. What the money is for",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/06-question-household-costs-desktop.webp`,
-            alt: "Borrower Copilot asking for monthly household costs, with an “I'm not sure” option",
+            alt: "Borrower Copilot questionnaire step asking for monthly household expenses and living costs",
             caption: "2. Household costs, or “I'm not sure”",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/07-question-credit-score-desktop.webp`,
-            alt: "Borrower Copilot asking for a credit score on a 300–900 slider, with an “I don't know it” option",
+            alt: "Borrower Copilot credit score question with 300 to 900 interactive rating slider",
             caption: "3. Credit score, if you know it",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/08-question-existing-loans-desktop.webp`,
-            alt: "Borrower Copilot asking about existing loans, with an option to skip the rest and see the result",
+            alt: "Borrower Copilot questionnaire step collecting existing loan EMI payments and debts",
             caption: "4. Existing loans, or skip to the result",
             w: 2880,
             h: 1800,
@@ -899,28 +899,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${bc}/09-result-verdict-desktop.webp`,
-            alt: "Borrower Copilot's result for Ravi: “Borrow — but less than you planned”, routed to a secured loan, safe amount ₹3.0L–₹5.0L",
+            alt: "Borrower Copilot verdict for Ravi advising secured loan with safe amount between ₹3.0L and ₹5.0L",
             caption: "The verdict and the safe amount",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/10-result-fair-rate-desktop.webp`,
-            alt: "Borrower Copilot's lender estimate with its reasoning, and a fair rate band of 10.8%–15.0% with each adjustment listed",
+            alt: "Borrower Copilot lender estimate breakdown and fair interest rate band from 10.8% to 15.0%",
             caption: "The lender's number, and a fair rate with its reasons",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/11-result-emi-ceiling-desktop.webp`,
-            alt: "Borrower Copilot's EMI ceiling of ₹11,500/month with a tenure trade-off table and a passed stress test",
+            alt: "Borrower Copilot EMI ceiling of ₹11,500 per month with loan tenure comparison table and stress test",
             caption: "The EMI ceiling, tenure trade-off and stress test",
             w: 2880,
             h: 1800,
           },
           {
             src: `${bc}/12-negotiation-card-desktop.webp`,
-            alt: "Borrower Copilot's Negotiation Card: safe amount, lender estimate, EMI ceiling, fair rate, tenure and a line to say to the lender",
+            alt: "Borrower Copilot Negotiation Card detailing safe borrowing terms and talking script for bank lenders",
             caption: "The Negotiation Card",
             w: 2880,
             h: 1800,
@@ -934,21 +934,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${bc}/14-home-hero-mobile.webp`,
-            alt: "Borrower Copilot's home page on a phone",
+            alt: "Borrower Copilot mobile landing page highlighting private, no-login borrowing assessment",
             caption: "Home",
             w: 1170,
             h: 2532,
           },
           {
             src: `${bc}/16-result-verdict-mobile.webp`,
-            alt: "Borrower Copilot's result for Priya on a phone: Borrow, with high confidence",
+            alt: "Borrower Copilot mobile result for Priya indicating high confidence safe borrowing recommendation",
             caption: "The result",
             w: 1170,
             h: 2532,
           },
           {
             src: `${bc}/17-negotiation-card-mobile.webp`,
-            alt: "Borrower Copilot's Negotiation Card for Priya on a phone",
+            alt: "Borrower Copilot mobile Negotiation Card for Priya with safe loan figures and bank talking points",
             caption: "The Negotiation Card",
             w: 1170,
             h: 2532,
@@ -1045,14 +1045,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${ao}/01-landing-hero-desktop.webp`,
-        alt: "AsliOffer's landing page: “Verify Job Offers With Real Public Footprint Proof”, in the browser at aslioffer.vercel.app",
+        alt: "AsliOffer browser landing page with Verify Job Offers With Real Public Footprint Proof headline",
         caption: "The landing page",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${ao}/10-landing-hero-mobile.webp`,
-        alt: "AsliOffer's landing page on a phone",
+        alt: "AsliOffer mobile landing hero with Verify an Offer Now button and fraud prevention mission",
         caption: "The landing page on mobile",
         w: 1170,
         h: 2531,
@@ -1066,28 +1066,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${ao}/02-agent-pipeline-sample-offers-desktop.webp`,
-            alt: "AsliOffer's four agent cards, Company, Recruiter, Salary and Scam, above two illustrative sample offers",
+            alt: "AsliOffer multi-agent investigation cards for Company, Recruiter, Salary, and Scam detectors",
             caption: "The four agents",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/03-verify-offer-form-desktop.webp`,
-            alt: "AsliOffer's Verify Offer page with quick test scenarios and tabs to paste text or upload a PDF or screenshot",
+            alt: "AsliOffer verification portal with text paste and PDF upload tabs for inspecting job letters",
             caption: "1. Paste the offer, or upload a PDF or screenshot",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/04-offer-pasted-desktop.webp`,
-            alt: "An Infosys offer letter pasted into AsliOffer, above the Investigate Offer with AI Agents button",
+            alt: "AsliOffer input console with pasted offer letter text ready for AI agent forensic audit",
             caption: "2. Send it to the agents",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/05-investigation-progress-desktop.webp`,
-            alt: "AsliOffer's progress checklist: entity extraction, company footprint and recruiter domain done, salary check running",
+            alt: "AsliOffer forensic progress checklist tracking company domain verification and salary benchmark checks",
             caption: "3. Each check, as it runs",
             w: 2880,
             h: 1800,
@@ -1101,28 +1101,28 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${ao}/06-sample-report-verdict-desktop.webp`,
-            alt: "AsliOffer's illustrative sample report: High risk for a TCS offer, with red flags and green flags",
+            alt: "AsliOffer forensic sample report flagging fraudulent job offer as High Risk with 94% confidence",
             caption: "The verdict, red flags and green flags",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/07-sample-report-evidence-desktop.webp`,
-            alt: "The claims pulled from the sample offer, including a Gmail recruiter address and a ₹15,000 deposit, above the Company agent's evidence",
+            alt: "AsliOffer evidence summary exposing fake recruiter Gmail domain and ₹15,000 upfront deposit red flags",
             caption: "The claims it found, and the first agent's evidence",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/08-sample-report-agents-desktop.webp`,
-            alt: "Recruiter, Salary and Scam agent findings in the sample report, each with a source link",
+            alt: "AsliOffer Recruiter, Salary, and Scam agent detailed findings with verified source links",
             caption: "Each agent's findings, with sources",
             w: 2880,
             h: 1800,
           },
           {
             src: `${ao}/09-sample-report-next-steps-desktop.webp`,
-            alt: "The employer's official website and careers page, and recommended next steps including the 1930 cyber-crime helpline",
+            alt: "AsliOffer employer verification links and cybercrime reporting helpline next steps",
             caption: "Official contact routes and next steps",
             w: 2880,
             h: 1800,
@@ -1136,21 +1136,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${ao}/10-landing-hero-mobile.webp`,
-            alt: "AsliOffer's landing page on a phone",
+            alt: "AsliOffer mobile home screen explaining corporate footprint verification for jobseekers",
             caption: "Home",
             w: 1170,
             h: 2531,
           },
           {
             src: `${ao}/11-agent-pipeline-mobile.webp`,
-            alt: "AsliOffer's agent cards on a phone",
+            alt: "AsliOffer mobile investigation pipeline displaying Company, Recruiter, and Salary agent cards",
             caption: "The four agents",
             w: 1170,
             h: 2531,
           },
           {
             src: `${ao}/13-sample-report-mobile.webp`,
-            alt: "AsliOffer's illustrative sample report on a phone, marked as hand-written",
+            alt: "AsliOffer mobile sample report identifying critical red flags in a fake job offer letter",
             caption: "The sample report",
             w: 1170,
             h: 2531,
@@ -1244,14 +1244,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${fd}/01-dashboard-overview-desktop.webp`,
-        alt: "FrontDesk AI's dashboard overview: call stats, calls over the last seven days, the integrations panel and recent calls",
+        alt: "FrontDesk AI browser call dashboard showing reception metrics, 7-day call volume, and integrations",
         caption: "The call dashboard",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${fd}/12-dashboard-overview-mobile.webp`,
-        alt: "FrontDesk AI's dashboard overview on a phone",
+        alt: "FrontDesk AI mobile receptionist dashboard displaying call volume and booking conversion rates",
         caption: "The dashboard on mobile",
         w: 1170,
         h: 2532,
@@ -1265,21 +1265,21 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${fd}/01-dashboard-overview-desktop.webp`,
-            alt: "The dashboard overview: total calls, answer rate, bookings, conversion, drop-off, escalation, missed calls and an average response latency of 1.58 seconds",
+            alt: "FrontDesk AI overview displaying 100% answer rate, bookings count, and 1.58-second average latency",
             caption: "Overview after one test call that ended in a booking",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/02-calls-list-desktop.webp`,
-            alt: "The Calls page listing two web test calls, both ended and handled",
+            alt: "FrontDesk AI Calls log table listing patient call IDs, durations, and successful completion statuses",
             caption: "Every call, with its status and outcome",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/03-integrations-desktop.webp`,
-            alt: "The Integrations page: Cal.com and HubSpot live, SMS and the knowledge base on mocks",
+            alt: "FrontDesk AI Integrations dashboard showing active connections for Cal.com, HubSpot, and SMS",
             caption: "Which integrations are live and which are mocked",
             w: 2880,
             h: 1800,
@@ -1293,14 +1293,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${fd}/04-vapi-call-transcript-desktop.webp`,
-            alt: "Vapi's log of a 4 minute 18 second browser test call, with the recording waveform and the start of the transcript",
+            alt: "Vapi call inspection console showing voice waveform recording and turn-by-turn dialogue transcript",
             caption: "The recording and transcript",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/05-vapi-latency-desktop.webp`,
-            alt: "Vapi's latency summary for the same call: 16 turns, 1,584 ms average, split into transport, transcriber, endpointing, LLM and voice",
+            alt: "Vapi voice latency breakdown across 16 turns tracking transcriber, LLM, and speech synthesis speed",
             caption: "Latency per stage: 1.58 s average over 16 turns",
             w: 2880,
             h: 1800,
@@ -1314,42 +1314,42 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${fd}/06-calcom-booking-desktop.webp`,
-            alt: "A confirmed 30 minute Cal.com booking for the test caller on 6 October 2026, with contact details blurred",
+            alt: "Cal.com confirmed 30-minute clinic consultation booking scheduled automatically by FrontDesk AI",
             caption: "The confirmed booking in Cal.com",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/07-hubspot-call-transcript-desktop.webp`,
-            alt: "The HubSpot contact with a logged call open, showing the start of the transcript",
+            alt: "HubSpot CRM record showing inbound call activity with synced full conversation transcript",
             caption: "The call logged with its transcript",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/08-hubspot-transcript-booking-desktop.webp`,
-            alt: "Further down the logged transcript: the agent offers times, takes the caller's details and confirms the Botox booking",
+            alt: "HubSpot logged call dialogue where FrontDesk AI agent negotiates appointment times and secures booking",
             caption: "The transcript through to the booking",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/09-hubspot-contact-insights-desktop.webp`,
-            alt: "HubSpot's contact insights summarising a Botox inquiry, the booked appointment and the details collected",
+            alt: "HubSpot AI contact insights panel summarizing patient treatment interest and booked appointment details",
             caption: "HubSpot's summary of the call",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/10-hubspot-recent-interactions-desktop.webp`,
-            alt: "HubSpot's recent interactions panel showing the inbound logged call",
+            alt: "HubSpot timeline view documenting inbound AI phone call and receptionist interaction records",
             caption: "The inbound call on the contact's timeline",
             w: 2880,
             h: 1800,
           },
           {
             src: `${fd}/11-hubspot-sentiment-desktop.webp`,
-            alt: "HubSpot's sentiment panel rating the caller as receptive",
+            alt: "HubSpot sentiment analysis panel classifying clinic caller mood as receptive",
             caption: "HubSpot's sentiment read of the call",
             w: 2880,
             h: 1800,
@@ -1363,14 +1363,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${fd}/12-dashboard-overview-mobile.webp`,
-            alt: "FrontDesk AI's dashboard overview on a phone",
+            alt: "FrontDesk AI mobile dashboard displaying real-time call performance metrics and response latency",
             caption: "Overview",
             w: 1170,
             h: 2532,
           },
           {
             src: `${fd}/13-dashboard-integrations-mobile.webp`,
-            alt: "The dashboard's integrations and recent calls on a phone",
+            alt: "FrontDesk AI mobile integrations panel displaying live Cal.com scheduling and recent calls list",
             caption: "Integrations and recent calls",
             w: 1170,
             h: 2532,
@@ -1464,14 +1464,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${al}/04-n8n-lead-intake-desktop.webp`,
-        alt: "The AI Lead Agent's Lead Intake workflow in n8n, from the webhook through scoring, HubSpot, the reply and the Telegram alert",
+        alt: "AI Lead Agent n8n intake workflow diagram routing leads through Gemini scoring, HubSpot, and Telegram",
         caption: "The Lead Intake workflow",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${al}/10-telegram-brief-mobile.webp`,
-        alt: "A pre-call brief from the AI Lead Agent in Telegram",
+        alt: "AI Lead Agent Telegram notification delivering instant lead qualification summary and call pitch",
         caption: "A pre-call brief on Telegram",
         w: 1206,
         h: 2622,
@@ -1485,14 +1485,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${al}/01-contact-form-desktop.webp`,
-            alt: "The “Prefer to write first?” form on upperlayerstudio.com filled in for Priya Mehta of BrightSmile Dental, asking for AI automation for sales calls; the email address is blurred",
+            alt: "Studio contact form submitted with inquiry from BrightSmile Dental requesting sales AI automation",
             caption: "A sample lead fills in the form",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/02-form-success-desktop.webp`,
-            alt: "The form replaced by “Thanks — that's with me.” and a Pick a time button",
+            alt: "Studio inquiry confirmation screen displaying instant thank-you message and Cal.com meeting scheduler",
             caption: "The thank-you, shown about half a second later",
             w: 2880,
             h: 1800,
@@ -1506,35 +1506,35 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${al}/03-n8n-workflows-desktop.webp`,
-            alt: "n8n's workflow list with AI Lead Agent 01 Lead Intake, 02 Booking and 03 Follow-up, all published",
+            alt: "n8n automation dashboard showing active Lead Intake, Booking, and Follow-up workflow pipelines",
             caption: "Lead Intake, Booking and Follow-up, all published",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/04-n8n-lead-intake-desktop.webp`,
-            alt: "The Lead Intake workflow: webhook, normalise, email check, website enrichment, Gemini qualify with a fallback, HubSpot upsert, route by tier, reply, email and Telegram alert",
+            alt: "n8n Lead Intake pipeline: website enrichment, Gemini lead scoring, HubSpot sync, and Telegram alerts",
             caption: "Lead Intake: score, log, reply and alert",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/05-n8n-booking-desktop.webp`,
-            alt: "The Booking workflow: Cal.com webhook, find or create the HubSpot contact, set Call Booked, write the pre-call brief with Gemini and a fallback, and send it to Telegram",
+            alt: "n8n Booking workflow: receives Cal.com webhook, updates CRM contact, and generates Gemini pre-call brief",
             caption: "Booking: update the CRM and brief me",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/06-n8n-follow-up-desktop.webp`,
-            alt: "The Follow-up workflow: an hourly trigger finds open leads, decides, then either writes and sends a nudge or sets the lead to Nurture",
+            alt: "n8n Follow-up workflow scheduled hourly to evaluate pending leads and send personalized nurture emails",
             caption: "Follow-up: nudge or move to Nurture",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/07-n8n-execution-desktop.webp`,
-            alt: "A successful Follow-up execution in n8n on 6 October at 21:00, finished in 1.468 seconds",
+            alt: "n8n execution log confirming successful automated follow-up execution completed in 1.468 seconds",
             caption: "An hourly Follow-up run, done in 1.5 seconds",
             w: 2880,
             h: 1800,
@@ -1548,14 +1548,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${al}/08-gmail-ai-reply-desktop.webp`,
-            alt: "The AI-written reply in Gmail: it restates BrightSmile Dental's request, asks which CRM they use and links to a 30-minute discovery call",
+            alt: "Personalized AI email reply in Gmail referencing client requirements and proposing discovery call link",
             caption: "The reply, written for this lead",
             w: 2880,
             h: 1800,
           },
           {
             src: `${al}/09-calcom-booking-desktop.webp`,
-            alt: "A confirmed Cal.com discovery call on Wednesday 7 October 2026, booked from a test enquiry",
+            alt: "Cal.com scheduling confirmation screen for a 30-minute discovery call booked from sales inquiry",
             caption: "The discovery call, booked on Cal.com",
             w: 2880,
             h: 1800,
@@ -1569,14 +1569,14 @@ export const projects: Project[] = [
         shots: [
           {
             src: `${al}/10-telegram-brief-mobile.webp`,
-            alt: "A Telegram pre-call brief for the sample lead: founder of BrightSmile Dental Clinics, wants AI booking across 4 clinics, with three questions to ask and a pitch angle",
+            alt: "Telegram pre-call intelligence brief for BrightSmile Dental with qualification notes and pitch strategy",
             caption: "A pre-call brief",
             w: 1206,
             h: 2622,
           },
           {
             src: `${al}/11-telegram-booking-brief-mobile.webp`,
-            alt: "A second Telegram brief for a booked call about AI automation for sales calls, with questions on call volume, pain points and budget",
+            alt: "Telegram booked meeting brief outlining prospect call volume pain points, budget, and sales questions",
             caption: "The brief for the booked test call",
             w: 1206,
             h: 2622,

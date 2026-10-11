@@ -9,7 +9,7 @@ export function LogoMark({ className }: { className?: string }) {
     <svg
       viewBox="0 0 1024 1024"
       role="img"
-      aria-label="Upper Layer Studio"
+      aria-label="Upper Layer Studio logo"
       className={cn("h-6 w-6", className)}
       fill="currentColor"
     >

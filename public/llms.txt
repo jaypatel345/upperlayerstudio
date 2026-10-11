@@ -1,0 +1,12 @@
+# Upper Layer Studio
+> One-person AI studio in India building AI automation, voice AI agents, custom AI agents and AI products for teams worldwide. Fixed-fee scope in 48 hours.
+
+## Services
+- [AI Automation](https://www.upperlayerstudio.com/services/automation)
+- [Voice AI](https://www.upperlayerstudio.com/services/voice)
+- [AI Agents](https://www.upperlayerstudio.com/services/agents)
+- [Product Build](https://www.upperlayerstudio.com/services/product)
+
+## Work
+- [FrontDesk AI](https://www.upperlayerstudio.com/work/frontdeskai): AI phone receptionist on Vapi
+- [AI Lead Agent](https://www.upperlayerstudio.com/work/ai-lead-agent): n8n lead response
