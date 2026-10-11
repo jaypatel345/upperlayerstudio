@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence } from "motion/react";
-import * as m from "motion/react-m";
 import { cn } from "@/lib/cn";
 
 export type AccordionItem = {
@@ -56,21 +54,17 @@ export function Accordion({ items, defaultOpen = 0, className }: Props) {
               </span>
             </button>
 
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <m.div
-                  id={`panel-${item.id}`}
-                  key="panel"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="overflow-hidden"
-                >
-                  <div className={cn("pb-8", item.n && "sm:pl-17")}>{item.content}</div>
-                </m.div>
+            <div
+              id={`panel-${item.id}`}
+              className={cn(
+                "grid transition-[grid-template-rows,opacity] duration-400 ease-[var(--ease-out-soft)]",
+                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
               )}
-            </AnimatePresence>
+            >
+              <div className="overflow-hidden">
+                <div className={cn("pb-8", item.n && "sm:pl-17")}>{item.content}</div>
+              </div>
+            </div>
           </div>
         );
       })}

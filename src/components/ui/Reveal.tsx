@@ -1,8 +1,8 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 type Props = {
   children: React.ReactNode;
@@ -12,21 +12,72 @@ type Props = {
   y?: number;
 };
 
-/** Scroll-in reveal used by every section so motion stays consistent. */
+let sharedObserver: IntersectionObserver | null = null;
+const observerCallbacks = new Map<Element, () => void>();
+
+function getSharedObserver() {
+  if (typeof window === "undefined" || !("IntersectionObserver" in window)) return null;
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const cb = observerCallbacks.get(entry.target);
+            if (cb) {
+              cb();
+              observerCallbacks.delete(entry.target);
+              sharedObserver?.unobserve(entry.target);
+            }
+          }
+        }
+      },
+      { rootMargin: "-80px" },
+    );
+  }
+  return sharedObserver;
+}
+
+/** Scroll-in reveal used by every section so motion stays consistent without Framer Motion overhead. */
 export function Reveal({ children, className, delay = 0, y = 18 }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
   const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (reduce) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = getSharedObserver();
+    if (!observer) {
+      const frame = requestAnimationFrame(() => setRevealed(true));
+      return () => cancelAnimationFrame(frame);
+    }
+
+    observerCallbacks.set(el, () => setRevealed(true));
+    observer.observe(el);
+
+    return () => {
+      observerCallbacks.delete(el);
+      observer.unobserve(el);
+    };
+  }, [reduce]);
 
   if (reduce) return <div className={className}>{children}</div>;
 
   return (
-    <m.div
+    <div
+      ref={ref}
       className={cn(className)}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? "none" : `translateY(${y}px)`,
+        transition: "opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)",
+        transitionDelay: delay ? `${delay}s` : undefined,
+        willChange: revealed ? undefined : "opacity, transform",
+      }}
     >
       {children}
-    </m.div>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Analytics } from "@/components/layout/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { MotionProvider } from "@/components/ui/MotionProvider";
 import { site } from "@/lib/site";
@@ -78,12 +79,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={inter.variable}>
       <body className="antialiased">
         <Script
-          strategy="lazyOnload"
-          src="https://www.googletagmanager.com/gtag/js?id=G-X3049BT33Q"
-        />
-        <Script
-          id="google-analytics"
-          strategy="lazyOnload"
+          id="google-analytics-init"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -93,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        <Analytics />
         <JsonLd data={siteSchema()} />
         <a
           href="#main"
