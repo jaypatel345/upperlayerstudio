@@ -53,7 +53,7 @@ export const site = {
     { label: "X.com", href: "https://x.com/UpperLayerAI" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/jaypatel3405/" },
     { label: "GitHub", href: "https://github.com/jaypatel345/upperlayerstudio" },
-    { label: "YouTube", href: "https://www.youtube.com/@upperlayerstudio" },
+    { label: "YouTube", href: "https://www.youtube.com/@upper-layer-studio" },
   ],
 } as const;
 

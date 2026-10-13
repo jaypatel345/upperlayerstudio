@@ -75,4 +75,4 @@ Full-stack production software for AI-first products and automations that have o
 - **Website:** [upperlayerstudio.com](https://www.upperlayerstudio.com)
 - **Schedule a Call:** [cal.com/jay-patel-znqgcm/discovery-call](https://cal.com/jay-patel-znqgcm/discovery-call)
 - **Email:** [jaypatel@upperlayerstudio.com](mailto:jaypatel@upperlayerstudio.com)
-- **Socials:** [LinkedIn](https://www.linkedin.com/in/jaypatel3405/) · [X / Twitter](https://x.com/UpperLayerAI) · [YouTube](https://www.youtube.com/@upperlayerstudio)
+- **Socials:** [LinkedIn](https://www.linkedin.com/in/jaypatel3405/) · [X / Twitter](https://x.com/UpperLayerAI) · [YouTube](https://www.youtube.com/@upper-layer-studio)
