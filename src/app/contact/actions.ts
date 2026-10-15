@@ -12,7 +12,7 @@
  * form can hand the visitor the plain email route instead of losing the lead.
  */
 
-export type LeadValues = { name: string; email: string; company: string; service: string; message: string };
+export type LeadValues = { name: string; email: string; phone?: string; company: string; service: string; message: string };
 
 export type LeadState = {
   status: "idle" | "sent" | "invalid" | "fallback";
@@ -35,6 +35,7 @@ export async function submitLead(_prev: LeadState, data: FormData): Promise<Lead
   const lead = {
     name: field(data, "name", 120),
     email: field(data, "email", 200).toLowerCase(),
+    phone: field(data, "phone", 40) || null,
     company: field(data, "company", 160) || null,
     service_interest: field(data, "service", 60) || null,
     message: field(data, "message", 4000),
@@ -42,7 +43,12 @@ export async function submitLead(_prev: LeadState, data: FormData): Promise<Lead
   };
 
   const values: LeadValues = {
-    name: lead.name, email: lead.email, company: lead.company ?? "", service: lead.service_interest ?? "", message: lead.message,
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone ?? "",
+    company: lead.company ?? "",
+    service: lead.service_interest ?? "",
+    message: lead.message,
   };
 
   if (!lead.name || !EMAIL.test(lead.email) || lead.message.length < 10) {

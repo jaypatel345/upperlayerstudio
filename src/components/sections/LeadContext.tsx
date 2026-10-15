@@ -7,7 +7,7 @@ import { createContext, useContext, useState } from "react";
  * scheduler opens pre-filled. Booking with the same email is what lets the
  * lead agent match the booking to the enquiry.
  */
-export type Lead = { name: string; email: string; message: string };
+export type Lead = { name: string; email: string; phone?: string; message: string };
 
 const LeadContext = createContext<{ lead: Lead | null; setLead: (lead: Lead) => void }>({
   lead: null,

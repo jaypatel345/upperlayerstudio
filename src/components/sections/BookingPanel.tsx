@@ -24,6 +24,7 @@ export function BookingPanel() {
     url.searchParams.set("name", lead.name);
     url.searchParams.set("email", lead.email);
     url.searchParams.set("notes", lead.message.slice(0, 500));
+    if (lead.phone) url.searchParams.set("phone", lead.phone);
     src = url.toString();
   }
 

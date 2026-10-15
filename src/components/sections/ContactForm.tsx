@@ -28,8 +28,8 @@ export function ContactForm() {
 
   useEffect(() => {
     if (state.status === "sent" && state.values) {
-      const { name, email, message } = state.values;
-      setLead({ name, email, message });
+      const { name, email, phone, message } = state.values;
+      setLead({ name, email, phone, message });
     }
   }, [state, setLead]);
 
@@ -77,10 +77,21 @@ export function ContactForm() {
             <input name="email" type="email" required autoComplete="email" defaultValue={v?.email} className={input} />
           </label>
           <label className={label}>
+            Phone number <span className="font-normal text-muted">(optional)</span>
+            <input
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              placeholder="+1 555 000 0000"
+              defaultValue={v?.phone}
+              className={input}
+            />
+          </label>
+          <label className={label}>
             Company <span className="font-normal text-muted">(optional)</span>
             <input name="company" autoComplete="organization" defaultValue={v?.company} className={input} />
           </label>
-          <label className={label}>
+          <label className={`${label} sm:col-span-2`}>
             Service
             <select key={v?.service} name="service" defaultValue={v?.service ?? ""} className={input}>
               <option value="">Not sure yet</option>
