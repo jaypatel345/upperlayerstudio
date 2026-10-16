@@ -12,7 +12,7 @@
 set -euo pipefail
 
 BUCKET="upperlayer-media"
-PARALLEL=6
+PARALLEL="${PARALLEL:-2}"
 cd "$(dirname "$0")/.."
 
 if [ "$#" -gt 0 ]; then
