@@ -74,8 +74,7 @@ export function AutoplayVideo({
         connection?: { saveData?: boolean; effectiveType?: string };
       }).connection;
       const slow = conn?.saveData || /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
-      // CSS pixels: wider than the 720p cut's own width is where 1080p shows.
-      return mediaUrl(!slow && video.clientWidth > 1280 ? src : srcSmall);
+      return mediaUrl(slow ? srcSmall : src);
     };
 
     // Fetch when the clip is about a quarter-screen away; drop it again once

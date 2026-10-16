@@ -1670,8 +1670,8 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      // New file names (not showcase.mp4) so cached copies of the old cut aren't reused
-      src: `${al}/acquisition-showcase.mp4`,
+      // 4K master cut from Remotion render (2880x2160)
+      src: `${al}/acquisition-showcase-4k.mp4`,
       srcSmall: `${al}/acquisition-showcase-720.mp4`,
       poster: `${al}/acquisition-showcase-poster.jpg`,
       posterFull: `${al}/acquisition-showcase-poster-4x3.jpg`,
