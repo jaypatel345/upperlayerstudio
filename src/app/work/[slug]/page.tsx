@@ -187,20 +187,22 @@ export default async function CaseStudyPage({ params }: Params) {
       </Section>
 
       {/* Video */}
-      <Section tone="tint" pad="md">
-        <Container size="text">
-          <Reveal>
-            <SectionHeader
-              eyebrow="Walkthrough"
-              title="See it working"
-              body={project.video.note}
-            />
-          </Reveal>
-          <Reveal delay={0.08} className="mt-10 select-none">
-            <ProjectVideo video={project.video} name={project.name} />
-          </Reveal>
-        </Container>
-      </Section>
+      {project.video.src && !project.heroVideo && (
+        <Section tone="tint" pad="md">
+          <Container size="text">
+            <Reveal>
+              <SectionHeader
+                eyebrow="Walkthrough"
+                title="See it working"
+                body={project.video.note}
+              />
+            </Reveal>
+            <Reveal delay={0.08} className="mt-10 select-none">
+              <ProjectVideo video={project.video} name={project.name} />
+            </Reveal>
+          </Container>
+        </Section>
+      )}
 
       {/* Features */}
       <Section tone="white" pad="lg">
