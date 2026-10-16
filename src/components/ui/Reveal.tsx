@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  /** distance travelled on entry, in px */
+  /** distance travelled on entry, in px — 12px matches Bright Studios micro-motion */
   y?: number;
 };
 
@@ -31,14 +31,19 @@ function getSharedObserver() {
           }
         }
       },
-      { rootMargin: "-80px" },
+      // Triggers slightly before element enters view for smooth, anticipatory flow
+      { rootMargin: "0px 0px -24px 0px", threshold: 0.04 },
     );
   }
   return sharedObserver;
 }
 
-/** Scroll-in reveal used by every section so motion stays consistent without Framer Motion overhead. */
-export function Reveal({ children, className, delay = 0, y = 18 }: Props) {
+/**
+ * Scroll-in reveal matching Bright Studios:
+ * Fast, delicate 0.48s entrance with [0.22, 1, 0.36, 1] quintic ease-out
+ * and subtle 12px translation to prevent disruptive layout jumping.
+ */
+export function Reveal({ children, className, delay = 0, y = 12 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
   const reduce = useReducedMotion();
@@ -71,8 +76,9 @@ export function Reveal({ children, className, delay = 0, y = 18 }: Props) {
       className={cn(className)}
       style={{
         opacity: revealed ? 1 : 0,
-        transform: revealed ? "none" : `translateY(${y}px)`,
-        transition: "opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)",
+        transform: revealed ? "none" : `translate3d(0, ${y}px, 0)`,
+        transition:
+          "opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1), transform 0.48s cubic-bezier(0.22, 1, 0.36, 1)",
         transitionDelay: delay ? `${delay}s` : undefined,
         willChange: revealed ? undefined : "opacity, transform",
       }}

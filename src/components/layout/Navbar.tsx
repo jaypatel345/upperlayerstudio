@@ -35,7 +35,7 @@ export function Navbar() {
         "fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-[var(--ease-out-soft)]",
         // Light see-through frost in every state (BrightStudios' nav): a soft
         // white gradient, a gentle blur, and glassy edge highlights
-        "bg-[linear-gradient(125deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.62)_45%,rgba(247,251,253,0.7)_100%)] backdrop-blur-[5px] backdrop-saturate-[1.18]",
+        "bg-[linear-gradient(125deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.62)_45%,rgba(247,251,253,0.7)_100%)] backdrop-blur-[18px] backdrop-saturate-[1.18] border-b border-[rgba(10,10,10,0.06)]",
         "shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_8px_32px_rgba(31,50,61,0.06)]",
       )}
       onMouseLeave={() => setOpenMenu(null)}

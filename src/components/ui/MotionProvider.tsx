@@ -1,6 +1,12 @@
-import React from "react";
+"use client";
 
-/** Pass-through provider. Framer Motion is fully replaced with high-performance CSS and native observers. */
+import React from "react";
+import { SmoothScroll } from "./SmoothScroll";
+
+/**
+ * Global provider for studio micro-motion and smooth momentum scrolling.
+ * Emulates the exact fluidity, physics, and damping of bybrightstudios.com.
+ */
 export function MotionProvider({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <SmoothScroll>{children}</SmoothScroll>;
 }

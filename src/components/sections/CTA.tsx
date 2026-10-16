@@ -42,7 +42,7 @@ export function CTA({ after = "white" }: { after?: "white" | "tint" }) {
 
       <Container>
         <Reveal>
-          <div className="mx-auto max-w-[900px] rounded-2xl bg-[linear-gradient(125deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.62)_45%,rgba(247,251,253,0.7)_100%)] px-6 py-10 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_8px_32px_rgba(31,50,61,0.06)] backdrop-blur-[5px] backdrop-saturate-[1.18] sm:p-8">
+          <div className="mx-auto max-w-[900px] rounded-2xl bg-[linear-gradient(125deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.62)_45%,rgba(247,251,253,0.7)_100%)] px-6 py-10 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.96),inset_1px_0_0_rgba(255,255,255,0.68),inset_0_-1px_0_rgba(255,255,255,0.7),0_8px_32px_rgba(31,50,61,0.06)] backdrop-blur-[18px] backdrop-saturate-[1.18] sm:p-8">
             <Eyebrow className="text-[#24596d]">{cta.eyebrow}</Eyebrow>
             <h2 className="mx-auto mt-3 text-[30px] leading-[1.1] sm:text-[40px]">{cta.title}</h2>
             <p className="mx-auto mt-4 max-w-[44ch] text-[16px] leading-[1.55] text-ink text-pretty sm:text-[17px]">

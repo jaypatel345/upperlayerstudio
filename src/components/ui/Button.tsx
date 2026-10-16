@@ -6,14 +6,14 @@ type Size = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-card)] font-medium " +
-  "whitespace-nowrap transition-all duration-200 ease-[var(--ease-out-soft)] " +
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink " +
+  "whitespace-nowrap select-none transition-all duration-200 ease-[var(--ease-out-soft)] " +
   "active:scale-[0.985]";
 
 const variants: Record<Variant, string> = {
-  solid: "bg-ink text-white hover:bg-[#2a2a2a] shadow-[0_1px_2px_rgba(10,10,10,0.2)]",
+  solid:
+    "bg-ink text-white shadow-[0_1px_2px_rgba(10,10,10,0.2)]",
   light:
-    "bg-white text-ink border border-line hover:border-line-strong hover:bg-[#fafafa] shadow-[0_1px_2px_rgba(10,10,10,0.06)]",
+    "bg-white text-ink border border-line shadow-[0_1px_2px_rgba(10,10,10,0.06)]",
   outline: "border border-line text-ink hover:bg-tint",
   ghost: "text-ink hover:bg-[rgba(10,10,10,0.04)]",
 };
@@ -43,27 +43,43 @@ export function Button({
   onClick,
   type = "button",
 }: Props) {
+  const isSolid = variant === "solid";
+  const isLight = variant === "light";
   const classes = cn(base, variants[variant], sizes[size], className);
+
+  const innerContent = (
+    <>
+      {isSolid && <span data-bright-gradient="true" aria-hidden="true" />}
+      <span className={cn(isSolid && "relative z-10 flex items-center justify-center gap-2")} data-bright-label={isSolid ? "true" : undefined}>
+        {children}
+      </span>
+    </>
+  );
+
+  const dataProps = {
+    "data-bright-cta": isSolid ? "true" : undefined,
+    "data-bright-secondary": isLight ? "true" : undefined,
+  };
 
   if (href) {
     const external = href.startsWith("http") || href.startsWith("mailto:");
     if (external) {
       return (
-        <a href={href} className={classes} target="_blank" rel="noreferrer">
-          {children}
+        <a href={href} className={classes} target="_blank" rel="noreferrer" {...dataProps}>
+          {innerContent}
         </a>
       );
     }
     return (
-      <Link href={href} className={classes}>
-        {children}
+      <Link href={href} className={classes} {...dataProps}>
+        {innerContent}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={classes}>
-      {children}
+    <button type={type} onClick={onClick} className={classes} {...dataProps}>
+      {innerContent}
     </button>
   );
 }
