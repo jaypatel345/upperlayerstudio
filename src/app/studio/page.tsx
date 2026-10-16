@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, pageMeta, webPageSchema } from "@/lib/seo";
 import { PageHero } from "@/components/sections/PageHero";
 import { CopyGrid } from "@/components/sections/CopyGrid";
 import { Studio } from "@/components/sections/Studio";
@@ -13,6 +14,15 @@ export const metadata: Metadata = pageMeta({ title: studio.meta.title, descripti
 export default function StudioPage() {
   return (
     <>
+      <JsonLd
+        data={webPageSchema({
+          type: "AboutPage",
+          path: "/studio",
+          name: studio.meta.title,
+          description: studio.meta.description,
+        })}
+      />
+      <JsonLd data={breadcrumbSchema([{ name: "Studio", path: "/studio" }])} />
       <PageHero
         eyebrow={studio.hero.eyebrow}
         headline={studio.hero.headline}

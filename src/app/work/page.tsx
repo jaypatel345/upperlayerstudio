@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, itemList, pageMeta, webPageSchema } from "@/lib/seo";
 import { ListingHeader } from "@/components/sections/ListingHeader";
 import { ProjectRows } from "@/components/sections/ProjectRows";
 import { CopyGrid } from "@/components/sections/CopyGrid";
@@ -12,6 +13,16 @@ export const metadata: Metadata = pageMeta({ title: work.meta.title, description
 export default function WorkPage() {
   return (
     <>
+      <JsonLd
+        data={webPageSchema({
+          type: "CollectionPage",
+          path: "/work",
+          name: work.meta.title,
+          description: work.meta.description,
+          extra: { mainEntity: itemList(projects.map((p) => ({ name: p.name, path: `/work/${p.slug}` }))) },
+        })}
+      />
+      <JsonLd data={breadcrumbSchema([{ name: "Work", path: "/work" }])} />
       <section className="overflow-x-clip pb-20 sm:pb-[88px]">
         <ListingHeader eyebrow={work.hero.eyebrow} title={work.hero.title} body={work.hero.body} />
         <ProjectRows projects={projects} />

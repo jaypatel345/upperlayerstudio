@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     path: `/insights/${post.slug}`,
     type: "article",
     publishedTime: post.date,
+    ogCard: true,
   });
 }
 

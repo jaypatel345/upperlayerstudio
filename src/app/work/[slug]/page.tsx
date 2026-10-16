@@ -29,8 +29,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const project = projectBySlug(slug);
   if (!project) return {};
 
-  const title = `${project.name}: ${project.kind} case study`;
-  return pageMeta({ title, description: project.summary, path: `/work/${project.slug}` });
+  return pageMeta({
+    title: project.seo?.title ?? `${project.name}: ${project.kind} case study`,
+    description: project.seo?.description ?? project.summary,
+    path: `/work/${project.slug}`,
+    ogCard: true,
+  });
 }
 
 export default async function CaseStudyPage({ params }: Params) {

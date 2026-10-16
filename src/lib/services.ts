@@ -61,10 +61,10 @@ export const serviceDetails: ServiceDetail[] = [
     meta: {
       title: "AI Automation Services & Agency",
       description:
-        "AI automation services that replace the work your team repeats: a workflow audit, n8n and custom-code automations, integrations with your existing tools, monitoring and handover.",
+        "AI automation services that replace the work your team repeats: a workflow audit, n8n and custom-code automations, integrations, monitoring and handover.",
     },
     hero: {
-      headline: { lead: "Automations that run", trail: "the work you repeat" },
+      headline: { lead: "AI Automation Services:", trail: "Automations that run the work you repeat" },
       body: "Every operation has work that happens the same way every time — quotes rebuilt from scratch, data retyped between tools, updates chased by hand. I map that work, replace it with systems that run on their own, and make sure you hear about it when they don't.",
       tags: ["Workflow audit", "n8n and custom code", "Human in the loop", "Monitoring and docs"],
     },
@@ -159,10 +159,10 @@ export const serviceDetails: ServiceDetail[] = [
     meta: {
       title: "AI Voice Agent Development & AI Receptionist",
       description:
-        "AI voice agents that answer every call, qualify the caller, book into your calendar and log the transcript to your CRM. An AI receptionist on your number, in your accounts.",
+        "AI voice agents that answer every call, qualify the caller, book into your calendar and log the transcript to your CRM: an AI receptionist on your number.",
     },
     hero: {
-      headline: { lead: "A voice agent that", trail: "answers every call" },
+      headline: { lead: "AI Voice Agent Development:", trail: "A voice agent that answers every call" },
       body: "Missed calls are lost revenue, and most businesses miss them after hours, mid-job, and whenever everyone is already on the phone. A voice agent picks up every time, asks your questions, books the work and writes down what was said.",
       tags: ["Inbound call handling", "Calendar booking", "Transcripts and summaries", "Human hand-off"],
     },
@@ -257,10 +257,10 @@ export const serviceDetails: ServiceDetail[] = [
     meta: {
       title: "Custom AI Agent Development & RAG",
       description:
-        "Custom AI agent development: agents grounded in your own data with RAG, wired into your real systems, with guardrails and an evaluation suite so you know when answers drift.",
+        "Custom AI agent development: agents grounded in your own data with RAG, wired into your systems, with guardrails and evals that catch answers drifting.",
     },
     hero: {
-      headline: { lead: "Agents that know", trail: "your business, not the internet" },
+      headline: { lead: "Custom AI Agent Development:", trail: "Agents that know your business, not the internet" },
       body: "A general chatbot can't answer a question about your pricing, your stock or your policies — and it will invent an answer rather than admit that. An agent grounded in your own data and wired into your own systems answers from what's true, and is tested so you know when it stops.",
       tags: ["Retrieval over your data", "Tool use", "Guardrails and evals", "Cost and latency tuning"],
     },
@@ -355,10 +355,10 @@ export const serviceDetails: ServiceDetail[] = [
     meta: {
       title: "AI Product Development Services",
       description:
-        "AI product development from design to launch: interface, model layer and infrastructure for teams taking an AI product to market, or outgrowing the automations they started with.",
+        "AI product development from design to launch: the interface, model layer and infrastructure for teams taking an AI product to market.",
     },
     hero: {
-      headline: { lead: "The software", trail: "you actually own" },
+      headline: { lead: "AI Product Development Services:", trail: "The software you actually own" },
       body: "When a workflow becomes how your business runs, renting it inside somebody else's tool stops making sense. This is the full build — interface, model layer and infrastructure — whether you're taking an AI product to market or outgrowing the automations we started with.",
       tags: ["Product and interface design", "Full-stack build", "Model orchestration", "Launch and iteration"],
     },
@@ -449,7 +449,7 @@ export const serviceBySlug = (slug: string) => serviceDetails.find((s) => s.slug
 export const servicesIndex = {
   hero: {
     eyebrow: "Services",
-    headline: { lead: "What needs", trail: "to change?" },
+    headline: { lead: "AI Automation Services:", trail: "What needs to change?" },
     body: "Start with the problem you need to solve. We agree the scope together, keep what already works, and take the right work through to production.",
     tags: serviceDetails.map((s) => s.name),
   },

@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Don't advertise the framework in every response
+  poweredByHeader: false,
   images: {
     // Next 16 coerces any quality not listed here down to the nearest entry,
     // so 90 has to be allowlisted for the case-study screenshots to use it.
@@ -27,8 +29,18 @@ const nextConfig: NextConfig = {
         value: "public, max-age=604800, stale-while-revalidate=86400",
       },
     ];
+    // Baseline hardening on every response. Google's page-experience signals
+    // include HTTPS safety, and these cost nothing: no CSP here, since GA and
+    // the Cal.com embed would need a maintained allowlist to stay working.
+    const security = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "Permissions-Policy", value: "camera=(), geolocation=(), browsing-topics=()" },
+    ];
     // Media files only: /work/<slug> is also a page, and that must stay fresh.
     return [
+      { source: "/:path*", headers: security },
       { source: "/work/:file(.+\\.(?:webp|mp4|jpg))", headers: cache },
       { source: "/hero/:file(.+\\.jpg)", headers: cache },
     ];

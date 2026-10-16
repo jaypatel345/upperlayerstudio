@@ -19,11 +19,11 @@ export const work = {
   meta: {
     title: "Work & Case Studies",
     description:
-      "What Upper Layer Studio has built, what a case study here will contain, and how to hire a new studio without carrying the risk.",
+      "AI automation, voice AI and AI agent case studies from Upper Layer Studio: what was built, the stack behind it, walkthrough videos and measured results.",
   },
   hero: {
     eyebrow: "Selected work",
-    title: "Work",
+    title: "AI Case Studies",
     body: "Products I've built and shipped myself, each one live or open to inspect. None of it is client work yet, and each case study says exactly what it was built as.",
   },
 
@@ -94,7 +94,7 @@ export const studio = {
   },
   hero: {
     eyebrow: "The studio",
-    headline: { lead: "One person,", trail: "start to finish" },
+    headline: { lead: "AI Automation Studio:", trail: "One person, start to finish" },
     body: "Upper Layer Studio is deliberately small. You talk to the person writing the code, so nothing is lost between the brief and the build — and when something isn't right, there's exactly one person to tell.",
     tags: [site.location, "Solo studio", "Fixed-fee projects"],
   },

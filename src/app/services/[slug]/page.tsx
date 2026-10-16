@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: service.meta.title,
     description: service.meta.description,
     path: `/services/${service.slug}`,
+    ogCard: true,
   });
 }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, pageMeta, webPageSchema } from "@/lib/seo";
 import { MediaImage } from "@/components/ui/MediaImage";
 import { BookingPanel } from "@/components/sections/BookingPanel";
 import { ContactForm } from "@/components/sections/ContactForm";
@@ -21,6 +22,15 @@ export default function ContactPage() {
 
   return (
     <LeadProvider>
+      <JsonLd
+        data={webPageSchema({
+          type: "ContactPage",
+          path: "/contact",
+          name: contact.meta.title,
+          description: contact.meta.description,
+        })}
+      />
+      <JsonLd data={breadcrumbSchema([{ name: "Contact", path: "/contact" }])} />
       <Container size="wide" className="pt-[124px] pb-24 sm:pt-[144px]">
         <div className="max-w-[680px]">
           <h1 className="rise text-[38px] leading-[1.06] sm:text-[54px]" style={delay(0)}>
