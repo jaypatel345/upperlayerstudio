@@ -31,6 +31,7 @@ export function Services() {
                 poster={project.video.poster}
                 label={`${project.name} walkthrough video`}
                 className="aspect-video"
+                style={project.video.focus ? { objectPosition: project.video.focus } : undefined}
               />
             </div>
           ) : project ? (

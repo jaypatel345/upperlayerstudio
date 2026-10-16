@@ -5,7 +5,7 @@
  * claim is something that can be checked on the live product, the repo or the
  * CI history. Newsbit, PromptX and StyleNest are the studio's own products,
  * Borrower Copilot and FrontDesk AI were built to a written brief, AsliOffer
- * was a two-person hackathon build, and the AI Lead Agent is the studio's own
+ * was a two-person hackathon build, and the AI Client Acquisition System is the studio's own
  * lead pipeline; none of them is client work, and the page says so.
  *
  * Adding a project: append to `projects`. The card, the case study route and
@@ -25,6 +25,11 @@ export type Shot = {
 export type Project = {
   slug: string;
   name: string;
+  /**
+   * Search-result title and description. Head-only, never rendered on the
+   * page; kept short enough (~60 / ~155 chars) that Google shows them whole.
+   */
+  seo?: { title: string; description: string };
   /** Short category line shown on cards */
   kind: string;
   /** Which of the four services this project is proof of */
@@ -51,9 +56,24 @@ export type Project = {
    * Walkthrough video. Set `src` to "" to show the "coming soon" poster
    * instead; swap in a hosted URL and nothing else needs to change.
    * `src` is the 1080p cut; `srcSmall` is an optional 720p cut served to
-   * phones and other small screens.
+   * phones and other small screens. `aspect` is the clip's own ratio when it
+   * isn't 16:9 (e.g. "4 / 3"): the case study shows it whole, and the 16:9
+   * gallery fills its frame with it, framed on `focus` (CSS object-position).
+   * `poster` is always 16:9; `posterFull` is the uncropped frame for players
+   * that show such a clip at its own ratio.
    */
-  video: { src: string; srcSmall?: string; poster: string; note: string };
+  video: {
+    src: string;
+    srcSmall?: string;
+    poster: string;
+    note: string;
+    aspect?: string;
+    focus?: string;
+    posterFull?: string;
+    /** Publish date (ISO) and length in seconds, for VideoObject and the video sitemap */
+    uploaded?: string;
+    duration?: number;
+  };
 };
 
 export type ScreenGroup = {
@@ -76,6 +96,11 @@ export const projects: Project[] = [
   {
     slug: "newsbit",
     name: "Newsbit",
+    seo: {
+      title: "Newsbit: AI News App Case Study",
+      description:
+        "Newsbit case study: an AI news app that ranks the day's top 10 stories, summarises each one with a source link and refreshes itself every morning.",
+    },
     kind: "AI news app",
     service: "Product Build",
     summary:
@@ -289,6 +314,11 @@ export const projects: Project[] = [
   {
     slug: "promptx",
     name: "PromptX",
+    seo: {
+      title: "PromptX: AI Prompt Enhancer Case Study",
+      description:
+        "PromptX case study: a full-stack AI prompt enhancer that turns rough prompts into clear instructions for ChatGPT, Claude, Gemini or Grok.",
+    },
     kind: "AI prompt enhancer",
     service: "Product Build",
     summary:
@@ -505,6 +535,11 @@ export const projects: Project[] = [
   {
     slug: "stylenest",
     name: "StyleNest",
+    seo: {
+      title: "StyleNest: Fashion E-commerce Case Study",
+      description:
+        "StyleNest case study: a full-stack fashion store with Stripe checkout, an admin dashboard for products and orders, and an Express and MongoDB API.",
+    },
     kind: "Fashion e-commerce",
     service: "Product Build",
     summary:
@@ -732,6 +767,11 @@ export const projects: Project[] = [
   {
     slug: "borrower-copilot",
     name: "Borrower Copilot",
+    seo: {
+      title: "Borrower Copilot: Loan Check Case Study",
+      description:
+        "Borrower Copilot case study: a loan self-check for Indian borrowers that returns a verdict, a safe amount, a fair rate and an EMI ceiling in the browser.",
+    },
     kind: "Loan self-assessment",
     service: "Product Build",
     summary:
@@ -966,6 +1006,11 @@ export const projects: Project[] = [
   {
     slug: "aslioffer",
     name: "AsliOffer",
+    seo: {
+      title: "AsliOffer: Job Scam Checker Case Study",
+      description:
+        "AsliOffer case study: an AI agent that checks a job offer against the employer's public footprint and flags scam signals for Indian freshers, with sources.",
+    },
     kind: "Job offer verification agent",
     service: "AI Agents",
     summary:
@@ -1168,6 +1213,11 @@ export const projects: Project[] = [
   {
     slug: "frontdeskai",
     name: "FrontDesk AI",
+    seo: {
+      title: "FrontDesk AI: AI Receptionist Case Study",
+      description:
+        "FrontDesk AI case study: an AI phone receptionist on Vapi that answers questions, qualifies callers, books in Cal.com and logs every transcript to HubSpot.",
+    },
     kind: "AI phone receptionist",
     service: "Voice AI",
     summary:
@@ -1387,11 +1437,16 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-lead-agent",
-    name: "AI Lead Agent",
+    name: "AI Client Acquisition System",
+    seo: {
+      title: "AI Client Acquisition System Case Study",
+      description:
+        "AI lead qualification case study: six n8n workflows score leads with Gemini, sync HubSpot or Google Sheets and reply by email and WhatsApp, averaging 14s.",
+    },
     kind: "Lead automation",
     service: "AI Automation",
     summary:
-      "Three n8n workflows that answer every website enquiry in under a minute: they score the lead with Gemini, log it in HubSpot, send a reply written for that lead, brief me before the call and follow up until the lead books. It runs on free tiers for $0 a month.",
+      "Six n8n workflows that answer every enquiry in under a minute: they take leads from any form, score them with Gemini, log them in HubSpot or Google Sheets, reply by email and WhatsApp with a booking link, brief me before the call, follow up, and stop the moment a lead replies. It runs on free tiers for $0 a month.",
     art: "clear",
     live: "https://upperlayerstudio.com/contact",
     repo: "",
@@ -1402,29 +1457,29 @@ export const projects: Project[] = [
       { label: "Service", value: "AI Automation" },
     ],
     problem:
-      "Small service businesses lose leads between “form submitted” and “someone replies”. The enquiry sits in an inbox for hours, nobody records it, the owner can't tell a serious buyer from a spammer, and if the lead doesn't book straight away nobody follows up.",
+      "Small service businesses lose leads between “form submitted” and “someone replies”. The enquiry sits in an inbox for hours, nobody records it, the owner can't tell a serious buyer from a spammer, leads arrive from three different form tools in three different shapes, and if the lead doesn't book straight away nobody follows up.",
     built:
-      "The AI Lead Agent is three n8n workflows behind the “Prefer to write first?” form on this site. Lead Intake scores each enquiry with Gemini, writes it to HubSpot, emails a reply that restates what the lead asked for with a booking link, and pings me on Telegram when a lead is hot. Booking catches the Cal.com webhook, moves the contact to “Call Booked” and sends me a pre-call brief. Follow-up runs every hour and nudges warm and hot leads who haven't booked, twice, before moving them to Nurture. Everything runs on free tiers. The leads in these screens are my own test enquiries; “Priya Mehta” and BrightSmile Dental are a sample lead, not a client.",
+      "The AI Client Acquisition System is six n8n workflows behind the “Prefer to write first?” form on this site. A normaliser takes submissions from the site, Typeform, Tally, Google Forms and Apollo or Clay lists and turns them into one lead shape. Lead Intake checks whether the contact is new, scores the enquiry with Gemini, writes it to the CRM, replies by email and WhatsApp with a booking link and alerts me on Telegram and WhatsApp when a lead is hot. A CRM adapter sends every record to HubSpot or to Google Sheets, whichever the business uses. Booking catches the Cal.com webhook, moves the contact to “Call Booked” and sends me a pre-call brief. Follow-up nudges open leads twice before moving them to Nurture, and Reply Detection reads replies on email and WhatsApp, stops the follow-ups and tells me to step in. Everything runs on free tiers. The leads in these screens are my own test enquiries; “Priya Mehta” and BrightSmile Dental are a sample lead, not a client.",
     features: [
       {
-        title: "A reply in seconds, not hours",
-        body: "Hot and warm leads get an email written for them: it restates their problem in plain words, asks one concrete question and links to the booking page. The visitor sees “Thanks” in about half a second while the rest runs in the background.",
+        title: "A reply in seconds, on email and WhatsApp",
+        body: "Hot and warm leads get a message written for them: it restates their problem in plain words, asks one concrete question and links to the booking page, by email and, when they leave a number, on WhatsApp. The visitor sees “Thanks” in about half a second while the rest runs in the background.",
       },
       {
         title: "Scored by the model, tiered by code",
-        body: "Gemini returns a score, intent, budget, urgency and a summary as strict JSON. A code node applies the rule itself: 70 and up is hot, 40 to 69 warm, under 40 cold, and spam is always cold and never emailed.",
+        body: "Gemini returns a score, intent, budget, urgency and a summary as strict JSON. A code node applies the rule itself: 70 and up is hot, 40 to 69 warm, under 40 cold, and spam is always cold and never answered. It tiered 20 of 20 labelled test leads correctly, spam included.",
       },
       {
-        title: "Every lead lands in the CRM",
-        body: "A HubSpot upsert keyed on email writes the contact with eight custom fields: score, tier, stage, service fit, AI summary, source, follow-ups sent and last contacted.",
+        title: "Any form in, any CRM out",
+        body: "One normaliser maps Typeform, Tally, Google Forms and Apollo or Clay rows onto the same lead, with phone numbers cleaned to E.164. A CRM adapter writes it to HubSpot, with eight custom fields, or to Google Sheets with a CSV export, so a business without HubSpot loses nothing.",
       },
       {
         title: "A brief before every call",
-        body: "When a lead books on Cal.com, Gemini writes a pre-call brief from the stored summary, with what they want, what to ask and the angle to lead with, and sends it to my Telegram.",
+        body: "When a lead books on Cal.com, Gemini writes a pre-call brief from the stored summary, with what they want, what to ask and the angle to lead with, and sends it to my Telegram and WhatsApp.",
       },
       {
         title: "Follow-up that knows when to stop",
-        body: "Open leads get a nudge after 24 hours and a second, with a link to my work, 48 hours later. Silent leads move to Nurture with no more email, and a lead who books gets none.",
+        body: "Open leads get a nudge after 24 hours and a second, with a link to my work, 48 hours later. A reply on email or WhatsApp is classified by Gemini, stops the sequence at once and alerts me; silent leads move to Nurture, and a lead who books gets nothing more.",
       },
       {
         title: "Honest by rule",
@@ -1434,7 +1489,7 @@ export const projects: Project[] = [
     pipeline: [
       {
         title: "Normalise and enrich",
-        body: "Each source maps to one lead shape, and a missing or invalid email is turned away with a 400. If the lead has a company domain or website, its homepage title and description are fetched as context, with a 5-second timeout.",
+        body: "Each source maps to one lead shape, and a missing or invalid email is turned away with a 400. A returning contact gets a note on their record instead of a second welcome. If the lead has a company website, its title and description are fetched as context, with a 5-second timeout.",
       },
       {
         title: "Qualify",
@@ -1442,18 +1497,22 @@ export const projects: Project[] = [
       },
       {
         title: "Log and reply",
-        body: "The contact is upserted into HubSpot, the reply goes out over Gmail, and a hot lead triggers a Telegram alert. Telegram, enrichment and email fail soft, so a broken side channel never blocks the reply or the CRM write.",
+        body: "The CRM adapter upserts the contact into HubSpot or Google Sheets, the reply goes out over Gmail and WhatsApp, and a hot lead triggers alerts on Telegram and WhatsApp. Alerts, enrichment and messaging fail soft, so a broken side channel never blocks the reply or the CRM write.",
       },
       {
-        title: "Book and follow up",
-        body: "The Cal.com webhook flips the contact to Call Booked and sends the brief. An hourly run picks up open leads, times nudges from the last email rather than from sign-up, and moves silent leads to Nurture.",
+        title: "Book, follow up, hand over",
+        body: "The Cal.com webhook flips the contact to Call Booked and sends the brief. An hourly run nudges open leads, timed from the last message rather than from sign-up. When a lead replies, the follow-ups stop and the conversation is handed to me.",
       },
     ],
     stack: [
       { group: "Orchestration", items: ["n8n (self-hosted, Docker)", "Cloudflare tunnel"] },
       { group: "AI", items: ["Gemini 3.1 Flash-Lite", "Gemini 3.5 Flash (fallback)"] },
-      { group: "Integrations", items: ["HubSpot Free CRM", "Cal.com", "Gmail SMTP", "Telegram bot"] },
-      { group: "Website", items: ["Next.js 16 Server Action"] },
+      { group: "CRM", items: ["HubSpot Free CRM", "Google Sheets"] },
+      {
+        group: "Messaging",
+        items: ["WhatsApp Business Cloud API", "Gmail SMTP", "Telegram bot", "Cal.com"],
+      },
+      { group: "Intake", items: ["Next.js 16 Server Action", "Typeform", "Tally", "Google Forms"] },
     ],
     result: {
       stat: "14.0s",
@@ -1464,14 +1523,14 @@ export const projects: Project[] = [
     cover: {
       desktop: {
         src: `${al}/04-n8n-lead-intake-desktop.webp`,
-        alt: "AI Lead Agent n8n intake workflow diagram routing leads through Gemini scoring, HubSpot, and Telegram",
+        alt: "AI Client Acquisition System n8n intake workflow diagram routing leads through Gemini scoring, HubSpot, and Telegram",
         caption: "The Lead Intake workflow",
         w: 2880,
         h: 1800,
       },
       mobile: {
         src: `${al}/10-telegram-brief-mobile.webp`,
-        alt: "AI Lead Agent Telegram notification delivering instant lead qualification summary and call pitch",
+        alt: "AI Client Acquisition System Telegram notification delivering instant lead qualification summary and call pitch",
         caption: "A pre-call brief on Telegram",
         w: 1206,
         h: 2622,
@@ -1500,8 +1559,8 @@ export const projects: Project[] = [
         ],
       },
       {
-        title: "The three workflows",
-        body: "The workflows as they run in production on n8n.",
+        title: "The workflows",
+        body: "The core of the system as it runs in production on n8n: intake, booking and follow-up.",
         kind: "desktop",
         shots: [
           {
@@ -1585,10 +1644,17 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      src: `${al}/showcase.mp4`,
-      srcSmall: `${al}/showcase-720.mp4`,
-      poster: `${al}/showcase-poster.jpg`,
-      note: "From the enquiry to the booked call, in one minute.",
+      // New file names (not showcase.mp4) so cached copies of the old cut aren't reused
+      src: `${al}/acquisition-showcase.mp4`,
+      srcSmall: `${al}/acquisition-showcase-720.mp4`,
+      poster: `${al}/acquisition-showcase-poster.jpg`,
+      posterFull: `${al}/acquisition-showcase-poster-4x3.jpg`,
+      uploaded: "2026-10-16T17:35:00+05:30",
+      duration: 20.5,
+      aspect: "4 / 3",
+      // Crops only the browser's address bar, keeping the whole page in view
+      focus: "50% 70%",
+      note: "From the enquiry form to the HubSpot record and a WhatsApp reply with a booking link.",
     },
   },
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { getImageProps } from "next/image";
 import { cn } from "@/lib/cn";
 import { mediaLoader, mediaUrl } from "@/lib/media";
@@ -29,14 +29,19 @@ export function AutoplayVideo({
   poster,
   label,
   posterWidth = 375,
+  fit = "cover",
   className,
+  style,
 }: {
   src: string;
   srcSmall?: string;
   poster: string;
   label: string;
   posterWidth?: number;
+  /** "contain" shows the whole clip when its ratio differs from the frame's */
+  fit?: "cover" | "contain";
   className?: string;
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -142,7 +147,12 @@ export function AutoplayVideo({
       controlsList="nodownload nofullscreen noremoteplayback"
       aria-label={label}
       onContextMenu={(e) => e.preventDefault()}
-      className={cn("pointer-events-none block w-full select-none object-cover", className)}
+      className={cn(
+        "pointer-events-none block w-full select-none",
+        fit === "contain" ? "object-contain" : "object-cover",
+        className,
+      )}
+      style={style}
     >
       {/* The clips have no sound; the track says so for anyone relying on captions */}
       <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />

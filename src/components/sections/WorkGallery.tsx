@@ -47,6 +47,7 @@ export function WorkGallery({ project }: { project: Project }) {
           poster={project.video.poster}
           label={`${project.name} walkthrough`}
           posterWidth={1248}
+          style={project.video.focus ? { objectPosition: project.video.focus } : undefined}
           className="absolute inset-0 h-full"
         />
       ),

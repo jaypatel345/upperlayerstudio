@@ -30,10 +30,12 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
       <AutoplayVideo
         src={video.src}
         srcSmall={video.srcSmall}
-        poster={video.poster}
+        poster={video.aspect && video.posterFull ? video.posterFull : video.poster}
         label={`${name} walkthrough video`}
         posterWidth={600}
-        className="aspect-video"
+        fit={video.aspect ? "contain" : "cover"}
+        className={video.aspect ? undefined : "aspect-video"}
+        style={video.aspect ? { aspectRatio: video.aspect } : undefined}
       />
     </div>
   );

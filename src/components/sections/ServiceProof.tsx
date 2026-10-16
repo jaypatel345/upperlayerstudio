@@ -44,6 +44,7 @@ export function ServiceProof({
           label={`${project.name} walkthrough`}
           posterWidth={posterWidth}
           className="aspect-video"
+          style={project.video.focus ? { objectPosition: project.video.focus } : undefined}
         />
       </Link>
       <figcaption
