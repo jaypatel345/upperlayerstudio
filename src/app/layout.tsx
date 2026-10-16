@@ -17,12 +17,14 @@ const inter = Inter({
 });
 
 const description =
-  "AI automation, voice AI agents and product build for teams worldwide. Fixed-fee scope within 48 hours. Based in India.";
+  "AI automation agency building workflow automation, AI voice agents and AI receptionists, and custom AI agents for businesses worldwide. Fixed-fee scope in 48 hours.";
+
+const socialTitle = `AI Automation Services & AI Voice Agents | ${site.name}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `AI Automation, Voice AI & Agents | ${site.name}`,
+    default: socialTitle,
     template: `%s | ${site.name}`,
   },
   description,
@@ -31,22 +33,26 @@ export const metadata: Metadata = {
   creator: "Jay Patel",
   publisher: site.name,
   keywords: [
-    "AI automation agency",
     "AI automation services",
-    "voice AI agent",
+    "AI automation agency",
+    "AI voice agent",
+    "AI voice agent development",
     "AI receptionist",
+    "AI phone answering service",
+    "voice AI agency",
     "custom AI agents",
+    "AI agent development",
+    "workflow automation services",
+    "business process automation",
+    "n8n automation agency",
     "AI product development",
-    "n8n automation",
-    "workflow automation",
-    "AI studio India",
+    "AI automation agency India",
   ],
   category: "technology",
   alternates: { canonical: "/", languages: { en: "/" } },
   openGraph: {
-    title: `${site.name} | ${site.tagline}`,
-    description:
-      "AI automation, voice agents and product build for teams that need something running, not another prototype.",
+    title: socialTitle,
+    description,
     url: "/",
     siteName: site.name,
     locale: "en_GB",
@@ -56,9 +62,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@UpperLayerAI",
     creator: "@UpperLayerAI",
-    title: `${site.name} | ${site.tagline}`,
-    description:
-      "AI automation, voice agents and product build for teams that need something running, not another prototype.",
+    title: socialTitle,
+    description,
   },
   robots: {
     index: true,

@@ -19,6 +19,41 @@ const ogImage = { url: "/opengraph-image", ...ogSize, alt: ogAlt };
 export const absolute = (path = "/") => new URL(path, siteUrl).toString();
 
 /**
+ * Last meaningful content edit, used as sitemap lastModified for pages that
+ * don't carry their own date. Bump it when page copy changes; Google ignores
+ * lastmod values that change on every build, so this is deliberately manual.
+ */
+export const contentUpdated = "2026-10-16";
+
+/** Videos are served from the R2 media origin, not from the Vercel site. */
+const MEDIA_ORIGIN = "https://media.upperlayerstudio.com";
+export const videoUrl = (src: string) => (src.startsWith("http") ? src : MEDIA_ORIGIN + src);
+
+/** Search phrases each service should be found for, used in its Service schema. */
+const serviceKeywords: Record<string, { alternateName: string[]; serviceType: string; audience: string }> = {
+  automation: {
+    alternateName: ["AI automation services", "AI automation agency", "Workflow automation services", "n8n automation"],
+    serviceType: "AI automation services",
+    audience: "Operations teams and small to mid-sized businesses",
+  },
+  voice: {
+    alternateName: ["AI voice agent", "Voice AI agent development", "AI receptionist", "AI phone answering service"],
+    serviceType: "AI voice agent development",
+    audience: "Service businesses that rely on inbound phone calls",
+  },
+  agents: {
+    alternateName: ["Custom AI agent development", "AI agent development services", "RAG chatbot development"],
+    serviceType: "AI agent development",
+    audience: "Teams that need assistants grounded in their own data",
+  },
+  product: {
+    alternateName: ["AI product development services", "AI software development", "AI MVP development"],
+    serviceType: "AI product development",
+    audience: "Founders and teams taking an AI product to market",
+  },
+};
+
+/**
  * Per-page metadata. Each page needs its own openGraph block: Next merges
  * metadata shallowly, so a page without one inherits the layout's og:url and
  * every share card would point at the homepage.
@@ -74,6 +109,7 @@ export function siteSchema() {
         "@type": "ProfessionalService",
         "@id": orgId,
         name: site.name,
+        alternateName: ["Upper Layer", "Upper Layer AI"],
         url: siteUrl,
         // Schema.org requires logo to be an ImageObject for rich results
         logo: {
@@ -88,28 +124,52 @@ export function siteSchema() {
           url: absolute("/opengraph-image"),
         },
         email: site.email,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: site.email,
+          url: absolute(site.book),
+          availableLanguage: ["English"],
+          areaServed: "Worldwide",
+        },
         slogan: site.tagline,
         description:
-          "AI automation, voice AI agents, custom AI agents and product build for teams that need software running, not another prototype.",
+          "AI automation agency offering AI automation services, AI voice agents and AI receptionists, custom AI agents and AI product development for teams worldwide. Fixed-fee scope within 48 hours.",
         founder: { "@id": founderId },
         address: { "@type": "PostalAddress", addressCountry: "IN" },
         areaServed: "Worldwide",
         knowsAbout: [
           "AI automation",
+          "AI automation services",
           "Workflow automation",
+          "Business process automation",
           "Voice AI agents",
+          "AI receptionist",
+          "AI phone answering",
+          "Conversational AI",
           "AI agents",
           "Retrieval-augmented generation",
+          "Large language models",
           "AI product development",
           "n8n",
+          "Vapi",
+          "ElevenLabs",
+          "OpenAI",
+          "Anthropic Claude",
         ],
         sameAs: site.socials.map((s) => s.href),
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "Services",
+          name: "AI automation and voice AI services",
           itemListElement: serviceDetails.map((s) => ({
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: s.name, url: absolute(`/services/${s.slug}`) },
+            itemOffered: {
+              "@type": "Service",
+              "@id": `${absolute(`/services/${s.slug}`)}#service`,
+              name: s.name,
+              serviceType: serviceKeywords[s.slug]?.serviceType ?? s.name,
+              url: absolute(`/services/${s.slug}`),
+            },
           })),
         },
       },
@@ -164,15 +224,30 @@ export function breadcrumbSchema(trail: { name: string; path: string }[]) {
 }
 
 export function serviceSchema(s: { name: string; slug: string; description: string }) {
+  const url = absolute(`/services/${s.slug}`);
+  const k = serviceKeywords[s.slug];
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${url}#service`,
     name: s.name,
-    serviceType: s.name,
+    ...(k && { alternateName: k.alternateName }),
+    serviceType: k?.serviceType ?? s.name,
     description: s.description,
-    url: absolute(`/services/${s.slug}`),
+    url,
+    mainEntityOfPage: url,
     provider: { "@id": orgId },
+    brand: { "@id": orgId },
     areaServed: "Worldwide",
+    ...(k && { audience: { "@type": "BusinessAudience", audienceType: k.audience } }),
+    // No published prices: the offer says how it's priced, not what it costs
+    offers: {
+      "@type": "Offer",
+      url: absolute(site.book),
+      availability: "https://schema.org/InStock",
+      description: "Fixed fee against an agreed scope, quoted in writing within 48 hours of a discovery call.",
+      seller: { "@id": orgId },
+    },
   };
 }
 
@@ -195,7 +270,18 @@ export function articleSchema(p: { slug: string; title: string; summary: string;
   };
 }
 
-export function projectSchema(p: { slug: string; name: string; kind: string; summary: string; live: string }) {
+/** Date the case-study walkthrough videos were published (git history of public/work). */
+const videoUploadDate = "2026-10-06T00:00:00+05:30";
+
+export function projectSchema(p: {
+  slug: string;
+  name: string;
+  kind: string;
+  summary: string;
+  live: string;
+  video?: { src: string; poster: string; note: string };
+}) {
+  const url = absolute(`/work/${p.slug}`);
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -207,8 +293,21 @@ export function projectSchema(p: { slug: string; name: string; kind: string; sum
       ...(p.live && { url: p.live }),
     },
     description: p.summary,
-    url: absolute(`/work/${p.slug}`),
+    url,
     creator: { "@id": founderId },
     publisher: { "@id": orgId },
+    // Lets the walkthrough appear in Google's video results and video carousels
+    ...(p.video?.src && {
+      video: {
+        "@type": "VideoObject",
+        name: `${p.name}: ${p.kind} walkthrough`,
+        description: p.video.note || p.summary,
+        thumbnailUrl: absolute(p.video.poster),
+        contentUrl: videoUrl(p.video.src),
+        uploadDate: videoUploadDate,
+        embedUrl: url,
+        publisher: { "@id": orgId },
+      },
+    }),
   };
 }

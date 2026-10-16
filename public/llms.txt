@@ -1,12 +1,37 @@
 # Upper Layer Studio
-> One-person AI studio in India building AI automation, voice AI agents, custom AI agents and AI products for teams worldwide. Fixed-fee scope in 48 hours.
+
+> Upper Layer Studio is a one-person AI automation agency based in India, working with businesses worldwide. It offers AI automation services, AI voice agents (AI receptionists that answer phone calls), custom AI agents with retrieval over your own data, and AI product development. Every project gets a written scope and a fixed fee within 48 hours of a discovery call. The founder, Jay Patel, scopes, builds and ships each project himself.
+
+Key facts:
+- Services: AI automation and workflow automation (n8n and custom code), voice AI agents and AI phone receptionists, custom AI agents and RAG assistants, full-stack AI product development.
+- Pricing: fixed fee against an agreed scope, split across milestones. An optional monthly retainer covers ongoing support. No hourly billing.
+- Ownership: clients own the code, prompts, infrastructure and documentation, delivered in their own accounts.
+- Models: the studio does not build foundation models. It builds the architecture, integrations, guardrails and interfaces around models from OpenAI, Anthropic and speech providers such as ElevenLabs.
+- Status: a new studio. The case studies are the founder's own products and briefed builds, not client work, and each case study says which.
+- Contact: jaypatel@upperlayerstudio.com. Book a 30-minute call at https://www.upperlayerstudio.com/contact
 
 ## Services
-- [AI Automation](https://www.upperlayerstudio.com/services/automation)
-- [Voice AI](https://www.upperlayerstudio.com/services/voice)
-- [AI Agents](https://www.upperlayerstudio.com/services/agents)
-- [Product Build](https://www.upperlayerstudio.com/services/product)
+- [AI Automation Services](https://www.upperlayerstudio.com/services/automation): workflow audit, automations built in n8n or custom code, integrations with existing tools, a human in the loop, monitoring and handover docs.
+- [AI Voice Agents & AI Receptionist](https://www.upperlayerstudio.com/services/voice): inbound call handling, caller qualification, calendar booking during the call, transcripts and summaries to your CRM, hand-off to a human.
+- [Custom AI Agents](https://www.upperlayerstudio.com/services/agents): retrieval over your own knowledge base, tool use in real systems, guardrails, an evaluation suite, cost and latency tuning.
+- [AI Product Development](https://www.upperlayerstudio.com/services/product): product and interface design, full-stack build, model orchestration and fallbacks, launch support.
+- [All services](https://www.upperlayerstudio.com/services)
 
 ## Work
-- [FrontDesk AI](https://www.upperlayerstudio.com/work/frontdeskai): AI phone receptionist on Vapi
-- [AI Lead Agent](https://www.upperlayerstudio.com/work/ai-lead-agent): n8n lead response
+- [FrontDesk AI](https://www.upperlayerstudio.com/work/frontdeskai): AI phone receptionist built on Vapi, with Cal.com booking and HubSpot logging.
+- [AI Lead Agent](https://www.upperlayerstudio.com/work/ai-lead-agent): n8n lead-response automation.
+- [AsliOffer](https://www.upperlayerstudio.com/work/aslioffer): job offer verification agent.
+- [Newsbit](https://www.upperlayerstudio.com/work/newsbit): AI news app with voice chat.
+- [PromptX](https://www.upperlayerstudio.com/work/promptx): AI prompt enhancer.
+- [Borrower Copilot](https://www.upperlayerstudio.com/work/borrower-copilot): loan self-assessment tool.
+- [StyleNest](https://www.upperlayerstudio.com/work/stylenest): fashion e-commerce.
+
+## Insights
+- [Automation or agent? Pick the boring one](https://www.upperlayerstudio.com/insights/automation-or-agent)
+- [Nobody in this business builds the model](https://www.upperlayerstudio.com/insights/nobody-builds-the-model)
+- [What a voice agent actually costs to run](https://www.upperlayerstudio.com/insights/voice-agent-real-cost)
+
+## Optional
+- [About the studio](https://www.upperlayerstudio.com/studio)
+- [Contact and booking](https://www.upperlayerstudio.com/contact)
+- [Sitemap](https://www.upperlayerstudio.com/sitemap.xml)

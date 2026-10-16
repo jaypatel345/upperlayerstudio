@@ -59,9 +59,9 @@ export const serviceDetails: ServiceDetail[] = [
     art: { sky: "clear", label: "Automation" },
     proof: "ai-lead-agent",
     meta: {
-      title: "AI Automation Services & Workflow Automation",
+      title: "AI Automation Services & Agency",
       description:
-        "I map the work your team repeats and replace it with automations that run on their own — built on the tools you already use, documented and handed over.",
+        "AI automation services that replace the work your team repeats: a workflow audit, n8n and custom-code automations, integrations with your existing tools, monitoring and handover.",
     },
     hero: {
       headline: { lead: "Automations that run", trail: "the work you repeat" },
@@ -157,9 +157,9 @@ export const serviceDetails: ServiceDetail[] = [
     art: { sky: "deep", label: "Voice" },
     proof: "frontdeskai",
     meta: {
-      title: "Voice AI Agents & AI Phone Receptionist",
+      title: "AI Voice Agent Development & AI Receptionist",
       description:
-        "A voice agent that answers every call in your tone, qualifies the caller, books the job into your calendar and writes it down — on your number, in your accounts.",
+        "AI voice agents that answer every call, qualify the caller, book into your calendar and log the transcript to your CRM. An AI receptionist on your number, in your accounts.",
     },
     hero: {
       headline: { lead: "A voice agent that", trail: "answers every call" },
@@ -255,9 +255,9 @@ export const serviceDetails: ServiceDetail[] = [
     art: { sky: "dusk", label: "Agents" },
     proof: "aslioffer",
     meta: {
-      title: "Custom AI Agents & RAG Assistants",
+      title: "Custom AI Agent Development & RAG",
       description:
-        "Agents grounded in your own data and wired into your real systems, with guardrails and an evaluation suite so you know when the answers drift.",
+        "Custom AI agent development: agents grounded in your own data with RAG, wired into your real systems, with guardrails and an evaluation suite so you know when answers drift.",
     },
     hero: {
       headline: { lead: "Agents that know", trail: "your business, not the internet" },
@@ -353,9 +353,9 @@ export const serviceDetails: ServiceDetail[] = [
     art: { sky: "cumulus", label: "Product" },
     proof: "newsbit",
     meta: {
-      title: "AI Product Development",
+      title: "AI Product Development Services",
       description:
-        "The full build — interface, model layer and infrastructure — for teams taking an AI product to market, or outgrowing the automations they started with.",
+        "AI product development from design to launch: interface, model layer and infrastructure for teams taking an AI product to market, or outgrowing the automations they started with.",
     },
     hero: {
       headline: { lead: "The software", trail: "you actually own" },
