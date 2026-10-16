@@ -128,15 +128,11 @@ export function WorkGallery({ project }: { project: Project }) {
                   poster={project.video.poster}
                   label={`${project.name} walkthrough`}
                   posterWidth={1248}
-                  fit={project.video.aspect ? "contain" : "cover"}
-                  className={project.video.aspect ? "w-full" : "aspect-video w-full"}
-                  style={
-                    project.video.aspect
-                      ? { aspectRatio: project.video.aspect }
-                      : project.video.focus
-                      ? { objectPosition: project.video.focus }
-                      : undefined
-                  }
+                  fit="cover"
+                  className="aspect-video w-full object-cover"
+                  style={{
+                    objectPosition: project.video.focus ?? "center",
+                  }}
                 />
               </div>
             </div>
