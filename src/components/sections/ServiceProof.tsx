@@ -43,13 +43,23 @@ export function ServiceProof({
           <AutoplayVideo
             src={project.video.src}
             srcSmall={project.video.srcSmall}
-            poster={project.video.poster}
+            poster={
+              project.video.aspect && project.video.posterFull
+                ? project.video.posterFull
+                : project.video.poster
+            }
             label={`${project.name} walkthrough`}
             posterWidth={posterWidth}
-            fit="cover"
-            className="aspect-[16/10] w-full object-cover"
+            fit={project.video.aspect ? "contain" : "cover"}
+            className={
+              project.video.aspect
+                ? "w-full"
+                : "aspect-[16/10] w-full object-cover"
+            }
             style={
-              project.video.focus
+              project.video.aspect
+                ? { aspectRatio: project.video.aspect }
+                : project.video.focus
                 ? { objectPosition: project.video.focus }
                 : undefined
             }

@@ -1678,8 +1678,7 @@ export const projects: Project[] = [
       uploaded: "2026-10-16T17:35:00+05:30",
       duration: 20.5,
       aspect: "4 / 3",
-      // Crops only the browser's address bar, keeping the whole page in view
-      focus: "50% 70%",
+      focus: "50% 50%",
       note: "From the enquiry form to the HubSpot record and a WhatsApp reply with a booking link.",
     },
   },
