@@ -30,25 +30,13 @@ export function Services() {
               <AutoplayVideo
                 src={project.video.src}
                 srcSmall={project.video.srcSmall}
-                poster={
-                  project.video.aspect && project.video.posterFull
-                    ? project.video.posterFull
-                    : project.video.poster
-                }
+                poster={project.video.poster}
                 label={`${project.name} walkthrough video`}
-                fit={project.video.aspect ? "contain" : "cover"}
-                className={
-                  project.video.aspect
-                    ? "w-full"
-                    : "aspect-[16/10] w-full object-cover"
-                }
-                style={
-                  project.video.aspect
-                    ? { aspectRatio: project.video.aspect }
-                    : project.video.focus
-                    ? { objectPosition: project.video.focus }
-                    : undefined
-                }
+                fit="cover"
+                className="aspect-[16/10] w-full object-cover"
+                style={{
+                  objectPosition: project.video.focus ?? "center",
+                }}
               />
             </Link>
           ) : project ? (
