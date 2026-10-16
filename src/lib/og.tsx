@@ -3,11 +3,20 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { site } from "./site";
 
-/** Shared social card: the hero sky with the wordmark and tagline over it. */
+/**
+ * Social card: the hero sky with the wordmark over it. With no options it is
+ * the sitewide card (tagline + services line). Case studies, services and
+ * articles pass their own headline so a shared link shows what it points at,
+ * which lifts click-through from LinkedIn, X and Slack previews.
+ */
 export const ogSize = { width: 1200, height: 630 };
 export const ogAlt = `${site.name} — ${site.tagline}`;
 
-export async function renderOgImage() {
+export async function renderOgImage(card?: { eyebrow: string; title: string }) {
+  const headline = card?.title ?? site.tagline;
+  const sub = card?.eyebrow ?? "AI Automation · Voice AI · AI Agents · Product Build";
+  // Long headlines step down so they still fit in three lines
+  const fontSize = headline.length > 60 ? 56 : headline.length > 36 ? 64 : 72;
   const [sky, logo] = await Promise.all([
     readFile(join(process.cwd(), "src/assets/og-sky.jpg"), "base64"),
     readFile(join(process.cwd(), "public/brand/upper_layer_studio_logo_badge.png"), "base64"),
@@ -38,12 +47,10 @@ export async function renderOgImage() {
             <span style={{ fontSize: 30, fontWeight: 600, letterSpacing: "-0.03em" }}>{site.wordmark}</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <span style={{ fontSize: 72, lineHeight: 1.04, letterSpacing: "-0.04em", maxWidth: 940 }}>
-              {site.tagline}
+            <span style={{ fontSize, lineHeight: 1.04, letterSpacing: "-0.04em", maxWidth: 1000 }}>
+              {headline}
             </span>
-            <span style={{ fontSize: 28, color: "rgba(10,10,10,0.7)" }}>
-              AI Automation · Voice AI · AI Agents · Product Build
-            </span>
+            <span style={{ fontSize: 28, color: "rgba(10,10,10,0.7)" }}>{sub}</span>
           </div>
         </div>
       </div>

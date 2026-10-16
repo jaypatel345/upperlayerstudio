@@ -9,7 +9,7 @@ import { projectBySlug } from "@/lib/projects";
  * first as the strongest live product, then the rest in services-ladder order.
  * Everything else lives on /work.
  */
-const featured = ["newsbit", "ai-lead-agent", "frontdeskai", "aslioffer"]
+const featured = ["ai-lead-agent", "frontdeskai", "newsbit", "aslioffer"]
   .map(projectBySlug)
   .filter((p) => p !== undefined);
 
@@ -17,6 +17,34 @@ const featured = ["newsbit", "ai-lead-agent", "frontdeskai", "aslioffer"]
 export function HomeWork() {
   return (
     <section id="work" className="relative overflow-x-clip bg-surface text-ink">
+      {/* Left continuous glass sheet (BrightStudios style) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-20 w-4 sm:w-8 md:w-12 lg:w-24 xl:w-[calc(max(96px,(100vw-1340px)/2))]"
+        style={{
+          background:
+            "linear-gradient(112deg, rgba(255,255,255,0.30) 0%, rgba(248,252,254,0.07) 35%, rgba(235,246,251,0.05) 68%, rgba(255,255,255,0.25) 100%)",
+          backdropFilter: "blur(8px) saturate(1.18)",
+          WebkitBackdropFilter: "blur(8px) saturate(1.18)",
+          boxShadow:
+            "inset 1px 0 0 rgba(255,255,255,0.92), inset -1px 0 0 rgba(255,255,255,0.76), inset 5px 0 12px -8px rgba(12,49,65,0.35), inset -5px 0 12px -8px rgba(12,49,65,0.28), 0 0 16px rgba(20,44,56,0.035)",
+        }}
+      />
+
+      {/* Right continuous glass sheet (BrightStudios style) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-4 sm:w-8 md:w-12 lg:w-24 xl:w-[calc(max(96px,(100vw-1340px)/2))]"
+        style={{
+          background:
+            "linear-gradient(112deg, rgba(255,255,255,0.30) 0%, rgba(248,252,254,0.07) 35%, rgba(235,246,251,0.05) 68%, rgba(255,255,255,0.25) 100%)",
+          backdropFilter: "blur(8px) saturate(1.18)",
+          WebkitBackdropFilter: "blur(8px) saturate(1.18)",
+          boxShadow:
+            "inset 1px 0 0 rgba(255,255,255,0.92), inset -1px 0 0 rgba(255,255,255,0.76), inset 5px 0 12px -8px rgba(12,49,65,0.35), inset -5px 0 12px -8px rgba(12,49,65,0.28), 0 0 16px rgba(20,44,56,0.035)",
+        }}
+      />
+
       <div className="px-6 pt-16 pb-8 text-center sm:pt-[88px] sm:pb-10 lg:px-32">
         <Reveal>
           <Eyebrow>Selected work</Eyebrow>

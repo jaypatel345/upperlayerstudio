@@ -13,6 +13,8 @@ import { ProjectShowcase } from "@/components/sections/ProjectShowcase";
 import { ProjectVideo } from "@/components/sections/ProjectVideo";
 import { CTA } from "@/components/sections/CTA";
 import { projectBySlug, projects } from "@/lib/projects";
+import { posts } from "@/lib/insights";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema, pageMeta, projectSchema } from "@/lib/seo";
 
@@ -29,9 +31,18 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const project = projectBySlug(slug);
   if (!project) return {};
 
-  const title = `${project.name}: ${project.kind} case study`;
-  return pageMeta({ title, description: project.summary, path: `/work/${project.slug}` });
+  return pageMeta({
+    title: project.seo?.title ?? `${project.name}: ${project.kind} case study`,
+    description: project.seo?.description ?? project.summary,
+    path: `/work/${project.slug}`,
+    ogCard: true,
+  });
 }
+
+const formatDate = (iso: string) =>
+  new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(
+    new Date(iso),
+  );
 
 export default async function CaseStudyPage({ params }: Params) {
   const { slug } = await params;
@@ -40,6 +51,11 @@ export default async function CaseStudyPage({ params }: Params) {
 
   const delay = (s: number) => ({ "--rise-delay": `${s}s` }) as React.CSSProperties;
   const liveHost = project.live.replace(/^https?:\/\//, "");
+  const relatedPosts = posts.filter(
+    (p) =>
+      project.relatedArticleSlugs?.includes(p.slug) ||
+      p.serviceSlug === project.serviceSlug,
+  ).slice(0, 2);
 
   return (
     <>
@@ -61,26 +77,35 @@ export default async function CaseStudyPage({ params }: Params) {
           }}
         />
         <Container className="pt-14 pb-12 sm:pt-20 sm:pb-16">
-          <div className="rise" style={delay(0)}>
-            <Link
-              href="/work"
-              className="text-[14px] font-medium text-ink underline-offset-4 decoration-line-strong hover:underline"
-            >
-              ← All work
-            </Link>
+          <div className="rise mb-6" style={delay(0)}>
+            <Breadcrumbs
+              items={[
+                { label: "Work", href: "/work" },
+                { label: project.name },
+              ]}
+            />
           </div>
 
-          <div className="rise mt-8" style={delay(0.06)}>
+          <div className="rise mt-6" style={delay(0.06)}>
             <Eyebrow>
-              Case study · {project.kind} · {project.service}
+              Case study · {project.kind} ·{" "}
+              <Link
+                href={`/services/${project.serviceSlug}`}
+                className="underline underline-offset-4 decoration-line-strong hover:text-ink transition-colors"
+              >
+                {project.service}
+              </Link>
             </Eyebrow>
           </div>
 
           <h1
-            className="rise mt-5 max-w-[16ch] text-[44px] leading-[1.03] sm:text-[64px] lg:text-[84px]"
+            className="rise mt-5 max-w-[20ch] text-[38px] leading-[1.05] sm:text-[56px] lg:text-[72px]"
             style={delay(0.12)}
           >
-            {project.name}
+            <span>{project.name}</span>
+            <span className="block text-[0.45em] sm:text-[0.4em] font-normal tracking-normal text-ink-70 mt-2">
+              {project.kind} Case Study
+            </span>
           </h1>
           <p
             className="rise mt-6 max-w-[640px] text-[17px] leading-[1.6] text-ink-70 text-pretty sm:text-[19px]"
@@ -103,7 +128,7 @@ export default async function CaseStudyPage({ params }: Params) {
           </div>
 
           <dl
-            className="rise mt-12 grid gap-x-8 gap-y-6 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4"
+            className="rise mt-12 grid gap-x-8 gap-y-6 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-5"
             style={delay(0.3)}
           >
             {project.meta.map((m) => (
@@ -112,6 +137,14 @@ export default async function CaseStudyPage({ params }: Params) {
                 <dd className="mt-1.5 text-[15px] font-medium text-ink">{m.value}</dd>
               </div>
             ))}
+            <div>
+              <dt className="text-[13px] text-faint">Last updated</dt>
+              <dd className="mt-1.5 text-[15px] font-medium text-ink">
+                <time dateTime={project.lastUpdated ?? "2026-10-16"}>
+                  {formatDate(project.lastUpdated ?? "2026-10-16")}
+                </time>
+              </dd>
+            </div>
           </dl>
         </Container>
       </section>
@@ -123,7 +156,11 @@ export default async function CaseStudyPage({ params }: Params) {
             <ProjectShowcase
               project={project}
               priority
-              className="min-h-[360px] sm:min-h-[520px] lg:min-h-[620px]"
+              className={
+                project.heroVideo
+                  ? "w-full"
+                  : "min-h-[360px] sm:min-h-[520px] lg:min-h-[620px]"
+              }
             />
           </Reveal>
         </Container>
@@ -305,6 +342,74 @@ export default async function CaseStudyPage({ params }: Params) {
               </p>
               <p className="mt-3 text-[13px] text-faint">Source: {project.result.source}</p>
             </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Related Service & Insights */}
+      <Section tone="white" pad="lg">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Related Service Card */}
+            <div>
+              <Reveal>
+                <Eyebrow>Related Service</Eyebrow>
+                <div className="mt-6 rounded-[var(--radius-card)] border border-line bg-tint p-8 sm:p-10">
+                  <p className="text-[13px] font-medium text-faint uppercase tracking-wider">
+                    Service 0{project.serviceSlug === "automation" ? "1" : project.serviceSlug === "voice" ? "2" : project.serviceSlug === "agents" ? "3" : "4"}
+                  </p>
+                  <h3 className="mt-3 text-[26px] leading-[1.2] font-normal text-ink">
+                    {project.service}
+                  </h3>
+                  <p className="mt-4 text-[16px] leading-[1.6] text-ink-70 text-pretty">
+                    Need a system like {project.name}? I audit your workflows, build custom integrations, and hand over the keys in your accounts.
+                  </p>
+                  <div className="mt-8">
+                    <Button href={`/services/${project.serviceSlug}`} size="md">
+                      Explore {project.service} →
+                    </Button>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Related Insights Articles */}
+            {relatedPosts.length > 0 && (
+              <div>
+                <Reveal delay={0.08}>
+                  <Eyebrow>Related Reading</Eyebrow>
+                  <div className="mt-6 space-y-4">
+                    {relatedPosts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/insights/${post.slug}`}
+                        className="group block rounded-[var(--radius-card)] border border-line bg-tint p-6 transition-all duration-300 ease-[var(--ease-out-soft)] hover:-translate-y-0.5 hover:border-line-strong hover:bg-white hover:shadow-[var(--shadow-card)]"
+                      >
+                        <div className="flex items-center justify-between text-[13px] text-faint">
+                          <span>{post.topic}</span>
+                          <span>{post.readingTime}</span>
+                        </div>
+                        <h4 className="mt-3 text-[18px] leading-[1.3] font-medium text-ink group-hover:text-ink">
+                          {post.title}
+                        </h4>
+                        <p className="mt-2 text-[14px] leading-[1.5] text-ink-70 line-clamp-2">
+                          {post.summary}
+                        </p>
+                        <span className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
+                          Read article
+                          <span
+                            aria-hidden
+                            className="transition-transform duration-200 ease-[var(--ease-out-soft)] group-hover:translate-x-1"
+                          >
+                            →
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </Reveal>
+              </div>
+            )}
           </div>
         </Container>
       </Section>

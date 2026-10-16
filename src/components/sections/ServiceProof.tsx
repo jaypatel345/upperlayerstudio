@@ -32,19 +32,29 @@ export function ServiceProof({
         // The caption link below is the one keyboard and screen-reader users get
         tabIndex={-1}
         aria-hidden
-        className={cn(
-          "block overflow-hidden rounded-[var(--radius-card)] border",
-          dark ? "border-line-light bg-dark-2" : "border-line bg-tint",
-        )}
+        className="block overflow-hidden rounded-[var(--radius-card)]"
       >
-        <AutoplayVideo
-          src={project.video.src}
-          srcSmall={project.video.srcSmall}
-          poster={project.video.poster}
-          label={`${project.name} walkthrough`}
-          posterWidth={posterWidth}
-          className="aspect-video"
-        />
+        <div
+          className={cn(
+            "overflow-hidden rounded-[var(--radius-card)] border",
+            dark ? "border-line-light bg-dark-2" : "border-line bg-tint",
+          )}
+        >
+          <AutoplayVideo
+            src={project.video.src}
+            srcSmall={project.video.srcSmall}
+            poster={project.video.poster}
+            label={`${project.name} walkthrough`}
+            posterWidth={posterWidth}
+            fit="cover"
+            className="aspect-[16/10] w-full object-cover"
+            style={
+              project.video.focus
+                ? { objectPosition: project.video.focus }
+                : undefined
+            }
+          />
+        </div>
       </Link>
       <figcaption
         className={cn(

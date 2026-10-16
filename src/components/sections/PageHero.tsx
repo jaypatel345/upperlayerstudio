@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 
 type Props = {
   eyebrow: string;
@@ -9,6 +10,7 @@ type Props = {
   tags?: string[];
   primary: { label: string; href: string };
   secondary?: { label: string; href: string };
+  breadcrumbs?: BreadcrumbItem[];
 };
 
 /**
@@ -19,7 +21,7 @@ type Props = {
  *
  * pt-[60px] clears the fixed navbar, matching Hero.
  */
-export function PageHero({ eyebrow, headline, body, tags, primary, secondary }: Props) {
+export function PageHero({ eyebrow, headline, body, tags, primary, secondary, breadcrumbs }: Props) {
   const delay = (s: number) => ({ "--rise-delay": `${s}s` }) as React.CSSProperties;
 
   return (
@@ -35,7 +37,13 @@ export function PageHero({ eyebrow, headline, body, tags, primary, secondary }: 
       />
 
       <Container className="flex flex-col items-center pt-16 pb-14 text-center sm:pt-24 sm:pb-20">
-        <div className="rise" style={delay(0)}>
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <div className="rise mb-5" style={delay(0)}>
+            <Breadcrumbs items={breadcrumbs} />
+          </div>
+        )}
+
+        <div className="rise" style={delay(breadcrumbs ? 0.04 : 0)}>
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
 

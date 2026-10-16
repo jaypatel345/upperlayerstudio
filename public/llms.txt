@@ -19,7 +19,7 @@ Key facts:
 
 ## Work
 - [FrontDesk AI](https://www.upperlayerstudio.com/work/frontdeskai): AI phone receptionist built on Vapi, with Cal.com booking and HubSpot logging.
-- [AI Lead Agent](https://www.upperlayerstudio.com/work/ai-lead-agent): n8n lead-response automation.
+- [AI Client Acquisition System](https://www.upperlayerstudio.com/work/ai-lead-agent): n8n lead qualification, CRM sync and email + WhatsApp replies.
 - [AsliOffer](https://www.upperlayerstudio.com/work/aslioffer): job offer verification agent.
 - [Newsbit](https://www.upperlayerstudio.com/work/newsbit): AI news app with voice chat.
 - [PromptX](https://www.upperlayerstudio.com/work/promptx): AI prompt enhancer.
@@ -30,6 +30,9 @@ Key facts:
 - [Automation or agent? Pick the boring one](https://www.upperlayerstudio.com/insights/automation-or-agent)
 - [Nobody in this business builds the model](https://www.upperlayerstudio.com/insights/nobody-builds-the-model)
 - [What a voice agent actually costs to run](https://www.upperlayerstudio.com/insights/voice-agent-real-cost)
+- [AI receptionist cost in India: real setup, running and API numbers](https://www.upperlayerstudio.com/insights/ai-receptionist-cost-india)
+- [n8n vs Zapier for lead automation: cost, control, and where Zapier breaks](https://www.upperlayerstudio.com/insights/n8n-vs-zapier-lead-automation)
+- [How to automate lead follow-up: speed-to-lead, WhatsApp, and when to stop](https://www.upperlayerstudio.com/insights/how-to-automate-lead-follow-up)
 
 ## Optional
 - [About the studio](https://www.upperlayerstudio.com/studio)

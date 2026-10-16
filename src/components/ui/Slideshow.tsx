@@ -24,6 +24,7 @@ export function Slideshow({
   variant = "bleed",
   slideClassName,
   className,
+  overlay,
 }: {
   slides: Slide[];
   /** What the slides show, for the region's accessible name */
@@ -32,6 +33,7 @@ export function Slideshow({
   /** Sizing for each slide, e.g. its aspect ratio and background */
   slideClassName?: string;
   className?: string;
+  overlay?: React.ReactNode;
 }) {
   const n = slides.length;
   const reduce = useReducedMotion();
@@ -230,10 +232,12 @@ export function Slideshow({
           })}
         </div>
 
+        {overlay}
+
         <div
           ref={hintRef}
           aria-hidden
-          className="pointer-events-none absolute top-0 left-0 z-10 hidden pointer-fine:block"
+          className="pointer-events-none absolute top-0 left-0 z-20 hidden pointer-fine:block"
         >
           <div
             className={cn(

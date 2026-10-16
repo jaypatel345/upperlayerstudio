@@ -26,14 +26,16 @@ export function ProjectVideo({ video, name }: { video: Project["video"]; name: s
 
   // A light frame that clips the clip, so no dark fringe shows at the corners.
   return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-line bg-white shadow-[var(--shadow-card)]">
+    <div className="mx-auto max-w-[760px] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-white shadow-[var(--shadow-card)]">
       <AutoplayVideo
         src={video.src}
         srcSmall={video.srcSmall}
-        poster={video.poster}
+        poster={video.aspect && video.posterFull ? video.posterFull : video.poster}
         label={`${name} walkthrough video`}
         posterWidth={600}
-        className="aspect-video"
+        fit={video.aspect ? "contain" : "cover"}
+        className={video.aspect ? undefined : "aspect-video"}
+        style={video.aspect ? { aspectRatio: video.aspect } : undefined}
       />
     </div>
   );

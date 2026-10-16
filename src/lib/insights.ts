@@ -19,6 +19,7 @@ export type Post = {
   /** Shown on the card and under the article title */
   summary: string;
   date: string;
+  lastUpdated?: string;
   readingTime: string;
   topic: string;
   /**
@@ -26,6 +27,7 @@ export type Post = {
    * the project's slug and the shot's src, both as they appear in projects.ts.
    */
   cover: { project: string; src: string };
+  serviceSlug?: string;
   sections: PostSection[];
 };
 
@@ -36,8 +38,10 @@ export const posts: Post[] = [
     summary:
       "Most problems sold as AI agents are automations wearing a costume. Here's the test I use before quoting either.",
     date: "2026-09-24",
+    lastUpdated: "2026-10-16",
     readingTime: "4 min read",
     topic: "Automation",
+    serviceSlug: "automation",
     cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/04-n8n-lead-intake-desktop.webp" },
     sections: [
       {
@@ -85,8 +89,10 @@ export const posts: Post[] = [
     summary:
       "What an AI studio actually makes, what it rents, and why the distinction should be on the invoice.",
     date: "2026-09-17",
+    lastUpdated: "2026-10-16",
     readingTime: "3 min read",
     topic: "Working with AI",
+    serviceSlug: "product",
     cover: { project: "promptx", src: "/work/promptx/05-model-picker-desktop.webp" },
     sections: [
       {
@@ -124,8 +130,10 @@ export const posts: Post[] = [
     summary:
       "Per-minute pricing looks trivial until you multiply it. A plain look at the running costs nobody quotes.",
     date: "2026-09-10",
+    lastUpdated: "2026-10-16",
     readingTime: "4 min read",
     topic: "Voice AI",
+    serviceSlug: "voice",
     cover: { project: "frontdeskai", src: "/work/frontdeskai/01-dashboard-overview-desktop.webp" },
     sections: [
       {
@@ -166,6 +174,194 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: "ai-receptionist-cost-india",
+    title: "AI receptionist cost in India: real setup, running and API numbers",
+    summary:
+      "Per-minute voice AI costs in India, telephony rates on Exotel and Twilio, and how an AI phone receptionist compares to a full-time clinic front desk.",
+    date: "2026-10-12",
+    lastUpdated: "2026-10-16",
+    readingTime: "5 min read",
+    topic: "Voice AI",
+    serviceSlug: "voice",
+    cover: { project: "frontdeskai", src: "/work/frontdeskai/01-dashboard-overview-desktop.webp" },
+    sections: [
+      {
+        paragraphs: [
+          "A full-time front-desk receptionist in Mumbai, Delhi, or Bangalore costs between ₹20,000 and ₹40,000 per month. For that salary, you get someone who handles walk-in clients, manages the register, and picks up the phone during business hours. What you do not get is someone who answers calls at 8:30 PM when someone is searching for a dental consultation, or on a Sunday morning when an enquiry comes in.",
+          "An AI phone receptionist doesn't replace the human running your front desk; it catches the 30% to 50% of inbound calls that happen when that person is already on another line or the clinic is closed. Here is what that system actually costs to build and run in India, without agency markup.",
+        ],
+      },
+      {
+        heading: "The four API bills on an Indian number",
+        paragraphs: [
+          "Every production voice agent — including the system I built in the FrontDesk AI case study — pays for four separate services simultaneously:",
+        ],
+        list: [
+          "Telephony (Twilio or Exotel): An Indian local DID or 1800 toll-free virtual number costs ₹800 to ₹1,500/month rental, plus approx. ₹0.50 to ₹0.90 per incoming call minute.",
+          "Speech-to-Text (Deepgram Nova-3): Transcribing Indian English, accents, and local speech patterns costs $0.0043 per minute (~₹0.36/min).",
+          "The Language Model (GPT-4o mini or Claude 3.5 Haiku): Processing caller intent, checking FAQs, and deciding how to reply runs about $0.15 per million input tokens. On a 2-minute call with trimmed context, that is under ₹0.25.",
+          "Text-to-Speech (Cartesia or ElevenLabs Turbo): Synthesizing natural conversational speech costs approx. $0.015 per 1,000 characters (~₹1.20 to ₹1.80 per minute of spoken audio).",
+        ],
+      },
+      {
+        heading: "The monthly total for 500 calls",
+        paragraphs: [
+          "Assume a typical high-intent clinic or firm receiving 500 calls a month, averaging two minutes each (1,000 total conversation minutes):",
+        ],
+        list: [
+          "Telephony rental + inbound minutes: ~₹1,800/month",
+          "Transcription (Deepgram): ~₹360/month",
+          "LLM logic and extraction: ~₹250/month",
+          "Voice synthesis (TTS): ~₹1,500/month",
+          "WhatsApp notification API (confirmations): ~₹450/month",
+        ],
+      },
+      {
+        paragraphs: [
+          "The total running cost comes out to ₹4,300 to ₹5,500 ($50–$65) per month for 500 completed, fully transcribed phone calls. If a single cosmetic procedure or legal retainer is worth ₹5,000 to ₹25,000, saving even one missed after-hours enquiry pays for the entire monthly run.",
+        ],
+      },
+      {
+        heading: "Where Indian implementations waste money",
+        paragraphs: [
+          "First, latency routing. If your voice orchestration server is deployed in North America (us-east-1), the round-trip latency to a caller in Pune or Gurgaon adds 300ms of lag. Combined with model inference, the awkward pause stretches to nearly two seconds. Hosting the orchestration in AWS Mumbai (ap-south-1) cuts round-trip audio transport to under 40ms.",
+          "Second, context accumulation. A naive implementation sends the full transcript of all previous turns back into the model on every single turn. A 10-turn call resends a 500-token prompt ten times. Pruning older turns into rolling summaries halves model token costs and speeds up voice responses by 200ms.",
+          "Third, over-promising on languages. Indian businesses frequently ask for an agent that speaks Hindi, English, Marathi, and Tamil out of the box. In practice, starting with bilingual English and conversational Hindi covers 90% of urban enquiries. Trying to support five languages before mastering one leads to hallucinated bookings and angry callers.",
+        ],
+      },
+      {
+        heading: "Own the system or rent a wrapper?",
+        paragraphs: [
+          "Many third-party SaaS vendors charge ₹15,000 to ₹35,000 per month for a closed dashboard that wraps standard Vapi or Twilio APIs. The moment you want to customize your booking logic, integrate your internal CRM, or adjust your qualification questions, you hit a wall.",
+          "With our voice AI service, the logic, scripts, telephony number, and integrations are built and handed over directly in your own accounts. You pay the raw API bills with no markup, and your software remains yours from day one.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "n8n-vs-zapier-lead-automation",
+    title: "n8n vs Zapier for lead automation: cost, control, and where Zapier breaks",
+    summary:
+      "Why I run lead qualification and CRM pipelines on n8n instead of Zapier: execution speed, branching, data privacy, and the 50,000-task bill.",
+    date: "2026-10-14",
+    lastUpdated: "2026-10-16",
+    readingTime: "5 min read",
+    topic: "Automation",
+    serviceSlug: "automation",
+    cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/03-n8n-workflows-desktop.webp" },
+    sections: [
+      {
+        paragraphs: [
+          "Zapier is usually the first tool any operator sets up. It takes a form submission from Typeform and sends an email via Gmail in under ten minutes. It is friendly, well-documented, and works seamlessly for basic two-step automations.",
+          "However, when your pipeline grows from a simple notification into a serious lead qualification system — validating schemas, enriching domains, scoring intent with Gemini or Claude, routing based on score tiers, writing custom properties to HubSpot, and scheduling WhatsApp follow-ups — Zapier starts breaking down both architecturally and commercially.",
+        ],
+      },
+      {
+        heading: "The task pricing trap",
+        paragraphs: [
+          "Zapier charges by the task: every single step in a Zap consumes one task from your monthly quota. Let's look at the math for a standard lead qualification workflow:",
+        ],
+        list: [
+          "Step 1: Webhook intake and validation (1 task)",
+          "Step 2: Company website domain enrichment (1 task)",
+          "Step 3: AI model evaluation and JSON parsing (1 task)",
+          "Step 4: Branching logic / filter (1 task)",
+          "Step 5: CRM contact upsert in HubSpot (1 task)",
+          "Step 6: Telegram / Slack founder alert (1 task)",
+          "Step 7: WhatsApp or Email personalized reply (1 task)",
+        ],
+      },
+      {
+        paragraphs: [
+          "That is 7 tasks for every single lead submission. If you generate 2,000 inbound enquiries or lead imports a month, that is 14,000 tasks. If you run a periodic 24-hour and 48-hour follow-up check across open leads, you easily burn 30,000 to 50,000 tasks per month. On Zapier's pricing ladder, that pushes your monthly bill to $300–$600+ every month.",
+          "With self-hosted n8n running on a lightweight VPS (like a $6–$10/month Hetzner or DigitalOcean droplet), execution counts are unlimited. Whether you run 1,000 or 500,000 tasks, your hosting cost remains static.",
+        ],
+      },
+      {
+        heading: "Complex branching versus linear chains",
+        paragraphs: [
+          "Real-world lead automation is rarely linear. In our AI Client Acquisition System case study, an enquiry can arrive from a website form, Typeform, Tally, or Apollo. It must be normalised into a common schema, evaluated for spam, categorized into hot/warm/cold tiers, and routed to different communication channels.",
+          "Zapier handles branching through separate Path filters or sub-zaps, which quickly become untangleable webs where finding an error requires opening four different browser tabs. In n8n, complex conditional branching, loops, and custom JavaScript or Python code nodes sit cleanly on one visual canvas.",
+        ],
+      },
+      {
+        heading: "Observability and error recovery",
+        paragraphs: [
+          "When a lead submission fails in production — perhaps because a prospect entered an invalid phone number or an AI API returned a temporary 503 — you need to know immediately, inspect the exact payload, fix the prompt or schema, and replay the execution.",
+          "n8n records the complete JSON input and output at every single node of every execution. You can pin test data, tweak code inline, and retry failed executions with one click. In Zapier, debugging custom payload errors is frustratingly opaque, and replaying failed webhook tasks often requires re-triggering external events.",
+        ],
+      },
+      {
+        heading: "Data residency and client ownership",
+        paragraphs: [
+          "When handling customer leads containing phone numbers, personal emails, budgets, and business requirements, routing that data through third-party multi-tenant SaaS servers can violate compliance policies. Self-hosting n8n inside your own cloud account ensures your lead data never leaves your infrastructure.",
+          "If you have two simple zaps moving spreadsheets to Slack, keep Zapier. But if you want a robust system that qualifies leads in 14 seconds and costs nothing to scale, explore our AI automation services.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-automate-lead-follow-up",
+    title: "How to automate lead follow-up: speed-to-lead, WhatsApp, and when to stop",
+    summary:
+      "Most leads go cold in the first five minutes. How I built a 14-second response system with AI scoring, WhatsApp messaging, and automatic shut-off.",
+    date: "2026-10-15",
+    lastUpdated: "2026-10-16",
+    readingTime: "4 min read",
+    topic: "Automation",
+    serviceSlug: "automation",
+    cover: { project: "ai-lead-agent", src: "/work/ai-agent-lead/08-gmail-ai-reply-desktop.webp" },
+    sections: [
+      {
+        paragraphs: [
+          "A study published in the Harvard Business Review established that businesses contacting inbound leads within an hour are nearly seven times more likely to qualify the prospect than those that wait even two hours. Contact them within five minutes, and conversion jumps by 21x.",
+          "Yet in most B2B service firms, an inbound form submission lands in a general inbox. Someone notices it three hours later, forwards it to a colleague, and an email goes out the next morning — by which time the prospect has already booked a discovery call with a competitor.",
+        ],
+      },
+      {
+        heading: "The three tiers: hot, warm, and spam",
+        paragraphs: [
+          "Automating follow-up does not mean sending the exact same canned template to every person who fills out your form. Doing that destroys credibility.",
+          "A modern lead workflow pipes the submission to a fast model (such as Gemini 3 Flash or Claude 3.5 Haiku) with strict JSON schema instructions to extract four signals: intent, budget, urgency, and fit. Code nodes then enforce rigid business rules:",
+        ],
+        list: [
+          "Hot (Score 70+): Urgent need with clear budget. Immediate personalized reply with direct calendar link, plus instant alert sent to founder's Telegram and WhatsApp.",
+          "Warm (Score 40-69): Good fit, exploratory timing. Tailored reply answering their specific question and referencing a relevant case study.",
+          "Cold / Spam (Score <40): Off-topic pitches, link exchanges, or incoherent requests. Stored in CRM for records, but no outbound reply is sent.",
+        ],
+      },
+      {
+        paragraphs: [
+          "Filtering spam automatically ensures you never send an automated calendar link to someone trying to sell you backlink packages.",
+        ],
+      },
+      {
+        heading: "Why email alone is losing the race",
+        paragraphs: [
+          "Average business email open rates hover around 25% to 35%, and spam filters frequently swallow messages containing booking links. In international markets — especially across India, the UK, Europe, and the Middle East — WhatsApp is where business communication actually happens.",
+          "When an enquiry includes a phone number, the automation should fire two parallel actions: a clean plain-text email with your signature, and a polite, conversational WhatsApp message through the official WhatsApp Business Cloud API. Our production metrics on the AI Client Acquisition System show a 14-second average turnaround from form submission to WhatsApp delivery.",
+        ],
+      },
+      {
+        heading: "The most important feature: reply detection",
+        paragraphs: [
+          "The biggest danger with automated follow-up sequences is lack of awareness. Nothing looks more amateur than receiving an automated 'Just bumping this to the top of your inbox!' message when the prospect has already replied and agreed to a meeting.",
+          "Any follow-up engine must implement two-way synchronization:",
+        ],
+        list: [
+          "Cal.com / Calendly Webhook: If the prospect books a call, all subsequent email and WhatsApp nudges are immediately canceled.",
+          "Inbound Reply Listener: Webhooks listening to Gmail/IMAP and WhatsApp parse incoming messages. The instant a reply is detected, the automated sequence halts, the CRM status updates to 'In Conversation', and an alert notifies you to take over.",
+        ],
+      },
+      {
+        heading: "Start with your highest-leverage leak",
+        paragraphs: [
+          "You do not need an enterprise marketing cloud to achieve this. With self-hosted n8n, free Gemini API tiers, and HubSpot's free CRM, you can deploy a lead follow-up system that runs 24/7 for under $10 a month. If you want this engineered and deployed for your business, take a look at our AI automation services.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const postBySlug = (slug: string) => posts.find((p) => p.slug === slug);
@@ -177,8 +373,8 @@ export const insightsIndex = {
       "Written positions on AI automation, voice agents and shipping AI products — the thinking behind how Upper Layer Studio scopes work.",
   },
   hero: {
-    eyebrow: "Insights",
-    headline: { lead: "Positions,", trail: "not predictions" },
+    eyebrow: "Insights & Articles",
+    headline: { lead: "AI Automation & Voice Insights:", trail: "Positions, not predictions" },
     body: "Short pieces on how this work actually goes — what to build, what to rent, and what things cost once they are running. Everything here is a position I will defend on a call, which is the only reason to publish it.",
     tags: ["Automation", "Voice AI", "Working with AI"],
   },

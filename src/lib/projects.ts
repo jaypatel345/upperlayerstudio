@@ -25,10 +25,18 @@ export type Shot = {
 export type Project = {
   slug: string;
   name: string;
+  seo?: {
+    title: string;
+    description: string;
+  };
   /** Short category line shown on cards */
   kind: string;
   /** Which of the four services this project is proof of */
   service: string;
+  serviceSlug?: string;
+  lastUpdated?: string;
+  relatedArticleSlugs?: string[];
+  heroVideo?: boolean;
   /** One-sentence card summary */
   summary: string;
   art: SkyVariant;
@@ -53,7 +61,17 @@ export type Project = {
    * `src` is the 1080p cut; `srcSmall` is an optional 720p cut served to
    * phones and other small screens.
    */
-  video: { src: string; srcSmall?: string; poster: string; note: string };
+  video: {
+    src: string;
+    srcSmall?: string;
+    poster: string;
+    note: string;
+    aspect?: string;
+    focus?: string;
+    posterFull?: string;
+    uploaded?: string;
+    duration?: number;
+  };
 };
 
 export type ScreenGroup = {
@@ -78,6 +96,9 @@ export const projects: Project[] = [
     name: "Newsbit",
     kind: "AI news app",
     service: "Product Build",
+    serviceSlug: "product",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["nobody-builds-the-model"],
     summary:
       "An AI news app that ranks the day's top 10 stories and summarises each one with a link to the original, refreshed automatically every morning.",
     art: "clear",
@@ -291,6 +312,9 @@ export const projects: Project[] = [
     name: "PromptX",
     kind: "AI prompt enhancer",
     service: "Product Build",
+    serviceSlug: "product",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["nobody-builds-the-model", "automation-or-agent"],
     summary:
       "A full-stack app that turns rough prompts into clear, AI-ready instructions formatted for ChatGPT, Claude, Gemini or Grok, with the AI work run as background jobs.",
     art: "deep",
@@ -507,6 +531,9 @@ export const projects: Project[] = [
     name: "StyleNest",
     kind: "Fashion e-commerce",
     service: "Product Build",
+    serviceSlug: "product",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["nobody-builds-the-model"],
     summary:
       "A full-stack fashion store: a storefront with Stripe checkout, a separate admin dashboard for products and orders, and an Express + MongoDB API.",
     art: "haze",
@@ -734,6 +761,9 @@ export const projects: Project[] = [
     name: "Borrower Copilot",
     kind: "Loan self-assessment",
     service: "Product Build",
+    serviceSlug: "product",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["automation-or-agent"],
     summary:
       "A loan self-check for Indian borrowers: about nine adaptive questions, then a verdict, a safe amount next to the lender's number, a fair rate and an EMI ceiling, all computed in the browser.",
     art: "cumulus",
@@ -968,6 +998,9 @@ export const projects: Project[] = [
     name: "AsliOffer",
     kind: "Job offer verification agent",
     service: "AI Agents",
+    serviceSlug: "agents",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["automation-or-agent", "nobody-builds-the-model"],
     summary:
       "An AI agent that checks a job offer against the employer's public footprint in live search results and flags scam signals for Indian freshers, citing a source for each finding.",
     art: "dusk",
@@ -1170,6 +1203,9 @@ export const projects: Project[] = [
     name: "FrontDesk AI",
     kind: "AI phone receptionist",
     service: "Voice AI",
+    serviceSlug: "voice",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["ai-receptionist-cost-india", "voice-agent-real-cost"],
     summary:
       "An AI phone receptionist for a demo cosmetic clinic, running on Vapi: it answers questions, qualifies the caller, books the appointment in Cal.com and logs the caller and the full transcript to HubSpot.",
     art: "high",
@@ -1387,9 +1423,12 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-lead-agent",
-    name: "AI Lead Agent",
+    name: "AI Client Acquisition System",
     kind: "Lead automation",
     service: "AI Automation",
+    serviceSlug: "automation",
+    lastUpdated: "2026-10-16",
+    relatedArticleSlugs: ["n8n-vs-zapier-lead-automation", "how-to-automate-lead-follow-up", "automation-or-agent"],
     summary:
       "Three n8n workflows that answer every website enquiry in under a minute: they score the lead with Gemini, log it in HubSpot, send a reply written for that lead, brief me before the call and follow up until the lead books. It runs on free tiers for $0 a month.",
     art: "clear",

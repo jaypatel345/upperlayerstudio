@@ -12,6 +12,8 @@ import { site } from "@/lib/site";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleSchema, breadcrumbSchema, pageMeta } from "@/lib/seo";
 
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+
 type Params = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
@@ -31,6 +33,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     path: `/insights/${post.slug}`,
     type: "article",
     publishedTime: post.date,
+    ogCard: true,
   });
 }
 
@@ -38,6 +41,37 @@ const formatDate = (iso: string) =>
   new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(
     new Date(iso),
   );
+
+function renderParagraphWithLinks(text: string) {
+  const parts = [];
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    const linkText = match[1];
+    const linkHref = match[2];
+    parts.push(
+      <Link
+        key={match.index}
+        href={linkHref}
+        className="font-medium text-ink underline underline-offset-4 decoration-line-strong hover:text-ink transition-colors"
+      >
+        {linkText}
+      </Link>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
@@ -67,6 +101,14 @@ export default async function PostPage({ params }: Params) {
           }}
         />
         <Container size="text" className="pt-16 pb-12 sm:pt-24 sm:pb-16">
+          <div className="rise mb-6">
+            <Breadcrumbs
+              items={[
+                { label: "Insights", href: "/insights" },
+                { label: post.title },
+              ]}
+            />
+          </div>
           <Eyebrow className="rise">
             {post.topic} · {post.readingTime}
           </Eyebrow>
@@ -76,8 +118,12 @@ export default async function PostPage({ params }: Params) {
           <p className="rise mt-6 max-w-[58ch] text-[17px] leading-[1.6] text-ink-70 text-pretty">
             {post.summary}
           </p>
-          <p className="rise mt-7 text-[14px] text-faint">
-            <time dateTime={post.date}>{formatDate(post.date)}</time> · {site.name}
+          <p className="rise mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 text-[14px] text-faint">
+            <span>Published <time dateTime={post.date}>{formatDate(post.date)}</time></span>
+            <span aria-hidden="true">·</span>
+            <span>Last updated <time dateTime={post.lastUpdated ?? post.date}>{formatDate(post.lastUpdated ?? post.date)}</time></span>
+            <span aria-hidden="true">·</span>
+            <span>{site.name}</span>
           </p>
         </Container>
       </section>
@@ -117,7 +163,7 @@ export default async function PostPage({ params }: Params) {
                   <div className="space-y-5">
                     {section.paragraphs.map((p) => (
                       <p key={p} className="text-[17px] leading-[1.7] text-ink-70 text-pretty">
-                        {p}
+                        {renderParagraphWithLinks(p)}
                       </p>
                     ))}
                   </div>
@@ -129,7 +175,7 @@ export default async function PostPage({ params }: Params) {
                             aria-hidden
                             className="mt-[0.7em] h-1 w-1 shrink-0 rounded-full bg-[rgba(10,10,10,0.35)]"
                           />
-                          <span className="text-pretty">{li}</span>
+                          <span className="text-pretty">{renderParagraphWithLinks(li)}</span>
                         </li>
                       ))}
                     </ul>
@@ -139,8 +185,37 @@ export default async function PostPage({ params }: Params) {
             ))}
           </article>
 
+          {/* Related Case Study & Service Callout */}
+          {cover && (
+            <div className="mt-14 rounded-[var(--radius-card)] border border-line bg-tint p-6 sm:p-8">
+              <Eyebrow>Related Case Study</Eyebrow>
+              <h3 className="mt-3 text-[22px] leading-[1.25] text-ink font-normal">
+                See this in production: {cover.project.name}
+              </h3>
+              <p className="mt-2 text-[15px] leading-[1.6] text-ink-70">
+                {cover.project.summary}
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <Link
+                  href={`/work/${cover.project.slug}`}
+                  className="inline-flex items-center gap-1.5 text-[14px] font-medium text-ink underline underline-offset-4 decoration-line-strong hover:text-ink"
+                >
+                  Read the {cover.project.name} case study →
+                </Link>
+                {cover.project.serviceSlug && (
+                  <Link
+                    href={`/services/${cover.project.serviceSlug}`}
+                    className="text-[14px] text-ink-70 hover:text-ink underline underline-offset-4"
+                  >
+                    Explore {cover.project.service} services
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Keep reading */}
-          <div className="mt-20 border-t border-line pt-10">
+          <div className="mt-16 border-t border-line pt-10">
             <Eyebrow className="mb-6">Keep reading</Eyebrow>
             <div className="grid gap-4 sm:grid-cols-2">
               {more.map((p) => (

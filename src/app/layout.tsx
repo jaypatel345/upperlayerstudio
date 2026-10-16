@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 const description =
-  "AI automation agency building workflow automation, AI voice agents and AI receptionists, and custom AI agents for businesses worldwide. Fixed-fee scope in 48 hours.";
+  "AI automation agency building workflow automation, AI voice agents, AI receptionists and custom AI agents for businesses worldwide. Fixed-fee scope in 48h.";
 
 const socialTitle = `AI Automation Services & AI Voice Agents | ${site.name}`;
 

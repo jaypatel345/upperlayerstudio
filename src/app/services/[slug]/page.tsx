@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: service.meta.title,
     description: service.meta.description,
     path: `/services/${service.slug}`,
+    ogCard: true,
   });
 }
 
@@ -51,6 +52,10 @@ export default async function ServicePage({ params }: Params) {
         ])}
       />
       <PageHero
+        breadcrumbs={[
+          { label: "Services", href: "/services" },
+          { label: service.name },
+        ]}
         eyebrow={service.name}
         headline={service.hero.headline}
         body={service.hero.body}

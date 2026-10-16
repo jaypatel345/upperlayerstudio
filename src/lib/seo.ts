@@ -9,6 +9,8 @@
 import type { Metadata } from "next";
 import { site, faqs, process } from "./site";
 import { serviceDetails } from "./services";
+import type { Project } from "./projects";
+import type { Post } from "./insights";
 import { ogAlt, ogSize } from "./og";
 
 export const siteUrl: string = site.url;
@@ -64,14 +66,19 @@ export function pageMeta({
   path,
   type = "website",
   publishedTime,
+  ogCard = false,
 }: {
   title: string;
   description: string;
   path: string;
   type?: "website" | "article";
   publishedTime?: string;
+  /** The route has its own opengraph-image/twitter-image files (per-page cards) */
+  ogCard?: boolean;
 }): Metadata {
   const social = `${title} | ${site.name}`;
+  const og = ogCard ? { ...ogImage, url: `${path}/opengraph-image`, alt: social } : ogImage;
+  const tw = ogCard ? { ...og, url: `${path}/twitter-image` } : ogImage;
   return {
     title,
     description,
@@ -83,7 +90,7 @@ export function pageMeta({
       siteName: site.name,
       locale: "en_GB",
       type,
-      images: [ogImage],
+      images: [og],
       ...(publishedTime && { publishedTime, authors: [process.founder.name] }),
     },
     twitter: {
@@ -91,7 +98,7 @@ export function pageMeta({
       title: social,
       description,
       creator: "@UpperLayerAI",
-      images: [ogImage],
+      images: [tw],
     },
   };
 }
@@ -184,7 +191,8 @@ export function siteSchema() {
           url: absolute(process.founder.photo.src),
         },
         worksFor: { "@id": orgId },
-        sameAs: [process.founder.link.href],
+        knowsAbout: ["AI automation", "n8n", "Voice AI agents", "AI agents", "Next.js", "Full-stack development"],
+        sameAs: [process.founder.link.href, "https://github.com/jaypatel345"],
       },
       {
         "@type": "WebSite",
@@ -211,9 +219,11 @@ export function faqSchema(items: { q: string; a: string }[] = faqs.items) {
 }
 
 export function breadcrumbSchema(trail: { name: string; path: string }[]) {
+  const last = trail.at(-1)?.path ?? "/";
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    "@id": `${absolute(last)}#breadcrumb`,
     itemListElement: [{ name: "Home", path: "/" }, ...trail].map((c, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -236,6 +246,7 @@ export function serviceSchema(s: { name: string; slug: string; description: stri
     description: s.description,
     url,
     mainEntityOfPage: url,
+    image: absolute(`/services/${s.slug}/opengraph-image`),
     provider: { "@id": orgId },
     brand: { "@id": orgId },
     areaServed: "Worldwide",
@@ -251,63 +262,196 @@ export function serviceSchema(s: { name: string; slug: string; description: stri
   };
 }
 
-export function articleSchema(p: { slug: string; title: string; summary: string; date: string; topic: string }) {
+export const blogId = `${siteUrl}/insights#blog`;
+
+const wordCount = (p: Post) =>
+  p.sections
+    .flatMap((x) => [x.heading ?? "", ...x.paragraphs, ...(x.list ?? [])])
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+export function articleSchema(p: Post) {
   const url = absolute(`/insights/${p.slug}`);
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `${url}#article`,
     headline: p.title,
     description: p.summary,
     datePublished: p.date,
-    dateModified: p.date,
+    dateModified: p.lastUpdated ?? p.date,
     articleSection: p.topic,
+    keywords: [p.topic, "AI automation", "AI agents", "voice AI"],
+    wordCount: wordCount(p),
+    timeRequired: `PT${parseInt(p.readingTime, 10) || 4}M`,
     url,
-    mainEntityOfPage: url,
-    image: absolute("/opengraph-image"),
-    author: { "@id": founderId, "@type": "Person", name: process.founder.name },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    isPartOf: { "@id": blogId },
+    // The article's own social card first, then the case-study screenshot it uses as a cover
+    image: [absolute(`/insights/${p.slug}/opengraph-image`), absolute(p.cover.src)],
+    author: { "@type": "Person", "@id": founderId, name: process.founder.name, url: process.founder.link.href },
     publisher: { "@id": orgId },
     inLanguage: "en",
   };
 }
 
-/** Date the case-study walkthrough videos were published (git history of public/work). */
-const videoUploadDate = "2026-10-06T00:00:00+05:30";
-
-export function projectSchema(p: {
-  slug: string;
-  name: string;
-  kind: string;
-  summary: string;
-  live: string;
-  video?: { src: string; poster: string; note: string };
-}) {
-  const url = absolute(`/work/${p.slug}`);
+/** /insights as a Blog listing its posts. */
+export function blogSchema(list: Post[], meta: { title: string; description: string }) {
   return {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: `${p.name}: ${p.kind} case study`,
-    about: {
-      "@type": "SoftwareApplication",
-      name: p.name,
-      applicationCategory: p.kind,
-      ...(p.live && { url: p.live }),
-    },
-    description: p.summary,
-    url,
-    creator: { "@id": founderId },
+    "@type": "Blog",
+    "@id": blogId,
+    name: `${meta.title} | ${site.name}`,
+    description: meta.description,
+    url: absolute("/insights"),
     publisher: { "@id": orgId },
-    // Lets the walkthrough appear in Google's video results and video carousels
-    ...(p.video?.src && {
-      video: {
+    inLanguage: "en",
+    blogPost: list.map((p) => ({
+      "@type": "BlogPosting",
+      "@id": `${absolute(`/insights/${p.slug}`)}#article`,
+      headline: p.title,
+      url: absolute(`/insights/${p.slug}`),
+      datePublished: p.date,
+    })),
+  };
+}
+
+/**
+ * A WebPage node of the right subtype (AboutPage, ContactPage,
+ * CollectionPage...) tied to the site graph and the page's breadcrumb.
+ */
+export function webPageSchema({
+  type = "WebPage",
+  path,
+  name,
+  description,
+  breadcrumb = true,
+  extra,
+}: {
+  type?: "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage";
+  path: string;
+  name: string;
+  description: string;
+  breadcrumb?: boolean;
+  extra?: Record<string, unknown>;
+}) {
+  const url = absolute(path);
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${url}#webpage`,
+    url,
+    name: `${name} | ${site.name}`,
+    description,
+    inLanguage: "en",
+    isPartOf: { "@id": websiteId },
+    about: { "@id": orgId },
+    publisher: { "@id": orgId },
+    dateModified: contentUpdated,
+    ...(breadcrumb && { breadcrumb: { "@id": `${url}#breadcrumb` } }),
+    ...extra,
+  };
+}
+
+/** An ItemList of internal URLs, for listing pages such as /work and /services. */
+export function itemList(items: { name: string; path: string }[]) {
+  return {
+    "@type": "ItemList",
+    numberOfItems: items.length,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      url: absolute(it.path),
+    })),
+  };
+}
+
+/**
+ * Walkthrough video facts for VideoObject and the video sitemap. Most clips
+ * were published together on 6 Oct 2026 and run 60s (ffprobe); a project
+ * that ships a different cut sets `video.uploaded` / `video.duration`.
+ */
+const videoDefaults = { uploaded: "2026-10-06T00:00:00+05:30", duration: 60 };
+
+export const videoFacts = (v: Project["video"]) => ({
+  uploaded: v.uploaded ?? videoDefaults.uploaded,
+  duration: Math.round(v.duration ?? videoDefaults.duration),
+});
+
+/** ISO 8601 duration, e.g. 20 -> PT20S, 60 -> PT1M. */
+const isoDuration = (sec: number) =>
+  `PT${Math.floor(sec / 60) ? `${Math.floor(sec / 60)}M` : ""}${sec % 60 ? `${sec % 60}S` : ""}`;
+
+/** Every screenshot on a case study, cover first, de-duplicated. */
+export const projectImages = (p: Project) =>
+  [...new Set([p.cover.desktop.src, p.cover.mobile?.src, ...p.screens.flatMap((g) => g.shots.map((x) => x.src))])]
+    .filter((x): x is string => Boolean(x));
+
+export function projectSchema(p: Project) {
+  const url = absolute(`/work/${p.slug}`);
+  const description = p.seo?.description ?? p.summary;
+  const facts = videoFacts(p.video);
+  const video = p.video.src
+    ? {
         "@type": "VideoObject",
+        "@id": `${url}#video`,
         name: `${p.name}: ${p.kind} walkthrough`,
-        description: p.video.note || p.summary,
-        thumbnailUrl: absolute(p.video.poster),
+        description: p.video.note || description,
+        thumbnailUrl: [absolute(p.video.poster)],
         contentUrl: videoUrl(p.video.src),
-        uploadDate: videoUploadDate,
-        embedUrl: url,
+        uploadDate: facts.uploaded,
+        duration: isoDuration(facts.duration),
+        isFamilyFriendly: true,
+        inLanguage: "en",
         publisher: { "@id": orgId },
+      }
+    : undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: `${p.seo?.title ?? `${p.name}: ${p.kind} case study`} | ${site.name}`,
+        description,
+        inLanguage: "en",
+        isPartOf: { "@id": websiteId },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        primaryImageOfPage: { "@type": "ImageObject", url: absolute(p.cover.desktop.src), caption: p.cover.desktop.alt },
+        mainEntity: { "@id": `${url}#casestudy` },
+        dateModified: p.lastUpdated ?? contentUpdated,
       },
-    }),
+      {
+        "@type": "CreativeWork",
+        "@id": `${url}#casestudy`,
+        name: `${p.name}: ${p.kind} case study`,
+        headline: p.name,
+        description,
+        abstract: p.summary,
+        genre: "Case study",
+        url,
+        inLanguage: "en",
+        keywords: [p.kind, p.service, ...p.stack.flatMap((g) => g.items)].join(", "),
+        about: {
+          "@type": "SoftwareApplication",
+          name: p.name,
+          applicationCategory: p.kind,
+          ...(p.live && { url: p.live }),
+          ...(p.repo && { sameAs: p.repo }),
+        },
+        image: projectImages(p).map(absolute),
+        creator: { "@id": founderId },
+        author: { "@id": founderId },
+        publisher: { "@id": orgId },
+        isPartOf: { "@id": `${absolute("/work")}#webpage` },
+        dateModified: p.lastUpdated ?? contentUpdated,
+        ...(video && { video: { "@id": video["@id"] } }),
+      },
+      ...(video ? [video] : []),
+    ],
   };
 }

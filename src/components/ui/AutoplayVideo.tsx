@@ -1,27 +1,35 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore, type CSSProperties } from "react";
 import { getImageProps } from "next/image";
 import { cn } from "@/lib/cn";
 import { mediaLoader, mediaUrl } from "@/lib/media";
+
+function subscribePhone(callback: () => void) {
+  const mql = window.matchMedia("(max-width: 768px)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+
+function getPhoneSnapshot() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
 
 /**
  * A showcase clip rather than a player: muted, looping, no controls, and it
  * only plays while it is on screen.
  *
- * Downloads are kept to the clip in front of the visitor. A clip only starts
- * fetching when it is about to scroll in, and if it is scrolled well away it
- * drops its source, which cancels the download. A page with several clips
- * (the homepage has five) used to buffer them all at once, and the one being
- * watched stalled for bandwidth.
+ * On mobile/phone viewports (<= 768px), videos are skipped entirely in favor
+ * of pre-sized plain images, saving multi-megabyte transfers on cellular data
+ * and dramatically speeding up mobile LCP and rendering performance.
  *
- * Given `srcSmall` (a 720p cut), it uses that unless the frame is wider than
- * the 720p cut itself or the visitor has asked to save data. The 1080p cut is
- * twice the size, and these clips are screen recordings shown at well under
- * full screen, so 720p is what most visitors see.
- *
- * `posterWidth` is the CSS width the frame is usually shown at; the poster is
- * served at twice that for high-density screens.
+ * Downloads on larger viewports are kept to the clip in front of the visitor.
+ * A clip only starts fetching when it is about to scroll in, and drops source
+ * once scrolled away.
  */
 export function AutoplayVideo({
   src,
@@ -29,18 +37,25 @@ export function AutoplayVideo({
   poster,
   label,
   posterWidth = 375,
+  fit = "cover",
   className,
+  style,
 }: {
   src: string;
   srcSmall?: string;
   poster: string;
   label: string;
   posterWidth?: number;
+  /** "contain" shows the whole clip when its ratio differs from the frame's */
+  fit?: "cover" | "contain";
   className?: string;
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const isPhone = useSyncExternalStore(subscribePhone, getPhoneSnapshot, getServerSnapshot);
 
   useEffect(() => {
+    if (isPhone) return;
     const video = ref.current;
     if (!video) return;
 
@@ -116,7 +131,7 @@ export function AutoplayVideo({
       observer.disconnect();
       document.removeEventListener("visibilitychange", sync);
     };
-  }, [src, srcSmall]);
+  }, [src, srcSmall, isPhone]);
 
   // The poster loads with the page, so it comes pre-sized: a WebP near the
   // frame's width instead of the ~100 KB 1920px JPEG it was cut from.
@@ -128,6 +143,23 @@ export function AutoplayVideo({
     height: Math.round((posterWidth * 9) / 16),
     quality: 75,
   }).props.src;
+
+  if (isPhone) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={posterSrc}
+        alt={label}
+        loading="lazy"
+        className={cn(
+          "pointer-events-none block w-full select-none",
+          fit === "contain" ? "object-contain" : "object-cover",
+          className,
+        )}
+        style={style}
+      />
+    );
+  }
 
   return (
     <video
@@ -142,7 +174,12 @@ export function AutoplayVideo({
       controlsList="nodownload nofullscreen noremoteplayback"
       aria-label={label}
       onContextMenu={(e) => e.preventDefault()}
-      className={cn("pointer-events-none block w-full select-none object-cover", className)}
+      className={cn(
+        "pointer-events-none block w-full select-none",
+        fit === "contain" ? "object-contain" : "object-cover",
+        className,
+      )}
+      style={style}
     >
       {/* The clips have no sound; the track says so for anyone relying on captions */}
       <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />

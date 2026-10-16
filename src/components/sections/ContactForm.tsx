@@ -5,6 +5,7 @@ import { submitLead, type LeadState } from "@/app/contact/actions";
 import { useLead } from "./LeadContext";
 import { contact } from "@/lib/pages";
 import { site } from "@/lib/site";
+import { serviceDetails } from "@/lib/services";
 
 const input =
   "mt-1.5 block w-full rounded-[var(--radius-card)] border border-line bg-white px-3.5 py-2.5 text-[15px] " +
@@ -95,9 +96,12 @@ export function ContactForm() {
             Service
             <select key={v?.service} name="service" defaultValue={v?.service ?? ""} className={input}>
               <option value="">Not sure yet</option>
-              <option>AI Automation</option>
-              <option>Web Development</option>
-              <option>Design</option>
+              {serviceDetails.map((service) => (
+                <option key={service.slug} value={service.name}>
+                  {service.name}
+                </option>
+              ))}
+              <option value="Other">Other</option>
             </select>
           </label>
           <label className={`${label} sm:col-span-2`}>

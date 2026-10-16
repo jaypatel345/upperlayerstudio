@@ -59,7 +59,7 @@ export function Hero() {
         {/* Two deliberate lines — text-wrap:balance is off here so the colour
             split always lands in the same place. */}
         <h1
-          className={`rise mt-4 max-w-[22ch] select-none text-[32px] leading-[1.06] sm:text-[46px] sm:leading-[1.05] lg:text-[54px] ${
+          className={`rise mt-4 max-w-[28ch] select-none text-[32px] leading-[1.06] sm:text-[46px] sm:leading-[1.05] lg:text-[54px] ${
             LIGHT_TEXT
               ? "text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.45),0_2px_28px_rgba(0,0,0,0.45)]"
               : HERO_PHOTO
@@ -75,7 +75,7 @@ export function Hero() {
         <p
           className={`rise mt-5 max-w-[700px] select-none text-[16px] leading-[1.5] text-pretty sm:text-[17px] ${
             LIGHT_TEXT
-              ? "font-medium text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.75),0_0_20px_rgba(0,0,0,0.6)]"
+              ? "font-medium text-white"
               : HERO_PHOTO
                 ? "text-[#102233]"
                 : "text-ink-70"

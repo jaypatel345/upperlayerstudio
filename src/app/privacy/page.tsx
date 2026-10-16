@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, pageMeta } from "@/lib/seo";
 import { LegalBody } from "@/components/sections/LegalBody";
 import { privacy } from "@/lib/legal";
 
@@ -10,5 +11,10 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function PrivacyPage() {
-  return <LegalBody doc={privacy} />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema([{ name: privacy.title, path: "/privacy" }])} />
+      <LegalBody doc={privacy} />
+    </>
+  );
 }

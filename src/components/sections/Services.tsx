@@ -22,17 +22,25 @@ export function Services() {
       content: (
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-12">
           {project?.video.src ? (
-            // The clip fills the card on its own, with no sky plate behind it.
-            // It is a showcase, not a link: no pointer, no click-through.
-            <div className="cursor-default select-none self-start overflow-hidden rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)]">
+            <Link
+              href={`/work/${project.slug}`}
+              aria-label={`${project.name} case study`}
+              className="block self-start overflow-hidden rounded-[var(--radius-card)] border border-line bg-white shadow-[var(--shadow-card)]"
+            >
               <AutoplayVideo
                 src={project.video.src}
                 srcSmall={project.video.srcSmall}
                 poster={project.video.poster}
                 label={`${project.name} walkthrough video`}
-                className="aspect-video"
+                fit="cover"
+                className="aspect-[16/10] w-full object-cover"
+                style={
+                  project.video.focus
+                    ? { objectPosition: project.video.focus }
+                    : undefined
+                }
               />
-            </div>
+            </Link>
           ) : project ? (
             <Link
               href={`/work/${project.slug}`}

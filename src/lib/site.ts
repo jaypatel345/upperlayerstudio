@@ -90,7 +90,7 @@ export const nav = [
 
 export const hero = {
   badge: "AI automation, AI voice & product",
-  headline: { lead: "Automate the work", trail: "that's slowing you down" },
+  headline: { lead: "AI Automation Services:", trail: "Automate the work that's slowing you down" },
   body:
     "I start with the work that repeats — the manual workflows, the missed calls, the copy‑paste between tools — and replace it with systems that run on their own. Once those are earning their keep, I turn them into software you own outright.",
   primary: { label: "Book a call", href: site.book },

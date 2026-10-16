@@ -1,4 +1,5 @@
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { Breadcrumbs, type BreadcrumbItem } from "@/components/ui/Breadcrumbs";
 
 /**
  * The reference's header for its listing pages (Work, The Lab): a small
@@ -9,16 +10,23 @@ export function ListingHeader({
   eyebrow,
   title,
   body,
+  breadcrumbs,
 }: {
   eyebrow: string;
   title: string;
   body?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }) {
   const delay = (s: number) => ({ "--rise-delay": `${s}s` }) as React.CSSProperties;
 
   return (
     <header className="mx-auto max-w-[1440px] px-6 pt-32 pb-12 sm:pt-[176px] sm:pb-14 lg:px-32 lg:pb-20">
-      <div className="rise" style={delay(0)}>
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <div className="rise mb-4" style={delay(0)}>
+          <Breadcrumbs items={breadcrumbs} />
+        </div>
+      )}
+      <div className="rise" style={delay(breadcrumbs ? 0.04 : 0)}>
         <Eyebrow>{eyebrow}</Eyebrow>
       </div>
       <h1
