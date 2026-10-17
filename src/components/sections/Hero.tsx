@@ -55,13 +55,13 @@ export function Hero() {
           <span className="block text-white">
             {hero.headline.lead}
           </span>
-          <span className="block mt-1 sm:mt-1.5 text-[#c7e9f8]">
+          <span className="block mt-1 sm:mt-1.5 text-[#bae6fd]">
             {hero.headline.trail}
           </span>
         </h1>
 
         <p
-          className="rise mt-6 max-w-[620px] select-none text-[16px] leading-[1.65] text-pretty text-white/70 sm:text-[17px]"
+          className="rise mt-6 max-w-[620px] select-none text-[16px] leading-[1.65] text-pretty text-white/75 sm:text-[17px]"
           style={delay(0.05)}
         >
           {hero.body}
