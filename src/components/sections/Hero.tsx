@@ -7,7 +7,7 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { HeroParallax } from "./HeroParallax";
 
 // Photo behind the hero. null leaves the hero on the plain page background.
-const HERO_PHOTO: string | null = "/hero/mario-hafliger-rkCAHEeMp_A-unsplash.jpg";
+const HERO_PHOTO: string | null = "/hero/hero-clouds.jpg";
 
 // A 24px copy of HERO_PHOTO, inlined so the sky paints with the HTML while the
 // full photo is still on its way (and the white copy is never on bare white).
