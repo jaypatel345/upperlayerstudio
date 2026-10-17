@@ -7,13 +7,13 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { HeroParallax } from "./HeroParallax";
 
 // Photo behind the hero. null leaves the hero on the plain page background.
-const HERO_PHOTO: string | null = "/hero/hero-clouds.jpg";
+const HERO_PHOTO: string | null = "/hero/hero-clouds-v2.jpg";
 
 // A 24px copy of HERO_PHOTO, inlined so the sky paints with the HTML while the
 // full photo is still on its way (and the white copy is never on bare white).
 // Regenerate it whenever the photo changes; null skips the placeholder.
 const HERO_BLUR: string | null =
-  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAKABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAUGAv/EACIQAAEEAAYDAQAAAAAAAAAAAAIAAQMRBBITFCFRQUJxgf/EABUBAQEAAAAAAAAAAAAAAAAAAAIF/8QAGxEAAQQDAAAAAAAAAAAAAAAAAQACAwQRIUH/2gAMAwEAAhEDEQA/AFY4YultsIVXT13ScxgG6Ycg1Y8V8VFDGGk8eQcjxlY1w/4qr5i3GlGjrh+dqG2roVw2Hg3UTaMfn1ZCJnI4kKoPV//Z";
+  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAMABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIGBf/EACIQAAEEAQMFAQAAAAAAAAAAAAEAAgMRBBITIQUUIjFBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAEF/8QAGREAAgMBAAAAAAAAAAAAAAAAAAEEFEFh/9oADAMBAAIRAxEAPwDLbju/E4xXVdGlYv6XhsiMgi5v1fCTCk3I5Iixm2LGkN4ItUnJWIlKE9ZJ9qUKwiZE5us48JcA4jwHwoRa4NLp/9k=";
 
 /** Server component — no JS on the critical path. */
 export function Hero() {
