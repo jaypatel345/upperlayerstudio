@@ -7,13 +7,13 @@ import { MediaImage } from "@/components/ui/MediaImage";
 import { HeroParallax } from "./HeroParallax";
 
 // Photo behind the hero. null leaves the hero on the plain page background.
-const HERO_PHOTO: string | null = "/hero/edgar-torabyan-KjMBQey6OiU-unsplash.jpg";
+const HERO_PHOTO: string | null = "/hero/mario-hafliger-rkCAHEeMp_A-unsplash.jpg";
 
 // A 24px copy of HERO_PHOTO, inlined so the sky paints with the HTML while the
 // full photo is still on its way (and the white copy is never on bare white).
 // Regenerate it whenever the photo changes; null skips the placeholder.
 const HERO_BLUR: string | null =
-  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAQABgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAQDBv/EABwQAQABBQEBAAAAAAAAAAAAAAEAAgMREiEEMf/EABUBAQEAAAAAAAAAAAAAAAAAAAEE/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAETUf/aAAwDAQACEQMRAD8A6TWNJStlHFvHTCM2pfMIIY79OyqqJpMg1xEvDzUmzRk51q5ELLBkz//Z";
+  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAKABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAUGAv/EACIQAAEEAAYDAQAAAAAAAAAAAAIAAQMRBBITFCFRQUJxgf/EABUBAQEAAAAAAAAAAAAAAAAAAAIF/8QAGxEAAQQDAAAAAAAAAAAAAAAAAQACAwQRIUH/2gAMAwEAAhEDEQA/AFY4YultsIVXT13ScxgG6Ycg1Y8V8VFDGGk8eQcjxlY1w/4qr5i3GlGjrh+dqG2roVw2Hg3UTaMfn1ZCJnI4kKoPV//Z";
 
 /** Server component — no JS on the critical path. */
 export function Hero() {
@@ -23,7 +23,7 @@ export function Hero() {
     <section className="relative isolate overflow-hidden pt-[60px]">
       {/* The photo stops ~48px under the stat card and masks out over its last 30%, like BrightStudios */}
       {HERO_PHOTO && (
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden [mask-image:linear-gradient(180deg,#000_0%,#000_70%,rgba(0,0,0,0.6)_82%,rgba(0,0,0,0.25)_91%,transparent_100%)]">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden [mask-image:linear-gradient(180deg,#000_0%,#000_93%,rgba(0,0,0,0.6)_97%,transparent_100%)]">
           <HeroParallax>
             <MediaImage
               src={HERO_PHOTO}

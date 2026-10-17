@@ -44,10 +44,10 @@ export function HeroParallax({ children }: { children: React.ReactNode }) {
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      {/* Starts 10% above the box, so the photo sits higher and its lower part shows */}
+      {/* Flush with top so the sky sits cleanly behind the headline and subtitle */}
       <div
         ref={innerRef}
-        className="absolute inset-x-0 -top-[10%] bottom-0 will-change-transform"
+        className="absolute inset-0 will-change-transform"
         style={{
           transform: reduce ? "scale(1.025)" : "translate3d(0, 0%, 0) scale(1.025)",
         }}
