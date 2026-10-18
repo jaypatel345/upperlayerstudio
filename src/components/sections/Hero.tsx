@@ -1,29 +1,55 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { hero } from "@/lib/site";
 import { MediaImage } from "@/components/ui/MediaImage";
+import { mediaUrl } from "@/lib/media";
 import { HeroParallax } from "./HeroParallax";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
-// Photo behind the hero. null leaves the hero on the plain page background.
-const HERO_PHOTO: string | null = "/hero/hero-clouds-v2.jpg";
+// Background assets: native 4K UHD meadow visual with hill crest reaching halfway through subtitle (~53.9%)
+const HERO_PHOTO: string | null = "/hero/upper-layer-meadow-mid-4k.jpg";
+const HERO_VIDEO: string | null = null; // Can be set to "/hero/upper-layer-meadow.mp4" once animated with Runway/Luma
 
-// A 24px copy of HERO_PHOTO, inlined so the sky paints with the HTML while the
-// full photo is still on its way (and the white copy is never on bare white).
-// Regenerate it whenever the photo changes; null skips the placeholder.
+// 24px inlined blur placeholder for upper-layer-meadow-mid-4k.jpg
 const HERO_BLUR: string | null =
-  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAMABgDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIGBf/EACIQAAEEAQMFAQAAAAAAAAAAAAEAAgMRBBITIQUUIjFBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAEF/8QAGREAAgMBAAAAAAAAAAAAAAAAAAEEFEFh/9oADAMBAAIRAxEAPwDLbju/E4xXVdGlYv6XhsiMgi5v1fCTCk3I5Iixm2LGkN4ItUnJWIlKE9ZJ9qUKwiZE5us48JcA4jwHwoRa4NLp/9k=";
+  "data:image/jpeg;base64,/9j/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAANABgDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABgAF/8QAJBAAAQQCAQIHAAAAAAAAAAAAAgABAxEEEiExUQUTFEFzkeH/xAAWAQEBAQAAAAAAAAAAAAAAAAADAgT/xAAbEQEAAgMBAQAAAAAAAAAAAAABAAIDBCERMf/aAAwDAQACEQMRAD8AYT5cU1eYQi793pZsr4hFXqIL+RkNyPHJnIRILd652/FR5cskWz6c89Lr7Weu1epwhZMVb/WN8eLHaA2GaI2d7fQ2e69lIAWQQycCPfopIbK9SSUA8J//2Q==";
 
-/** Server component — no JS on the critical path. */
+// Exact multi-stop fade mask from bybrightstudios.com:
+// -webkit-mask: linear-gradient(#000 0% 70%, #0009 82%, #00000040 91%, #0000 100%);
+// mask: linear-gradient(#000 0% 70%, #0009 82%, #00000040 91%, #0000 100%);
+const HERO_MASK_STYLE: React.CSSProperties = {
+  WebkitMaskImage:
+    "linear-gradient(180deg, #000 0% 70%, rgba(0, 0, 0, 0.6) 82%, rgba(0, 0, 0, 0.25) 91%, transparent 100%)",
+  maskImage:
+    "linear-gradient(180deg, #000 0% 70%, rgba(0, 0, 0, 0.6) 82%, rgba(0, 0, 0, 0.25) 91%, transparent 100%)",
+};
+
+// Softened hero text veil: lighter radial glow behind headline
+const HERO_TEXT_VEIL_STYLE: React.CSSProperties = {
+  background:
+    "radial-gradient(62% 52% at 50% 46%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.20) 48%, transparent 78%)",
+};
+
+// Bright Studios signature ease-out curve for visitor arrival entrance
+const BRIGHT_EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Hero() {
-  const delay = (s: number) => ({ "--rise-delay": `${s}s` }) as React.CSSProperties;
+  const reduce = useReducedMotion();
 
   return (
-    <section className="relative isolate overflow-hidden pt-[60px]">
-      {/* The photo stops ~48px under the stat card and masks out over its last 30%, like BrightStudios */}
+    <section className="relative isolate overflow-hidden bg-white pt-[60px]">
+      {/* Hero media background: Bright Studios video loop with high-res poster and multi-stop mask */}
       {HERO_PHOTO && (
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-10 overflow-hidden [mask-image:linear-gradient(180deg,#000_0%,#000_93%,rgba(0,0,0,0.6)_97%,transparent_100%)]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 bottom-0 -z-20 overflow-hidden"
+          style={HERO_MASK_STYLE}
+        >
           <HeroParallax>
             <MediaImage
               src={HERO_PHOTO}
@@ -35,55 +61,97 @@ export function Hero() {
               blurDataURL={HERO_BLUR ?? undefined}
               sizes="100vw"
               quality={90}
-              className="object-cover object-top"
+              className="object-cover object-center"
             />
+            {HERO_VIDEO && (
+              <video
+                src={mediaUrl(HERO_VIDEO)}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+              />
+            )}
           </HeroParallax>
         </div>
       )}
 
-      <Container className="relative flex flex-col items-center pt-14 pb-10 text-center sm:pt-20 sm:pb-14">
-        <div className="rise select-none" style={delay(0)}>
-          <Pill className="px-[14px]! py-1.5! text-[14px]! font-normal!">{hero.badge}</Pill>
-        </div>
+      {/* Hero text veil: radial illumination glow centered behind the headline */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={HERO_TEXT_VEIL_STYLE}
+      />
+
+      {/* Subtle bottom gradient to guarantee an imperceptible dissolve into the white page */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 -z-10 bg-gradient-to-b from-transparent via-white/40 to-white"
+      />
+
+      <Container className="relative flex flex-col items-center pt-10 pb-10 text-center sm:pt-14 sm:pb-14">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease: BRIGHT_EASE, delay: 0.08 }}
+          className="select-none"
+        >
+          <Pill tone="light" className="px-[14px]! py-1.5! text-[14px]! font-normal!">
+            {hero.badge}
+          </Pill>
+        </motion.div>
 
         {/* Two deliberate lines — text-wrap:balance is off here so the colour
             split always lands in the same place. */}
-        <h1
-          className="rise mt-5 max-w-[36ch] select-none text-[32px] leading-[1.12] tracking-[-0.025em] sm:text-[44px] sm:leading-[1.1] lg:text-[52px]"
-          style={delay(0)}
+        <motion.h1
+          initial={reduce ? false : { opacity: 0, y: 26, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.85, ease: BRIGHT_EASE, delay: 0.2 }}
+          className="mt-5 max-w-[36ch] select-none text-[32px] leading-[1.1] tracking-[-0.035em] sm:text-[44px] sm:leading-[1.08] lg:text-[52px]"
         >
-          <span className="block text-white">
+          <span className="block text-ink">
             {hero.headline.lead}
           </span>
-          <span className="block mt-1 sm:mt-1.5 text-[#bae6fd]">
+          <span className="block mt-1 sm:mt-1.5 text-[#286c85]">
             {hero.headline.trail}
           </span>
-        </h1>
+        </motion.h1>
 
-        <p
-          className="rise mt-6 max-w-[620px] select-none text-[16px] leading-[1.65] text-pretty text-white/75 sm:text-[17px]"
-          style={delay(0.05)}
+        <motion.p
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: BRIGHT_EASE, delay: 0.34 }}
+          className="mt-6 max-w-[620px] select-none text-[16px] leading-[1.65] text-pretty text-ink/75 sm:text-[17px]"
         >
           {hero.body}
-        </p>
+        </motion.p>
 
-        <div className="rise mt-7 flex flex-wrap items-center justify-center gap-3" style={delay(0.1)}>
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: BRIGHT_EASE, delay: 0.48 }}
+          className="mt-7 flex flex-wrap items-center justify-center gap-3"
+        >
           <Button href={hero.primary.href} size="lg">
             {hero.primary.label}
           </Button>
           <Button href={hero.secondary.href} size="lg" variant="light">
             {hero.secondary.label}
           </Button>
-        </div>
+        </motion.div>
       </Container>
 
       {/* Floating proof card, mirrors the reference's headline stat bar */}
-      <Container className="relative pb-[70px]">
-        <div
-          className="rise mx-auto flex max-w-[800px] flex-col gap-5 rounded-[var(--radius-card)] bg-white/94 px-6 py-5 shadow-[var(--shadow-float)] backdrop-blur-sm sm:flex-row sm:items-center sm:gap-5 sm:px-6"
-          style={delay(0.15)}
+      <Container className="relative pb-[95px]">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: BRIGHT_EASE, delay: 0.6 }}
+          className="mx-auto flex max-w-[800px] flex-col gap-5 rounded-[var(--radius-card)] bg-white/94 px-6 py-5 shadow-[0_2px_12px_rgba(10,10,10,0.04)] border border-line/60 backdrop-blur-sm sm:flex-row sm:items-center sm:gap-5 sm:px-6"
         >
-          <span className="text-[32px] leading-none font-medium tracking-[-0.035em] sm:text-[36px]">
+          <span className="text-[32px] leading-none font-medium tracking-[-0.035em] text-ink sm:text-[36px]">
             {hero.stat.value}
           </span>
           <div className="flex-1">
@@ -93,7 +161,7 @@ export function Hero() {
           <ArrowLink href={hero.stat.link.href} className="shrink-0 text-[13px]">
             {hero.stat.link.label}
           </ArrowLink>
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

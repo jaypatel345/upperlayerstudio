@@ -44,11 +44,12 @@ export function HeroParallax({ children }: { children: React.ReactNode }) {
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      {/* Flush with top so the sky sits cleanly behind the headline and subtitle */}
+      {/* Flush with top and padded so the parallax drift never clips or exposes a gap */}
       <div
         ref={innerRef}
-        className="absolute inset-0 will-change-transform"
+        className="absolute -top-[10%] -bottom-[10%] inset-x-0 h-[120%] origin-center will-change-transform"
         style={{
+          transformOrigin: "50% 50%",
           transform: reduce ? "scale(1.025)" : "translate3d(0, 0%, 0) scale(1.025)",
         }}
       >

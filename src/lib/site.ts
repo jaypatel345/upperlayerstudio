@@ -90,9 +90,9 @@ export const nav = [
 
 export const hero = {
   badge: "AI automation, AI voice & product",
-  headline: { lead: "AI Automation Services", trail: "Automate the work that's slowing you down" },
+  headline: { lead: "Automate the slow work", trail: "Then own the software" },
   body:
-    "I start with the work that repeats — the manual workflows, the missed calls, the copy‑paste between tools — and replace it with systems that run on their own. Once those are earning their keep, I turn them into software you own outright.",
+    "Bottlenecked by manual workflows, missing client calls, or scaling your team? I build custom AI automations and voice agents that help modern businesses run on autopilot and own the software outright.",
   primary: { label: "Book a call", href: site.book },
   secondary: { label: "See what I build", href: "#services" },
   stat: {
