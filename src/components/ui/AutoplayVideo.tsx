@@ -213,7 +213,7 @@ export function AutoplayVideo({
     return (
       <div
         className={cn(
-          "relative isolate overflow-hidden bg-slate-900/[0.04]",
+          "relative isolate overflow-hidden",
           className,
         )}
         style={style}
@@ -232,8 +232,17 @@ export function AutoplayVideo({
           style={style?.objectPosition ? { objectPosition: style.objectPosition } : undefined}
         />
         {!phonePosterLoaded && (
-          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-white/20 backdrop-blur-md">
-            <div className="absolute -inset-full animate-glass-sheen bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+            <div className="relative flex items-center gap-2.5 rounded-full border border-white/80 bg-white/65 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)] backdrop-blur-xl">
+              <div className="flex items-center gap-1">
+                <span className="h-2 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/80 [animation-delay:0ms]" />
+                <span className="h-3.5 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/90 [animation-delay:200ms]" />
+                <span className="h-2.5 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/80 [animation-delay:400ms]" />
+              </div>
+              <span className="text-[11px] font-medium tracking-tight text-ink/75 select-none">
+                Loading preview
+              </span>
+            </div>
           </div>
         )}
       </div>
@@ -243,7 +252,7 @@ export function AutoplayVideo({
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden bg-slate-900/[0.04]",
+        "relative isolate overflow-hidden",
         className,
       )}
       style={style}
@@ -270,25 +279,15 @@ export function AutoplayVideo({
         <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />
       </video>
 
-      {/* Glassy Loading Effect */}
+      {/* Floating Loading Preview Pill Only — No square background, no frosted box, no border */}
       <div
         className={cn(
-          "pointer-events-none absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-700 ease-out",
+          "pointer-events-none absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-500 ease-out",
           isReady ? "opacity-0" : "opacity-100",
         )}
         aria-hidden="true"
       >
-        {/* Frosted Glass Base Layer */}
-        <div className="absolute inset-0 bg-white/25 backdrop-blur-[6px]" />
-
-        {/* Ambient Prismatic Sky Aura */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-sky-200/35 via-white/10 to-sky-400/20" />
-
-        {/* Liquid Refraction Sheen Wave */}
-        <div className="absolute -inset-full animate-glass-sheen bg-gradient-to-r from-transparent via-white/55 to-transparent" />
-
-        {/* Floating Crystal Pill Badge */}
-        <div className="relative flex items-center gap-2.5 rounded-full border border-white/80 bg-white/55 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)] backdrop-blur-xl">
+        <div className="relative flex items-center gap-2.5 rounded-full border border-white/80 bg-white/65 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)] backdrop-blur-xl">
           <div className="flex items-center gap-1">
             <span className="h-2 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/80 [animation-delay:0ms]" />
             <span className="h-3.5 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/90 [animation-delay:200ms]" />

@@ -121,7 +121,7 @@ export function WorkGallery({ project }: { project: Project }) {
             {renderGlassBackground()}
 
             <div className="flex h-full items-center justify-center px-4 py-2 sm:px-8 sm:py-3 lg:px-12 lg:py-3.5">
-              <div className="relative w-full max-w-[680px] lg:max-w-[740px] overflow-hidden rounded-[14px] shadow-[0_20px_50px_-12px_rgba(15,23,42,0.2)]">
+              <div className="relative w-full max-w-[680px] lg:max-w-[740px] overflow-hidden rounded-[14px]">
                 <AutoplayVideo
                   src={project.video.src}
                   srcSmall={project.video.srcSmall}
