@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type CSSProperties } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import { getImageProps } from "next/image";
 import { cn } from "@/lib/cn";
 import { mediaLoader, mediaUrl } from "@/lib/media";
@@ -53,6 +53,8 @@ export function AutoplayVideo({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const isPhone = useSyncExternalStore(subscribePhone, getPhoneSnapshot, getServerSnapshot);
+  const [isReady, setIsReady] = useState(false);
+  const [phonePosterLoaded, setPhonePosterLoaded] = useState(false);
 
   useEffect(() => {
     if (isPhone) return;
@@ -106,15 +108,23 @@ export function AutoplayVideo({
       }
     };
 
-    const onCanPlay = () => {
+    const markReady = () => {
       clearFallback();
+      setIsReady(true);
+    };
+
+    const onCanPlay = () => {
+      markReady();
       sync();
     };
 
-    video.addEventListener("loadeddata", clearFallback);
+    video.addEventListener("loadeddata", markReady);
     video.addEventListener("canplay", onCanPlay);
-    video.addEventListener("playing", clearFallback);
-    video.addEventListener("error", fallbackToLocal);
+    video.addEventListener("playing", markReady);
+    video.addEventListener("error", () => {
+      setIsReady(false);
+      fallbackToLocal();
+    });
 
     // Pre-buffer when clip is ~1 screen away so it is already ready to play
     // when scrolled into view.
@@ -146,6 +156,7 @@ export function AutoplayVideo({
       ([entry]) => {
         if (entry.isIntersecting || !video.getAttribute("src")) return;
         clearFallback();
+        setIsReady(false);
         video.pause();
         video.removeAttribute("src");
         video.preload = "none";
@@ -176,9 +187,9 @@ export function AutoplayVideo({
     return () => {
       cancelAnimationFrame(raf);
       clearFallback();
-      video.removeEventListener("loadeddata", clearFallback);
+      video.removeEventListener("loadeddata", markReady);
       video.removeEventListener("canplay", onCanPlay);
-      video.removeEventListener("playing", clearFallback);
+      video.removeEventListener("playing", markReady);
       video.removeEventListener("error", fallbackToLocal);
       near.disconnect();
       far.disconnect();
@@ -200,43 +211,94 @@ export function AutoplayVideo({
 
   if (isPhone) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={posterSrc}
-        alt={label}
-        loading="lazy"
+      <div
         className={cn(
-          "pointer-events-none block w-full select-none",
-          fit === "contain" ? "object-contain" : "object-cover",
+          "relative isolate overflow-hidden bg-slate-900/[0.04]",
           className,
         )}
         style={style}
-      />
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={posterSrc}
+          alt={label}
+          loading="lazy"
+          onLoad={() => setPhonePosterLoaded(true)}
+          className={cn(
+            "pointer-events-none block h-full w-full select-none transition-opacity duration-500",
+            fit === "contain" ? "object-contain" : "object-cover",
+            phonePosterLoaded ? "opacity-100" : "opacity-0",
+          )}
+          style={style?.objectPosition ? { objectPosition: style.objectPosition } : undefined}
+        />
+        {!phonePosterLoaded && (
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-white/20 backdrop-blur-md">
+            <div className="absolute -inset-full animate-glass-sheen bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+          </div>
+        )}
+      </div>
     );
   }
 
   return (
-    <video
-      ref={ref}
-      poster={posterSrc}
-      muted
-      loop
-      playsInline
-      preload="none"
-      disablePictureInPicture
-      disableRemotePlayback
-      controlsList="nodownload nofullscreen noremoteplayback"
-      aria-label={label}
-      onContextMenu={(e) => e.preventDefault()}
+    <div
       className={cn(
-        "pointer-events-none block w-full select-none",
-        fit === "contain" ? "object-contain" : "object-cover",
+        "relative isolate overflow-hidden bg-slate-900/[0.04]",
         className,
       )}
       style={style}
     >
-      {/* The clips have no sound; the track says so for anyone relying on captions */}
-      <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />
-    </video>
+      <video
+        ref={ref}
+        poster={posterSrc}
+        muted
+        loop
+        playsInline
+        preload="none"
+        disablePictureInPicture
+        disableRemotePlayback
+        controlsList="nodownload nofullscreen noremoteplayback"
+        aria-label={label}
+        onContextMenu={(e) => e.preventDefault()}
+        className={cn(
+          "pointer-events-none block h-full w-full select-none",
+          fit === "contain" ? "object-contain" : "object-cover",
+        )}
+        style={style?.objectPosition ? { objectPosition: style.objectPosition } : undefined}
+      >
+        {/* The clips have no sound; the track says so for anyone relying on captions */}
+        <track kind="captions" src="/captions/no-audio.vtt" srcLang="en" label="English" />
+      </video>
+
+      {/* Glassy Loading Effect */}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-700 ease-out",
+          isReady ? "opacity-0" : "opacity-100",
+        )}
+        aria-hidden="true"
+      >
+        {/* Frosted Glass Base Layer */}
+        <div className="absolute inset-0 bg-white/25 backdrop-blur-[6px]" />
+
+        {/* Ambient Prismatic Sky Aura */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-sky-200/35 via-white/10 to-sky-400/20" />
+
+        {/* Liquid Refraction Sheen Wave */}
+        <div className="absolute -inset-full animate-glass-sheen bg-gradient-to-r from-transparent via-white/55 to-transparent" />
+
+        {/* Floating Crystal Pill Badge */}
+        <div className="relative flex items-center gap-2.5 rounded-full border border-white/80 bg-white/55 px-3.5 py-1.5 shadow-[0_8px_30px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)] backdrop-blur-xl">
+          <div className="flex items-center gap-1">
+            <span className="h-2 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/80 [animation-delay:0ms]" />
+            <span className="h-3.5 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/90 [animation-delay:200ms]" />
+            <span className="h-2.5 w-0.5 animate-[equalize_1.2s_ease-in-out_infinite] rounded-full bg-sky-600/80 [animation-delay:400ms]" />
+          </div>
+          <span className="text-[11px] font-medium tracking-tight text-ink/75 select-none">
+            Loading preview
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }

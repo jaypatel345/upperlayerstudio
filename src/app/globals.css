@@ -143,6 +143,32 @@
   100% { background-position: 0% 40%; }
 }
 
+/* Liquid glass sheen sweep for video and media loading */
+@keyframes glassSheen {
+  0% {
+    transform: translateX(-100%) skewX(-18deg);
+  }
+  50%, 100% {
+    transform: translateX(200%) skewX(-18deg);
+  }
+}
+
+/* Equalizer subtle bar animation for audio/video stream loader */
+@keyframes equalize {
+  0%, 100% {
+    transform: scaleY(0.35);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.animate-glass-sheen {
+  animation: glassSheen 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 [data-bright-cta] {
   position: relative;
   overflow: hidden;
