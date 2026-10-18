@@ -111,7 +111,20 @@ if (!VIDEOS_ONLY) {
   console.log("Discovering images across all pages...");
   await pool(pages, IMAGE_PARALLEL, async (page) => {
     try {
-      const html = await (await fetch(page)).text();
+      let res;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const controller = new AbortController();
+          const t = setTimeout(() => controller.abort(), 10000);
+          res = await fetch(page, { signal: controller.signal });
+          clearTimeout(t);
+          if (res.ok) break;
+        } catch (err) {
+          if (attempt === 2) throw err;
+          await new Promise((r) => setTimeout(r, 800));
+        }
+      }
+      const html = await res.text();
       // Extract Next.js optimized images (all responsive widths)
       for (const m of html.matchAll(/\/_next\/image\?url=[^"'\s,]+/g)) {
         const url = m[0].replace(/&amp;/g, "&");
@@ -201,7 +214,7 @@ if (allVideos.length > 0) {
   console.log(`\n--- Warming ${videoPaths.length} videos on Vercel and Cloudflare R2 (${allVideos.length} total endpoints, ${VIDEO_PARALLEL} parallel) ---`);
   await pool(allVideos, VIDEO_PARALLEL, async (url) => {
     // 128KB Range request primes the edge buffer and caches headers in ~100ms
-    const r = await fetchWithRetry(url, { headers: { Range: "bytes=0-131071" } }, 15000, 1);
+    const r = await fetchWithRetry(url, { headers: { Range: "bytes=0-131071" } }, 25000, 2);
     record(url, r);
     const domain = url.startsWith(SITE) ? "Vercel" : "Cloudflare R2";
     const path = url.replace(SITE, "").replace(MEDIA, "");
