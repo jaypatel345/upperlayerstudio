@@ -74,7 +74,14 @@ export function AutoplayVideo({
         connection?: { saveData?: boolean; effectiveType?: string };
       }).connection;
       const slow = conn?.saveData || /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
-      return mediaUrl(slow ? srcSmall : src);
+      if (slow) return mediaUrl(srcSmall);
+
+      // On standard displays (laptops, tablets, desktop viewports <= 1536px),
+      // the container frame is at most 740px wide. Serving the 720p cut (srcSmall)
+      // starts up to 3x faster, saves memory, and delivers >1.5x retina clarity.
+      // 1080p (src) is reserved for extra-wide displays (> 1536px).
+      const isUltraWide = typeof window !== "undefined" && window.innerWidth > 1536;
+      return mediaUrl(isUltraWide ? src : srcSmall);
     };
 
     let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
@@ -99,13 +106,18 @@ export function AutoplayVideo({
       }
     };
 
+    const onCanPlay = () => {
+      clearFallback();
+      sync();
+    };
+
     video.addEventListener("loadeddata", clearFallback);
-    video.addEventListener("canplay", clearFallback);
+    video.addEventListener("canplay", onCanPlay);
     video.addEventListener("playing", clearFallback);
     video.addEventListener("error", fallbackToLocal);
 
-    // Fetch when the clip is about a quarter-screen away; drop it again once
-    // it is more than half a screen away, so off-screen clips stop downloading.
+    // Pre-buffer when clip is ~1 screen away so it is already ready to play
+    // when scrolled into view.
     const near = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -121,13 +133,15 @@ export function AutoplayVideo({
               if (video.readyState < 2) {
                 fallbackToLocal();
               }
-            }, 4000);
+            }, 2500);
           }
         }
       },
-      { rootMargin: "25% 0px" },
+      { rootMargin: "120% 0px" },
     );
 
+    // Drop source only when scrolled far away (2.5 screens) so reading adjacent text
+    // does not discard buffered video chunks.
     const far = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting || !video.getAttribute("src")) return;
@@ -137,37 +151,35 @@ export function AutoplayVideo({
         video.preload = "none";
         video.load();
       },
-      { rootMargin: "60% 0px" },
+      { rootMargin: "250% 0px" },
     );
 
+    // Play as soon as the edge of the clip enters the viewport (5% visible)
     const observer = new IntersectionObserver(
       ([entry]) => {
         inView = entry.isIntersecting;
         sync();
       },
-      { threshold: 0.35 },
+      { threshold: 0.05 },
     );
 
-    // Hold any fetching until the page has finished loading: a clip near the
-    // fold would otherwise start a multi-MB download that competes with the
-    // hero photo for bandwidth on a phone and pushes back LCP.
+    // Arm observers right away on mount to avoid waiting on external images/scripts
     const arm = () => {
       near.observe(video);
       far.observe(video);
     };
-    if (document.readyState === "complete") arm();
-    else window.addEventListener("load", arm, { once: true });
+    const raf = requestAnimationFrame(arm);
 
     // A play() attempted in a background tab is dropped, so retry on return.
     document.addEventListener("visibilitychange", sync);
     observer.observe(video);
     return () => {
+      cancelAnimationFrame(raf);
       clearFallback();
       video.removeEventListener("loadeddata", clearFallback);
-      video.removeEventListener("canplay", clearFallback);
+      video.removeEventListener("canplay", onCanPlay);
       video.removeEventListener("playing", clearFallback);
       video.removeEventListener("error", fallbackToLocal);
-      window.removeEventListener("load", arm);
       near.disconnect();
       far.disconnect();
       observer.disconnect();

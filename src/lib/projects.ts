@@ -1670,8 +1670,8 @@ export const projects: Project[] = [
       },
     ],
     video: {
-      // 4K master cut from Remotion render (2880x2160)
-      src: `${al}/acquisition-showcase-4k.mp4`,
+      // 1080p web-optimized cut (1440x1080, 1.4 MB)
+      src: `${al}/acquisition-showcase.mp4`,
       srcSmall: `${al}/acquisition-showcase-720.mp4`,
       poster: `${al}/acquisition-showcase-poster.jpg`,
       posterFull: `${al}/acquisition-showcase-poster-4x3.jpg`,
