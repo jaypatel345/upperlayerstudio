@@ -77,15 +77,52 @@ export function AutoplayVideo({
       return mediaUrl(slow ? srcSmall : src);
     };
 
+    let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const clearFallback = () => {
+      if (fallbackTimer) {
+        clearTimeout(fallbackTimer);
+        fallbackTimer = undefined;
+      }
+    };
+
+    const fallbackToLocal = () => {
+      clearFallback();
+      const current = video.getAttribute("src") ?? "";
+      if (current.startsWith("http")) {
+        const local = srcSmall ? srcSmall : src;
+        if (current !== local) {
+          video.src = local;
+          video.load();
+          sync();
+        }
+      }
+    };
+
+    video.addEventListener("loadeddata", clearFallback);
+    video.addEventListener("canplay", clearFallback);
+    video.addEventListener("playing", clearFallback);
+    video.addEventListener("error", fallbackToLocal);
+
     // Fetch when the clip is about a quarter-screen away; drop it again once
     // it is more than half a screen away, so off-screen clips stop downloading.
     const near = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           if (video.getAttribute("src")) return;
-          video.src = pick();
+          const chosen = pick();
+          video.src = chosen;
           video.preload = "auto";
           sync();
+
+          if (chosen.startsWith("http")) {
+            clearFallback();
+            fallbackTimer = setTimeout(() => {
+              if (video.readyState < 2) {
+                fallbackToLocal();
+              }
+            }, 4000);
+          }
         }
       },
       { rootMargin: "25% 0px" },
@@ -94,6 +131,7 @@ export function AutoplayVideo({
     const far = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting || !video.getAttribute("src")) return;
+        clearFallback();
         video.pause();
         video.removeAttribute("src");
         video.preload = "none";
@@ -124,6 +162,11 @@ export function AutoplayVideo({
     document.addEventListener("visibilitychange", sync);
     observer.observe(video);
     return () => {
+      clearFallback();
+      video.removeEventListener("loadeddata", clearFallback);
+      video.removeEventListener("canplay", clearFallback);
+      video.removeEventListener("playing", clearFallback);
+      video.removeEventListener("error", fallbackToLocal);
       window.removeEventListener("load", arm);
       near.disconnect();
       far.disconnect();

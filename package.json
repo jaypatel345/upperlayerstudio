@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "warm": "node scripts/warm-cache.mjs",
+    "media:build": "node scripts/build-media.mjs",
+    "media:upload": "bash scripts/upload-media.sh",
+    "media:compress": "node scripts/compress-videos.mjs"
   },
   "dependencies": {
     "motion": "^13.4.6",
