@@ -18,23 +18,23 @@ import random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 FONT_PATH = "/System/Library/Fonts/HelveticaNeue.ttc"
-PHOTO_SOURCE = "public/hero/upper-layer-meadow-mid-4k.jpg"
-FALLBACK_PHOTO = "public/hero/upper-layer-meadow-mid-4k.jpg"
+PHOTO_SOURCE = "public/hero/hero-option-3-rolling-hills.jpg"
+FALLBACK_PHOTO = "public/hero/hero-option-3-rolling-hills.jpg"
 BADGE_SOURCE = "public/brand/upper_layer_studio_logo_badge.png"
 OUTPUT_DIR = "public/brand/covers"
 EXPORT_DIR = "cover latter"
 
 # Brand Copy
-LINE_1 = "Automate the slow work,"
-LINE_2 = "Then own the software."
+LINE_1 = "Automate the slow work"
+LINE_2 = "Then own the software"
 PILL_TEXT = "AI Automation · Voice AI · AI Agents · Product Build"
 DOMAIN_TEXT = "upperlayerstudio.com"
 
-# Brand Colors
+# Brand Colors (Aligned with Option 3 & Celestial Glass look)
 COLOR_WHITE = (255, 255, 255, 255)
-COLOR_CRYSTAL_BLUE = (186, 230, 253, 255)  # #bae6fd
+COLOR_CRYSTAL_BLUE = (186, 230, 253, 255)  # #bae6fd signature glassy crystal blue
 COLOR_INK = (10, 15, 22, 240)
-SHADOW_COLOR = (0, 20, 45, 140)
+SHADOW_COLOR = (0, 20, 45, 120)
 
 _GLYPH_CACHE = None
 
@@ -283,8 +283,8 @@ def generate_banner(config):
     if layout == "right":
         url_x = w - right_margin - url_w
         url_y = h - (config.get("bottom_margin", 65) * scale)
-        url_color = config.get("url_color", (10, 15, 22, 235))
-        url_shadow = (255, 255, 255, 180)
+        url_color = config.get("url_color", (255, 255, 255, 245))
+        url_shadow = (0, 20, 45, 120)
         draw_base.text((url_x, url_y + 1 * scale), DOMAIN_TEXT, font=url_font, fill=url_shadow)
         draw_base.text((url_x, url_y), DOMAIN_TEXT, font=url_font, fill=url_color)
     else: # center
