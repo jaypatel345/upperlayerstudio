@@ -1,6 +1,7 @@
 import { ogSize, renderOgImage } from "@/lib/og";
 import { postBySlug, posts } from "@/lib/insights";
 
+export const id = "rolling-hills-v2";
 export const alt = "Article by Upper Layer Studio";
 export const size = ogSize;
 export const contentType = "image/png";

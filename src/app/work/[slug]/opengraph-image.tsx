@@ -1,6 +1,7 @@
 import { ogSize, renderOgImage } from "@/lib/og";
 import { projectBySlug, projects } from "@/lib/projects";
 
+export const id = "rolling-hills-v2";
 export const alt = "Case study by Upper Layer Studio";
 export const size = ogSize;
 export const contentType = "image/png";
