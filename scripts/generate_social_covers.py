@@ -313,6 +313,11 @@ def generate_banner(config):
     if name == "x_twitter_cover":
         img_1x.save("public/brand/x_cover_upper_layer.png", "PNG", optimize=True)
 
+    if name == "og_image":
+        img_1x.save("public/brand/og_image.png", "PNG", optimize=True)
+        img_1x.save("public/og-image.png", "PNG", optimize=True)
+        img_1x.save("public/twitter-image.png", "PNG", optimize=True)
+
     print(f"Generated {out_1x} & {exp_1x} ({target_w}x{target_h})")
     return out_1x
 
@@ -405,6 +410,23 @@ def main():
             "top_y": 552, # safely inside safe zone 551 to 889
             "url_size": 20,
             "url_y": 752,  # safely inside 889 and above green hill crest
+            "layout": "center",
+        },
+        # 6. OpenGraph / Twitter Link Card (1200 x 630)
+        {
+            "name": "og_image",
+            "width": 1200,
+            "height": 630,
+            "y_crop_start": 0,
+            "pill_h": 38,
+            "pill_fsize": 14,
+            "pill_logo": 24,
+            "pill_gap": 26,
+            "head_size": 50,
+            "line_spacing": 60,
+            "top_y": 145,
+            "url_size": 19,
+            "url_y": 395,
             "layout": "center",
         },
     ]

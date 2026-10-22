@@ -25,7 +25,7 @@ export const absolute = (path = "/") => new URL(path, siteUrl).toString();
  * don't carry their own date. Bump it when page copy changes; Google ignores
  * lastmod values that change on every build, so this is deliberately manual.
  */
-export const contentUpdated = "2026-10-16";
+export const contentUpdated = "2026-10-22";
 
 /** Videos are served from the R2 media origin, not from the Vercel site. */
 const MEDIA_ORIGIN = "https://media.upperlayerstudio.com";

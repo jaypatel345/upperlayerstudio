@@ -41,5 +41,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# python
+__pycache__/
+*.pyc
+
 # Pre-sized images for the R2 media bucket (scripts/build-media.mjs)
 /.media
